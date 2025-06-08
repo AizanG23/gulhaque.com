@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gul and Metzen Solutions | Powering Civilizational Infrastructure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        jet: '#0A0A0A',
+                        industrial: '#2D2D2D',
+                        gold: '#D4AF37',
+                        electric: '#00A8E8',
+                        dark: '#111111'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Barlow', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out forwards',
+                        'count-up': 'countUp 2s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        countUp: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        glow: {
+                            '0%': { 'box-shadow': '0 0 5px rgba(212, 175, 55, 0.5)' },
+                            '100%': { 'box-shadow': '0 0 20px rgba(212, 175, 55, 0.8)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #0A0A0A;
+            color: #E5E5E5;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(10,10,10,0.98) 0%, rgba(45,45,45,0.95) 100%);
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #D4AF37;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .gold-underline::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 1px;
+            background: #D4AF37;
+            transition: width 0.3s;
+        }
+        
+        .gold-underline:hover::after {
+            width: 100%;
+        }
+        
+        .tech-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .case-study-overlay {
+            background: linear-gradient(0deg, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0) 100%);
+        }
+        
+        .video-mask {
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .fade-in {
+            opacity: 0;
+        }
+        
+        .delayed-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delayed-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delayed-3 {
+            animation-delay: 0.6s;
+        }
+        
+        .delayed-4 {
+            animation-delay: 0.8s;
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .investor-login {
+            background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(0,168,232,0.1) 100%);
+            border: 1px solid rgba(212,175,55,0.2);
+        }
+        
+        .press-card {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .press-card:hover {
+            border-bottom-color: #D4AF37;
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Top Bar -->
+    <div class="bg-jet text-industrial text-xs py-2 px-4 flex justify-between items-center border-b border-industrial/10">
+        <div class="flex space-x-4">
+            <a href="#" class="hover:text-gold transition-all"><i class="fas fa-phone-alt mr-1"></i> +1 (555) 123-4567</a>
+            <a href="#" class="hover:text-gold transition-all"><i class="fas fa-envelope mr-1"></i> executive@gms.com</a>
+        </div>
+        <div class="flex space-x-4">
+            <a href="#" class="hover:text-gold transition-all"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="hover:text-gold transition-all"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-gold transition-all"><i class="fas fa-lock mr-1"></i>Investor Login</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-jet shadow-sm sticky top-0 z-50 border-b border-industrial/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <div class="flex items-center">
+                        <div class="bg-gold p-2 rounded-md mr-3">
+                            <i class="fas fa-atom text-jet text-2xl"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white font-display">GUL AND METZEN</span>
+                        <span class="text-xs text-industrial ml-1">SOLUTIONS</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="nav-link text-gold px-3 py-2 font-medium">Home</a>
+                        <a href="#" class="nav-link text-industrial hover:text-gold px-3 py-2 font-medium">About</a>
+                        <div class="relative group">
+                            <button class="nav-link text-industrial hover:text-gold px-3 py-2 font-medium flex items-center">
+                                Divisions <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-jet ring-1 ring-white ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                                <div class="py-1">
+                                    <a href="#" class="block px-4 py-2 text-sm text-industrial hover:bg-industrial/10 hover:text-gold">Energy Dominance</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-industrial hover:bg-industrial/10 hover:text-gold">Aerospace & Autonomy</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-industrial hover:bg-industrial/10 hover:text-gold">AI & Systems Intelligence</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-industrial hover:bg-industrial/10 hover:text-gold">Sovereign Partnerships</a>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="nav-link text-industrial hover:text-gold px-3 py-2 font-medium">Clients</a>
+                        <a href="#" class="nav-link text-industrial hover:text-gold px-3 py-2 font-medium">Pressroom</a>
+                        <a href="#" class="nav-link text-industrial hover:text-gold px-3 py-2 font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-industrial hover:text-gold focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+        <div class="hero-gradient">
+            <div class="max-w-7xl mx-auto py-32 px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-6xl font-bold text-white font-display mb-6 fade-in">
+                        WE DON'T POWER THE FUTURE, <span class="text-gold">WE OWN IT</span>
+                    </h1>
+                    <p class="mt-6 text-xl text-industrial max-w-3xl mx-auto fade-in delayed-1">
+                        Gul and Metzen Solutions builds the systems that drive civilizations forward. From autonomous AI-powered aerospace fleets to advanced solar and nuclear infrastructure, our platform reshapes global energy, security, and industrial intelligence.
+                    </p>
+                    <div class="mt-10 fade-in delayed-2">
+                        <a href="#" class="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-jet bg-gold hover:bg-opacity-90 transition-all glow-effect">
+                            Schedule Executive Briefing
+                            <i class="fas fa-arrow-right ml-3"></i>
+                        </a>
+                        <a href="#" class="ml-6 inline-flex items-center px-8 py-4 border border-gold text-base font-medium rounded-md text-gold bg-transparent hover:bg-gold hover:bg-opacity-10 transition-all">
+                            Explore Divisions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 3D Animation Background -->
+        <div class="absolute inset-0 overflow-hidden video-mask opacity-20">
+            <video autoplay muted loop class="w-full h-full object-cover">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-sci-fi-background-1220-large.mp4" type="video/mp4">
+            </video>
+        </div>
+        
+        <!-- Floating elements -->
+        <div class="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-gold bg-opacity-20 filter blur-xl opacity-70 floating"></div>
+        <div class="absolute top-1/3 right-1/4 w-24 h-24 rounded-full bg-electric bg-opacity-10 filter blur-xl opacity-50 floating" style="animation-delay: 1s;"></div>
+    </div>
+
+    <!-- Marquee -->
+    <div class="bg-jet py-12 overflow-hidden border-t border-b border-industrial/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-industrial uppercase tracking-wider text-sm fade-in">STRATEGIC PARTNERSHIPS WITH</p>
+            <div class="relative overflow-hidden mt-6">
+                <div class="flex animate-marquee whitespace-nowrap">
+                    <div class="flex items-center space-x-16 mx-4">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=NASA" alt="NASA" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=DOE" alt="Department of Energy" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=LOCKHEED" alt="Lockheed Martin" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=SAUDI+ARAMCO" alt="Saudi Aramco" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=BOEING" alt="Boeing" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=SWF" alt="Sovereign Wealth Fund" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                    </div>
+                    <div class="flex items-center space-x-16 mx-4">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=NASA" alt="NASA" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=DOE" alt="Department of Energy" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=LOCKHEED" alt="Lockheed Martin" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=SAUDI+ARAMCO" alt="Saudi Aramco" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=BOEING" alt="Boeing" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                        <img src="https://via.placeholder.com/180x60/0A0A0A/2D2D2D?text=SWF" alt="Sovereign Wealth Fund" class="h-12 opacity-70 hover:opacity-100 transition mx-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="py-24 bg-dark parallax" style="background-image: url('https://images.unsplash.com/photo-1623874106686-5be5d9fef0c9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <div class="lg:col-span-5 mb-12 lg:mb-0 fade-in">
+                    <div class="relative">
+                        <div class="relative rounded-2xl overflow-hidden shadow-2xl h-96">
+                            <img src="https://images.unsplash.com/photo-1623874106686-5be5d9fef0c9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="About Gul and Metzen" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 bg-jet p-6 rounded-xl shadow-xl w-2/3 border border-industrial/10">
+                            <div class="flex items-center">
+                                <div class="bg-gold p-3 rounded-md mr-4">
+                                    <i class="fas fa-lightbulb text-jet text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-industrial">Since 2015</p>
+                                    <h3 class="text-lg font-bold text-white">Building Civilizational Infrastructure</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 fade-in delayed-1">
+                    <h2 class="text-3xl font-bold text-white mb-6 font-display">The GMS Difference</h2>
+                    <p class="text-lg text-industrial mb-6">
+                        As a multi-trillion dollar leader in advanced energy and autonomous systems, Gul and Metzen Solutions combines unparalleled expertise with groundbreaking innovation to deliver technologies that redefine industries and outlive generations.
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-jet p-6 rounded-lg shadow-sm border-l-4 border-gold border-industrial/10">
+                            <div class="flex items-start">
+                                <div class="bg-gold bg-opacity-10 p-2 rounded-md mr-4">
+                                    <i class="fas fa-bolt text-gold"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg mb-2 text-white">Visionary Founders</h3>
+                                    <p class="text-industrial">Industry pioneers with 50+ years combined at the forefront of energy and autonomy.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-jet p-6 rounded-lg shadow-sm border-l-4 border-electric border-industrial/10">
+                            <div class="flex items-start">
+                                <div class="bg-electric bg-opacity-10 p-2 rounded-md mr-4">
+                                    <i class="fas fa-globe text-electric"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg mb-2 text-white">Global Presence</h3>
+                                    <p class="text-industrial">Headquartered in New York with satellite operations across 47 countries.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-jet bg-gold hover:bg-opacity-90 transition-all gold-underline">
+                        Our Story & Leadership
+                        <i class="fas fa-chevron-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Divisions Section -->
+    <div class="py-24 bg-jet">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl font-bold text-white mb-4 font-display">Our Divisions</h2>
+                <p class="text-xl text-industrial max-w-3xl mx-auto">
+                    Specialized platforms delivering next-generation infrastructure and intelligence systems.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-dark p-8 tech-card rounded-xl fade-in">
+                    <div class="bg-gold bg-opacity-20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-solar-panel text-2xl text-gold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Energy Dominance</h3>
+                    <p class="text-industrial mb-6">
+                        Advanced solar fields, modular nuclear reactors, and grid innovation for sovereign-scale energy needs.
+                    </p>
+                    <a href="#" class="text-gold font-medium flex items-center gold-underline">
+                        Explore Energy
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-dark p-8 tech-card rounded-xl fade-in delayed-1">
+                    <div class="bg-electric bg-opacity-20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-space-shuttle text-2xl text-electric"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Aerospace & Autonomy</h3>
+                    <p class="text-industrial mb-6">
+                        AI-controlled aircraft and next-gen aviation systems for defense and commercial logistics.
+                    </p>
+                    <a href="#" class="text-electric font-medium flex items-center gold-underline">
+                        Explore Aerospace
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-dark p-8 tech-card rounded-xl fade-in delayed-2">
+                    <div class="bg-gold bg-opacity-20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-2xl text-gold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">AI & Systems Intelligence</h3>
+                    <p class="text-industrial mb-6">
+                        Real-time global analysis, predictive systems, and infrastructure AI for strategic advantage.
+                    </p>
+                    <a href="#" class="text-gold font-medium flex items-center gold-underline">
+                        Explore AI Systems
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-dark p-8 tech-card rounded-xl fade-in delayed-3">
+                    <div class="bg-electric bg-opacity-20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-handshake text-2xl text-electric"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Sovereign Innovation</h3>
+                    <p class="text-industrial mb-6">
+                        Government innovation deals, dual-use technologies, and economic diplomacy frameworks.
+                    </p>
+                    <a href="#" class="text-electric font-medium flex items-center gold-underline">
+                        Explore Partnerships
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="p-6 stat-card rounded-xl fade-in">
+                    <div class="text-5xl font-bold text-gold mb-2 font-display count-up" data-target="2.1">0</div>
+                    <div class="text-industrial uppercase tracking-wider text-sm">Trillion Capital Deployed</div>
+                </div>
+                <div class="p-6 stat-card rounded-xl fade-in delayed-1">
+                    <div class="text-5xl font-bold text-electric mb-2 font-display count-up" data-target="47">0</div>
+                    <div class="text-industrial uppercase tracking-wider text-sm">Countries of Operation</div>
+                </div>
+                <div class="p-6 stat-card rounded-xl fade-in delayed-2">
+                    <div class="text-5xl font-bold text-gold mb-2 font-display count-up" data-target="98">0</div>
+                    <div class="text-industrial uppercase tracking-wider text-sm">Client Retention Rate</div>
+                </div>
+                <div class="p-6 stat-card rounded-xl fade-in delayed-3">
+                    <div class="text-5xl font-bold text-electric mb-2 font-display count-up" data-target="120">0</div>
+                    <div class="text-industrial uppercase tracking-wider text-sm">Patents Held</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clients Section -->
+    <div class="py-24 bg-jet">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl font-bold text-white mb-4 font-display">Who We Serve</h2>
+                <p class="text-xl text-industrial max-w-3xl mx-auto">
+                    Partnering with institutions that shape global infrastructure and security.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-dark p-8 rounded-xl border border-industrial/10 fade-in">
+                    <div class="bg-gold bg-opacity-10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-landmark text-2xl text-gold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white text-center">Sovereign Wealth Funds</h3>
+                    <p class="text-industrial text-center">
+                        Strategic capital partners investing in next-generation infrastructure.
+                    </p>
+                </div>
+                
+                <div class="bg-dark p-8 rounded-xl border border-industrial/10 fade-in delayed-1">
+                    <div class="bg-electric bg-opacity-10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-university text-2xl text-electric"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white text-center">Ministries</h3>
+                    <p class="text-industrial text-center">
+                        Energy, AI, and Infrastructure ministries transforming national capabilities.
+                    </p>
+                </div>
+                
+                <div class="bg-dark p-8 rounded-xl border border-industrial/10 fade-in delayed-2">
+                    <div class="bg-gold bg-opacity-10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-shield-alt text-2xl text-gold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white text-center">Defense Agencies</h3>
+                    <p class="text-industrial text-center">
+                        National security organizations deploying autonomous systems.
+                    </p>
+                </div>
+                
+                <div class="bg-dark p-8 rounded-xl border border-industrial/10 fade-in delayed-3">
+                    <div class="bg-electric bg-opacity-10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-city text-2xl text-electric"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-white text-center">Infrastructure Consortiums</h3>
+                    <p class="text-industrial text-center">
+                        Mega-scale projects redefining urban and industrial landscapes.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why GMS Section -->
+    <div class="relative py-24 bg-dark overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('https://gulmetzen.com/images/pattern.png')] bg-repeat opacity-10"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <div class="lg:col-span-7 mb-12 lg:mb-0 fade-in">
+                    <h2 class="text-3xl font-bold text-white mb-6 font-display">Why GMS</h2>
+                    <p class="text-lg text-industrial mb-6">
+                        Our clients choose us because we don't just solve today's problems — we build ecosystems that outlive the next three generations. GMS doesn't iterate. We initiate revolutions.
+                    </p>
+                    <div class="space-y-6 mb-8">
+                        <div class="flex items-start">
+                            <div class="bg-gold p-2 rounded-md mr-4 mt-1">
+                                <i class="fas fa-check text-jet"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2 text-white">Multi-Generational Vision</h3>
+                                <p class="text-industrial">We engineer systems with 50+ year lifespans, not temporary fixes.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-gold p-2 rounded-md mr-4 mt-1">
+                                <i class="fas fa-check text-jet"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2 text-white">Sovereign-Scale Execution</h3>
+                                <p class="text-industrial">Operational capacity to transform national infrastructure.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-gold p-2 rounded-md mr-4 mt-1">
+                                <i class="fas fa-check text-jet"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg mb-2 text-white">Dual-Use Innovation</h3>
+                                <p class="text-industrial">Technologies that serve both commercial and defense applications.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 fade-in delayed-1">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl h-96">
+                        <video autoplay muted loop class="w-full h-full object-cover">
+                            <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-technology-background-1222-large.mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 bg-gradient-to-t from-jet to-transparent opacity-80"></div>
+                        <div class="absolute bottom-0 left-0 p-8">
+                            <h3 class="text-white text-xl font-bold">Where Vision Becomes Legacy</h3>
+                            <p class="text-industrial mt-2">See our technologies in action</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pressroom Section -->
+    <div class="py-24 bg-jet">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl font-bold text-white mb-4 font-display">Pressroom</h2>
+                <p class="text-xl text-industrial max-w-3xl mx-auto">
+                    Announcements and insights shaping the future of infrastructure.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-dark p-6 rounded-xl press-card fade-in">
+                    <span class="bg-gold text-jet text-xs px-3 py-1 rounded-full">Announcement</span>
+                    <h3 class="text-white text-lg font-bold mt-4 mb-2">GMS Secures $2.1T Sovereign Energy Contract</h3>
+                    <p class="text-industrial mb-4">Transformative deal to modernize national grid infrastructure across 12 countries.</p>
+                    <a href="#" class="text-gold font-medium flex items-center gold-underline">
+                        Read Release
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-dark p-6 rounded-xl press-card fade-in delayed-1">
+                    <span class="bg-electric text-jet text-xs px-3 py-1 rounded-full">Innovation</span>
+                    <h3 class="text-white text-lg font-bold mt-4 mb-2">Next-Gen Autonomous Fleet Unveiled</h3>
+                    <p class="text-industrial mb-4">AI-powered aerospace systems redefine logistics and defense capabilities.</p>
+                    <a href="#" class="text-electric font-medium flex items-center gold-underline">
+                        Read Report
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-dark p-6 rounded-xl press-card fade-in delayed-2">
+                    <span class="bg-gold text-jet text-xs px-3 py-1 rounded-full">Partnership</span>
+                    <h3 class="text-white text-lg font-bold mt-4 mb-2">Strategic Alliance with Global SWF</h3>
+                    <p class="text-industrial mb-4">$750B commitment to accelerate energy transition technologies.</p>
+                    <a href="#" class="text-gold font-medium flex items-center gold-underline">
+                        Read Details
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 fade-in delayed-3">
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-gold text-base font-medium rounded-md text-gold bg-transparent hover:bg-gold hover:bg-opacity-10 transition-all">
+                    View All Announcements
+                    <i class="fas fa-chevron-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Investor Login -->
+    <div class="py-16 bg-dark border-t border-b border-industrial/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <div class="lg:col-span-5 mb-8 lg:mb-0 fade-in">
+                    <div class="investor-login p-8 rounded-xl h-full flex flex-col justify-center">
+                        <h3 class="text-xl font-bold text-white mb-4">Secure Investor Portal</h3>
+                        <p class="text-industrial mb-6">Access proprietary research, deal flow, and executive briefings.</p>
+                        <div class="space-y-4">
+                            <input type="text" placeholder="Username" class="w-full px-4 py-3 rounded-md bg-jet border border-industrial/10 text-white placeholder-industrial/50">
+                            <input type="password" placeholder="Password" class="w-full px-4 py-3 rounded-md bg-jet border border-industrial/10 text-white placeholder-industrial/50">
+                            <button class="w-full px-4 py-3 rounded-md bg-gold text-jet font-medium hover:bg-opacity-90 transition-all">
+                                Login <i class="fas fa-lock ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 fade-in delayed-1">
+                    <h2 class="text-3xl font-bold text-white mb-6 font-display">Global Operations Map</h2>
+                    <div class="relative rounded-xl overflow-hidden h-96 bg-industrial/10 border border-industrial/10">
+                        <!-- Interactive map placeholder -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-globe-americas text-6xl text-industrial/20"></i>
+                        </div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <p class="text-industrial">Explore our 47-country operational footprint</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="relative py-32 bg-jet overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('https://gulmetzen.com/images/pattern.png')] bg-repeat opacity-10"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-bold text-white mb-6 font-display fade-in">SHAPE THE FUTURE WITH US</h2>
+                <p class="text-2xl text-gold max-w-3xl mx-auto mb-8 fade-in delayed-1">
+                    Partner with GMS — where vision becomes legacy.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-6 fade-in delayed-2">
+                    <a href="#" class="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-jet bg-gold hover:bg-opacity-90 transition-all glow-effect">
+                        Schedule Executive Briefing
+                        <i class="fas fa-calendar-alt ml-3"></i>
+                    </a>
+                    <a href="#" class="inline-flex items-center px-8 py-4 border border-gold text-base font-medium rounded-md text-gold bg-transparent hover:bg-gold hover:bg-opacity-10 transition-all">
+                        Contact Leadership
+                        <i class="fas fa-headset ml-3"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-industrial">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-12">
+                <div class="col-span-2">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gold p-2 rounded-md mr-3">
+                            <i class="fas fa-atom text-jet text-2xl"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white font-display">GUL AND METZEN</span>
+                        <span class="text-xs text-industrial ml-1">SOLUTIONS</span>
+                    </div>
+                    <p class="text-industrial mb-6">
+                        Pioneering the future of energy and autonomous technologies through relentless innovation and strategic vision.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-industrial hover:text-gold transition-all">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-industrial hover:text-gold transition-all">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-industrial hover:text-gold transition-all">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="text-industrial hover:text-gold transition-all">
+                            <i class="fas fa-rss"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Divisions</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">Energy Dominance</a></li>
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">Aerospace & Autonomy</a></li>
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">AI & Systems</a></li>
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">Sovereign Innovation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">About Us</a></li>
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">Leadership</a></li>
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">Careers</a></li>
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">Pressroom</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Resources</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">Insights</a></li>
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">Case Studies</a></li>
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">White Papers</a></li>
+                        <li><a href="#" class="text-industrial hover:text-gold transition-all gold-underline">Webinars</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-industrial/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-industrial/50 text-sm mb-4 md:mb-0">
+                    &copy; 2023 Gul and Metzen Solutions. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-industrial/50 hover:text-gold text-sm gold-underline">Privacy Policy</a>
+                    <a href="#" class="text-industrial/50 hover:text-gold text-sm gold-underline">Terms of Service</a>
+                    <a href="#" class="text-industrial/50 hover:text-gold text-sm gold-underline">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation trigger on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 1s ease-in-out forwards';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Marquee animation
+            const marquee = document.querySelector('.animate-marquee');
+            if (marquee) {
+                marquee.innerHTML += marquee.innerHTML;
+                
+                let speed = 1;
+                let position = 0;
+                
+                function animate() {
+                    position -= speed;
+                    if (position <= -marquee.scrollWidth/2) {
+                        position = 0;
+                    }
+                    marquee.style.transform = `translateX(${position}px)`;
+                    requestAnimationFrame(animate);
+                }
+                
+                animate();
+            }
+            
+            // Counter animation
+            const counters = document.querySelectorAll('.count-up');
+            const speed = 200;
+            
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 1);
+                } else {
+                    counter.innerText = target;
+                }
+                
+                function updateCount() {
+                    const count = +counter.innerText;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                }
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuButton = document.querySelector('.md\\:hidden button');
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function() {
+                    alert('Mobile menu would open here in a full implementation');
+                });
+            }
+            
+            // Parallax effect
+            window.addEventListener('scroll', function() {
+                const parallax = document.querySelector('.parallax');
+                if (parallax) {
+                    let scrollPosition = window.pageYOffset;
+                    parallax.style.backgroundPositionY = scrollPosition * 0.7 + 'px';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
