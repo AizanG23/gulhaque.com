@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gul and Metzen Solutions | Our Divisions</title>
-    <link rel="icon" href="https://imgur.com/FxVR4xW" type="image/png">
+    <link rel="icon" href="https://i.imgur.com/fUreDP2.png" type="image/png"> <!-- Favicon (might still appear dark depending on browser) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -73,6 +73,10 @@
             outline: none;
             border-color: #00b4d8;
         }
+        /* Custom CSS to invert logo color for visibility on dark backgrounds */
+        .logo-filter-invert {
+            filter: invert(100%);
+        }
     </style>
 </head>
 <body class="bg-gms-blue text-white font-roboto">
@@ -82,14 +86,14 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <!-- Logo -->
-                        <img src="https://imgur.com/ZKdHWza.png" alt="Gul Metzen Solutions Logo" class="h-12 w-auto">
+                        <!-- Logo (Nav) - Increased size and inverted filter added -->
+                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 w-auto logo-filter-invert"> 
                         <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline">GUL METZEN SOLUTIONS</span>
                         <span class="ml-3 text-lg font-bold font-montserrat sm:hidden">GMS</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">HOME</a>
+                    <a href="/" id="home-nav-link" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">HOME</a>
                     <a href="/about/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">ABOUT</a>
                     <a href="/divisions/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">DIVISIONS</a>
                     <a href="/clients/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CLIENTS</a>
@@ -107,7 +111,7 @@
         </div>
         <div id="mobile-menu" class="hidden md:hidden bg-gms-gray">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">HOME</a>
+                <a href="/" id="home-nav-link-mobile" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">HOME</a>
                 <a href="/about/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">ABOUT</a>
                 <a href="/divisions/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">DIVISIONS</a>
                 <a href="/clients/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">CLIENTS</a>
@@ -175,7 +179,7 @@
                             <li class="flex items-start">
                                 <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
                                 <span>Advanced surveillance systems</span>
-                            </li>
+                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
                                 <span>Disaster response coordination</span>
@@ -263,7 +267,8 @@
     <footer class="bg-gms-gray py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <div class="mb-8">
-                <img src="https://imgur.com/ZKdHWza.png" alt="Gul Metzen Solutions Logo" class="h-10 mx-auto mb-4">
+                <!-- Logo (Footer) - Increased size and inverted filter added -->
+                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 mx-auto mb-4 logo-filter-invert"> 
                 <p class="text-lg font-bold font-montserrat">GUL METZEN SOLUTIONS</p>
             </div>
             <div class="flex justify-center space-x-6 mb-8">
@@ -297,6 +302,25 @@
                 });
             }
 
+            // Prevent refresh on Home button if already at root
+            const homeNavLink = document.getElementById('home-nav-link');
+            const homeNavLinkMobile = document.getElementById('home-nav-link-mobile');
+            
+            function handleHomeClick(e) {
+                // Check if current path is root or /index.html (common for gh-pages)
+                const currentPath = window.location.pathname;
+                if (currentPath === '/' || currentPath === '/index.html' || currentPath === '/home/') {
+                    e.preventDefault(); // Stop the default link behavior (refresh)
+                }
+            }
+
+            if (homeNavLink) {
+                homeNavLink.addEventListener('click', handleHomeClick);
+            }
+            if (homeNavLinkMobile) {
+                homeNavLinkMobile.addEventListener('click', handleHomeClick);
+            }
+
             // Contact form submission (only if this page had a contact form)
             const contactForm = document.getElementById('contact-form');
             if(contactForm) {
@@ -326,4 +350,3 @@
     </script>
 </body>
 </html>
-
