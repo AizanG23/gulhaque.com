@@ -85,13 +85,15 @@
         }
         
         /* IMPORTANT: Custom CSS for Main Logo to ensure visibility and size */
+        /* Changed background-color to yellow for debugging if the image URL is not loading. */
+        /* Removed invert filter to see if the original black logo appears. */
         .main-logo-img {
-            filter: invert(100%) !important; /* Force invert filter */
-            height: 4rem; /* h-16 equivalent */
-            width: 4rem;  /* Ensure it takes up space, as the GMS logo is square */
+            /* filter: invert(100%) !important; Removed for testing if original black logo appears */
+            height: 80px; /* Increased size (h-20 equivalent) */
+            width: 80px;  /* Increased size (w-20 equivalent) */
             display: block; /* Ensure it's a block element */
-            /* Uncomment the line below for debugging if still invisible */
-            /* background-color: red; */ 
+            background-color: yellow; /* TEMPORARY: For debugging logo visibility. Should see yellow if image element is present. */
+            object-fit: contain; /* Ensure the image fits within the bounds */
         }
 
         /* Mobile Menu Animation */
@@ -116,8 +118,10 @@
                     <div class="flex-shrink-0 flex items-center">
                         <!-- Main Site Logo - Using new class for stronger CSS -->
                         <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="main-logo-img"> 
-                        <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline">GUL METZEN SOLUTIONS</span>
-                        <span class="ml-3 text-lg font-bold font-montserrat sm:hidden">GMS</span>
+                        <!-- Ensured GUL METZEN SOLUTIONS text is white -->
+                        <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline text-white !important">GUL METZEN SOLUTIONS</span>
+                        <!-- Ensured GMS text is white -->
+                        <span class="ml-3 text-lg font-bold font-montserrat sm:hidden text-white !important">GMS</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
