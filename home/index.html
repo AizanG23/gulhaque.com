@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gul and Metzen Solutions | Pioneering the Future</title>
-    <link rel="icon" href="https://i.imgur.com/fUreDP2.png" type="image/png">
+    <link rel="icon" href="https://i.imgur.com/fUreDP2.png" type="image/png"> <!-- Favicon will still use URL, often loads fine -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -84,16 +84,21 @@
             border-color: #00b4d8;
         }
         
-        /* IMPORTANT: Custom CSS for Main Logo to ensure visibility and size */
-        /* Changed background-color to yellow for debugging if the image URL is not loading. */
-        /* Removed invert filter to see if the original black logo appears. */
-        .main-logo-img {
-            /* filter: invert(100%) !important; Removed for testing if original black logo appears */
-            height: 80px; /* Increased size (h-20 equivalent) */
-            width: 80px;  /* Increased size (w-20 equivalent) */
-            display: block; /* Ensure it's a block element */
-            background-color: yellow; /* TEMPORARY: For debugging logo visibility. Should see yellow if image element is present. */
-            object-fit: contain; /* Ensure the image fits within the bounds */
+        /* Custom CSS for Main GMS Logo (will be inverted to white) */
+        .gms-logo {
+            filter: invert(100%); /* Make the black logo white */
+            height: 64px; /* Adjust size as needed */
+            width: auto; /* Maintain aspect ratio */
+            display: block; /* Ensure proper rendering */
+        }
+
+        /* Styling for Project Swarm Image (no invert filter) */
+        .project-swarm-img {
+            max-height: 400px; /* Limit height */
+            width: 100%; /* Ensure responsiveness */
+            object-fit: contain; /* Ensure the image fits within the bounds without cropping */
+            border-radius: 0.75rem; /* rounded-xl equivalent */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg equivalent */
         }
 
         /* Mobile Menu Animation */
@@ -116,12 +121,10 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <!-- Main Site Logo - Using new class for stronger CSS -->
-                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="main-logo-img"> 
-                        <!-- Ensured GUL METZEN SOLUTIONS text is white -->
-                        <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline text-white !important">GUL METZEN SOLUTIONS</span>
-                        <!-- Ensured GMS text is white -->
-                        <span class="ml-3 text-lg font-bold font-montserrat sm:hidden text-white !important">GMS</span>
+                        <!-- Main Site Logo - NOW USING BASE64 PLACEHOLDER -->
+                        <img src="<!-- BASE64_GMS_LOGO_HERE -->" alt="Gul Metzen Solutions Logo" class="gms-logo"> 
+                        <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline text-white">GUL METZEN SOLUTIONS</span>
+                        <span class="ml-3 text-lg font-bold font-montserrat sm:hidden text-white">GMS</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
@@ -144,9 +147,9 @@
         </div>
         <div id="mobile-menu" class="md:hidden bg-gms-gray">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <!-- Mobile Menu Logo -->
+                <!-- Mobile Menu Logo - NOW USING BASE64 PLACEHOLDER -->
                 <div class="flex items-center justify-center py-4">
-                    <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="main-logo-img">
+                    <img src="<!-- BASE64_GMS_LOGO_HERE -->" alt="Gul Metzen Solutions Logo" class="gms-logo">
                 </div>
                 <!-- Mobile Navigation Links with Hover Effect -->
                 <a href="/" id="home-nav-link-mobile" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
@@ -210,13 +213,13 @@
             </div>
         </section>
 
-        <!-- Project Swarm Section (Updated with new image) -->
+        <!-- Project Swarm Section (Updated with Base64 Placeholder) -->
         <section class="py-20 fade-in-section">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row items-center">
                     <div class="md:w-1/2 mb-10 md:mb-0 flex items-center justify-center">
-                        <!-- Project Swarm Image -->
-                        <img src="https://i.imgur.com/xjHUPvQ.png" alt="Project Swarm Logo" class="max-h-full max-w-full object-contain rounded-xl shadow-lg">
+                        <!-- Project Swarm Image - NOW USING BASE64 PLACEHOLDER -->
+                        <img src="<!-- BASE64_PROJECT_SWARM_LOGO_HERE -->" alt="Project Swarm Logo" class="project-swarm-img">
                     </div>
                     <div class="md:w-1/2 md:pl-16">
                         <h2 class="text-3xl font-bold mb-6 font-montserrat">PROJECT SWARM</h2>
@@ -260,8 +263,8 @@
     <footer class="bg-gms-gray py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <div class="mb-8">
-                <!-- Footer Logo - Using new class for stronger CSS -->
-                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="main-logo-img">
+                <!-- Footer Logo - NOW USING BASE64 PLACEHOLDER -->
+                <img src="<!-- BASE64_GMS_LOGO_HERE -->" alt="Gul Metzen Solutions Logo" class="gms-logo">
                 <p class="text-lg font-bold font-montserrat">GUL METZEN SOLUTIONS</p>
             </div>
             <div class="flex justify-center space-x-6 mb-8">
