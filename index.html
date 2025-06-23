@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -76,23 +76,25 @@
     </style>
 </head>
 <body class="bg-gms-blue text-white font-roboto">
+    <!-- Navigation -->
     <nav class="fixed w-full bg-gms-gray bg-opacity-90 backdrop-blur-sm z-50 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
+                        <!-- Logo -->
                         <img src="https://imgur.com/ZKdHWza.png" alt="Gul Metzen Solutions Logo" class="h-12 w-auto">
                         <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline">GUL METZEN SOLUTIONS</span>
                         <span class="ml-3 text-lg font-bold font-montserrat sm:hidden">GMS</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">HOME</a>
-                    <a href="about.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">ABOUT</a>
-                    <a href="divisions.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">DIVISIONS</a>
-                    <a href="clients.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CLIENTS</a>
-                    <a href="pressroom.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">PRESSROOM</a>
-                    <a href="contact.html" class="nav-link text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CONTACT</a>
+                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">HOME</a>
+                    <a href="/about/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">ABOUT</a>
+                    <a href="/divisions/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">DIVISIONS</a>
+                    <a href="/clients/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CLIENTS</a>
+                    <a href="/pressroom/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">PRESSROOM</a>
+                    <a href="/contact/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CONTACT</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
@@ -105,109 +107,113 @@
         </div>
         <div id="mobile-menu" class="hidden md:hidden bg-gms-gray">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="nav-link-mobile text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">HOME</a>
-                <a href="about.html" class="nav-link-mobile text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">ABOUT</a>
-                <a href="divisions.html" class="nav-link-mobile text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">DIVISIONS</a>
-                <a href="clients.html" class="nav-link-mobile text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">CLIENTS</a>
-                <a href="pressroom.html" class="nav-link-mobile text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">PRESSROOM</a>
-                <a href="contact.html" class="nav-link-mobile text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">CONTACT</a>
+                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">HOME</a>
+                <a href="/about/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">ABOUT</a>
+                <a href="/divisions/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">DIVISIONS</a>
+                <a href="/clients/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">CLIENTS</a>
+                <a href="/pressroom/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">PRESSROOM</a>
+                <a href="/contact/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">CONTACT</a>
             </div>
         </div>
     </nav>
 
-    <div id="page-container" class="pt-20 min-h-screen">
-        <div id="home-page" class="page-transition">
-            <section class="hero-bg py-32">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center">
-                        <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 fade-in">
-                            WE DON'T POWER THE FUTURE, <span class="text-gms-accent">WE OWN IT</span>
-                        </h1>
-                        <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 fade-in">
-                            Pioneering the future of energy and autonomous technologies through relentless innovation and strategic vision.
-                        </p>
-                        <div class="mt-10 fade-in">
-                            <a href="divisions.html" class="nav-link bg-gms-accent hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
-                                EXPLORE OUR DIVISIONS
-                            </a>
-                        </div>
+    <!-- Page Content for Home -->
+    <div class="pt-20 min-h-screen">
+        <!-- Hero Section -->
+        <section class="hero-bg py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 fade-in">
+                        WE DON'T POWER THE FUTURE, <span class="text-gms-accent">WE OWN IT</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 fade-in">
+                        Pioneering the future of energy and autonomous technologies through relentless innovation and strategic vision.
+                    </p>
+                    <div class="mt-10 fade-in">
+                        <a href="/divisions/" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
+                            EXPLORE OUR DIVISIONS
+                        </a>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="py-20 bg-gms-gray">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 class="text-3xl font-bold text-center mb-16 font-montserrat">GLOBAL LEADERS IN INNOVATION</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center fade-in">
-                            <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6">
-                                <i class="fas fa-atom text-3xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-4">Nuclear Energy</h3>
-                            <p>Pioneering Small Modular Reactor (SMR) grids with AI integration for safer, more efficient, and sustainable nuclear energy solutions.</p>
+        <!-- Highlights Section -->
+        <section class="py-20 bg-gms-gray">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 font-montserrat">GLOBAL LEADERS IN INNOVATION</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center fade-in">
+                        <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-atom text-3xl"></i>
                         </div>
-                        <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center fade-in">
-                            <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6">
-                                <i class="fas fa-solar-panel text-3xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-4">Solar Energy</h3>
-                            <p>Smart AI-integrated adjustable solar panel systems that optimize sun exposure and can be deployed in any location.</p>
+                        <h3 class="text-xl font-bold mb-4">Nuclear Energy</h3>
+                        <p>Pioneering Small Modular Reactor (SMR) grids with AI integration for safer, more efficient, and sustainable nuclear energy solutions.</p>
+                    </div>
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center fade-in">
+                        <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-solar-panel text-3xl"></i>
                         </div>
-                        <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center fade-in">
-                            <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6">
-                                <i class="fas fa-drone text-3xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-4">Autonomous Systems</h3>
-                            <p>Our Hive drone network serves first responders, border security, emergency disaster response, fire/wildfire combat, national defense, and anti-drone operations.</p>
+                        <h3 class="text-xl font-bold mb-4">Solar Energy</h3>
+                        <p>Smart AI-integrated adjustable solar panel systems that optimize sun exposure and can be deployed in any location.</p>
+                    </div>
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center fade-in">
+                        <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-drone text-3xl"></i>
                         </div>
+                        <h3 class="text-xl font-bold mb-4">Autonomous Systems</h3>
+                        <p>Our Hive drone network serves first responders, border security, emergency disaster response, fire/wildfire combat, national defense, and anti-drone operations.</p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="py-20">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
-                            <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96"></div>
-                        </div>
-                        <div class="md:w-1/2 md:pl-16 fade-in">
-                            <h2 class="text-3xl font-bold mb-6 font-montserrat">PROJECT SWARM</h2>
-                            <p class="mb-6 text-lg">Our flagship initiative revolutionizing autonomous systems for national security and emergency response.</p>
-                            <p class="mb-8">Project Swarm integrates advanced AI with drone technology to create coordinated response systems capable of operating in the most challenging environments. With real-time data processing and machine learning capabilities, our systems provide unprecedented situational awareness and response coordination.</p>
-                            <a href="divisions.html" class="text-gms-accent font-bold hover:text-blue-400 flex items-center">
-                                Learn more about Aerospace & Autonomy
-                                <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
+        <!-- Project Swarm -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                        <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96"></div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-16 fade-in">
+                        <h2 class="text-3xl font-bold mb-6 font-montserrat">PROJECT SWARM</h2>
+                        <p class="mb-6 text-lg">Our flagship initiative revolutionizing autonomous systems for national security and emergency response.</p>
+                        <p class="mb-8">Project Swarm integrates advanced AI with drone technology to create coordinated response systems capable of operating in the most challenging environments. With real-time data processing and machine learning capabilities, our systems provide unprecedented situational awareness and response coordination.</p>
+                        <a href="/divisions/" class="text-gms-accent font-bold hover:text-blue-400 flex items-center">
+                            Learn more about Aerospace & Autonomy
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="py-20 bg-gms-gray">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                        <div class="fade-in">
-                            <div class="text-5xl font-bold text-gms-accent mb-2">15+</div>
-                            <div class="text-lg">Years of Innovation</div>
-                        </div>
-                        <div class="fade-in">
-                            <div class="text-5xl font-bold text-gms-accent mb-2">$25B+</div>
-                            <div class="text-lg">Projects Raised</div>
-                        </div>
-                        <div class="fade-in">
-                            <div class="text-5xl font-bold text-gms-accent mb-2">100%</div>
-                            <div class="text-lg">US Made</div>
-                        </div>
-                        <div class="fade-in">
-                            <div class="text-5xl font-bold text-gms-accent mb-2">7+</div>
-                            <div class="text-lg">Countries Served</div>
-                        </div>
+        <!-- Stats Section -->
+        <section class="py-20 bg-gms-gray">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="fade-in">
+                        <div class="text-5xl font-bold text-gms-accent mb-2">15+</div>
+                        <div class="text-lg">Years of Innovation</div>
+                    </div>
+                    <div class="fade-in">
+                        <div class="text-5xl font-bold text-gms-accent mb-2">$25B+</div>
+                        <div class="text-lg">Projects Raised</div>
+                    </div>
+                    <div class="fade-in">
+                        <div class="text-5xl font-bold text-gms-accent mb-2">100%</div>
+                        <div class="text-lg">US Made</div>
+                    </div>
+                    <div class="fade-in">
+                        <div class="text-5xl font-bold text-gms-accent mb-2">7+</div>
+                        <div class="text-lg">Countries Served</div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
 
+    <!-- Footer -->
     <footer class="bg-gms-gray py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <div class="mb-8">
@@ -245,16 +251,17 @@
                 });
             }
 
-            // Contact form submission
+            // Contact form submission (only if this page had a contact form)
             const contactForm = document.getElementById('contact-form');
             if(contactForm) {
                 contactForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    alert('Thank you for your message. We will contact you shortly.');
+                    // In a real application, you would send this form data to a server
+                    alert('Thank you for your message. We will contact you shortly.'); // Consider replacing alert() with a custom modal/message box
                     contactForm.reset();
                 });
             }
-
+            
             // Add fade-in animation to elements when they come into view
             const fadeElements = document.querySelectorAll('.fade-in');
             
