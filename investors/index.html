@@ -87,6 +87,28 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #818cf8;
         }
+
+        /* Shake animation for login error */
+        .animate-shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+        @keyframes shake {
+            10%, 90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+            20%, 80% {
+                transform: translate3d(2px, 0, 0);
+            }
+            30%, 50%, 70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+            40%, 60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen overflow-x-hidden">
@@ -95,13 +117,9 @@
         <div id="login-page" class="min-h-screen flex items-center justify-center px-4 login-container fade-in">
             <div class="w-full max-w-md p-8 rounded-lg bg-gray-900 border border-gray-800 shadow-2xl transform transition-all duration-500 hover:scale-[1.01] hover:shadow-purple-900/20">
                 <div class="text-center mb-10">
-                    <div class="flex justify-center mb-6">
-                        <div class="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center border-2 border-purple-600 glow">
-                            <i class="fas fa-lock text-2xl text-purple-500"></i>
-                        </div>
-                    </div>
                     <h1 class="text-3xl font-bold text-gray-100 mb-2">Investor Portal</h1>
-                    <p class="text-gray-400">Access your investment dashboard</p>
+                    <!-- Changed text from "investment" to "Investor" -->
+                    <p class="text-gray-400">Access Your Investor Dashboard</p>
                 </div>
                 
                 <form id="login-form" class="space-y-6">
@@ -129,15 +147,7 @@
                         </div>
                     </div>
                     
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="remember" type="checkbox" class="w-4 h-4 rounded bg-gray-800 border-gray-600 text-purple-600 focus:ring-purple-500">
-                            </div>
-                            <label for="remember" class="ml-2 text-sm text-gray-400">Remember me</label>
-                        </div>
-                        <a href="#" class="text-sm text-purple-400 hover:text-purple-300 transition-colors">Forgot password?</a>
-                    </div>
+                    <!-- Removed "Remember me" and "Forgot password?" sections -->
                     
                     <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium rounded-lg py-2.5 px-5 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
                         <i class="fas fa-sign-in-alt"></i>
@@ -147,9 +157,7 @@
                     <div id="login-error" class="hidden bg-red-900/50 border border-red-800 text-red-200 px-4 py-3 rounded-lg text-sm"></div>
                 </form>
                 
-                <div class="mt-8 text-center text-gray-500 text-sm">
-                    <p>© 2023 GULHAQUE.com. All rights reserved.</p>
-                </div>
+                <!-- Removed copyright text -->
             </div>
             
             <div class="absolute bottom-4 left-0 right-0 text-center text-gray-600 text-sm">
@@ -167,7 +175,7 @@
                             <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
                                 <i class="fas fa-user text-white"></i>
                             </div>
-                            <span class="text-white font-medium">Investor</span>
+                            <span class="text-white font-medium">Meta</span>
                         </div>
                         <button id="logout-btn" class="text-gray-400 hover:text-purple-400 transition-colors">
                             <i class="fas fa-sign-out-alt"></i>
@@ -217,15 +225,11 @@
                         <div class="flex justify-between items-center">
                             <h1 class="text-xl font-bold text-white">AI Technology Demos</h1>
                             <div class="flex items-center space-x-4">
-                                <div class="relative">
-                                    <i class="fas fa-bell text-gray-400 hover:text-purple-400 transition-colors cursor-pointer"></i>
-                                    <span class="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
-                                </div>
                                 <div class="flex items-center space-x-2">
                                     <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center">
                                         <i class="fas fa-user text-gray-300"></i>
                                     </div>
-                                    <span class="text-gray-300 text-sm hidden md:inline">Investor</span>
+                                    <span class="text-gray-300 text-sm hidden md:inline">Meta</span>
                                 </div>
                             </div>
                         </div>
@@ -250,7 +254,7 @@
                             
                             <!-- Tab Content -->
                             <div class="p-6">
-                                <!-- Reactor AI Content -->
+                                <!-- Reactor AI Content (Updated with ARCOS 1 data) -->
                                 <div id="reactor-content" class="tab-content active">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
@@ -258,7 +262,7 @@
                                             <div class="h-64 bg-gray-800 rounded-lg flex items-center justify-center mb-4">
                                                 <div class="text-center">
                                                     <i class="fas fa-atom text-5xl text-purple-500 mb-3"></i>
-                                                    <p class="text-gray-400">AI-powered nuclear reactor simulation</p>
+                                                    <p class="text-gray-400">AI-powered small modular reactor (SMR) simulation</p>
                                                 </div>
                                             </div>
                                             <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-colors">
@@ -266,33 +270,45 @@
                                             </button>
                                         </div>
                                         <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
-                                            <h3 class="text-lg font-semibold text-white mb-4">Performance Metrics</h3>
+                                            <h3 class="text-lg font-semibold text-white mb-4">Performance Metrics (ARCOS 1 Reactor)</h3>
                                             <div class="space-y-4">
                                                 <div>
                                                     <div class="flex justify-between mb-1">
-                                                        <span class="text-sm font-medium text-gray-300">Efficiency</span>
-                                                        <span class="text-sm font-medium text-purple-400">78%</span>
-                                                    </div>
-                                                    <div class="w-full bg-gray-700 rounded-full h-2">
-                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 78%"></div>
+                                                        <span class="text-sm font-medium text-gray-300">Reactor Type</span>
+                                                        <span class="text-sm font-medium text-purple-400">Integral PWR Hybrid</span>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div class="flex justify-between mb-1">
-                                                        <span class="text-sm font-medium text-gray-300">Safety Score</span>
-                                                        <span class="text-sm font-medium text-purple-400">94%</span>
-                                                    </div>
-                                                    <div class="w-full bg-gray-700 rounded-full h-2">
-                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 94%"></div>
+                                                        <span class="text-sm font-medium text-gray-300">Core Pressure</span>
+                                                        <span class="text-sm font-medium text-purple-400">15.5 MPa (2,250 psi)</span>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div class="flex justify-between mb-1">
-                                                        <span class="text-sm font-medium text-gray-300">Energy Output</span>
-                                                        <span class="text-sm font-medium text-purple-400">2.4 GW</span>
+                                                        <span class="text-sm font-medium text-gray-300">Design Lifetime</span>
+                                                        <span class="text-sm font-medium text-purple-400">60 Years</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mb-1">
+                                                        <span class="text-sm font-medium text-gray-300">Fuel Type</span>
+                                                        <span class="text-sm font-medium text-purple-400">HALEU (5-19.75% U-235)</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mb-1">
+                                                        <span class="text-sm font-medium text-gray-300">Thermal Efficiency</span>
+                                                        <span class="text-sm font-medium text-purple-400">33-36%</span>
                                                     </div>
                                                     <div class="w-full bg-gray-700 rounded-full h-2">
-                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 80%"></div>
+                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 35%"></div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mb-1">
+                                                        <span class="text-sm font-medium text-gray-300">Core Refueling Cycle</span>
+                                                        <span class="text-sm font-medium text-purple-400">10 Years</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -300,7 +316,7 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Panel AI Content -->
+                                <!-- Panel AI Content (Updated with Qadira Solar Array System data) -->
                                 <div id="panel-content" class="tab-content hidden">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
@@ -316,33 +332,45 @@
                                             </button>
                                         </div>
                                         <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
-                                            <h3 class="text-lg font-semibold text-white mb-4">Performance Metrics</h3>
+                                            <h3 class="text-lg font-semibold text-white mb-4">Performance Metrics (Qadira Solar Array)</h3>
                                             <div class="space-y-4">
                                                 <div>
                                                     <div class="flex justify-between mb-1">
-                                                        <span class="text-sm font-medium text-gray-300">Energy Production</span>
-                                                        <span class="text-sm font-medium text-purple-400">540 MW</span>
+                                                        <span class="text-sm font-medium text-gray-300">Peak Efficiency</span>
+                                                        <span class="text-sm font-medium text-purple-400">29.4%</span>
                                                     </div>
                                                     <div class="w-full bg-gray-700 rounded-full h-2">
-                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 72%"></div>
+                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 29.4%"></div>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div class="flex justify-between mb-1">
-                                                        <span class="text-sm font-medium text-gray-300">Panel Efficiency</span>
-                                                        <span class="text-sm font-medium text-purple-400">86%</span>
-                                                    </div>
-                                                    <div class="w-full bg-gray-700 rounded-full h-2">
-                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 86%"></div>
+                                                        <span class="text-sm font-medium text-gray-300">Energy Yield (per 6GW)</span>
+                                                        <span class="text-sm font-medium text-purple-400">~2.4 TWh/year</span>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div class="flex justify-between mb-1">
-                                                        <span class="text-sm font-medium text-gray-300">Cost Savings</span>
-                                                        <span class="text-sm font-medium text-purple-400">$38M/yr</span>
+                                                        <span class="text-sm font-medium text-gray-300">Battery Density</span>
+                                                        <span class="text-sm font-medium text-purple-400">~1,250 Wh/kg</span>
                                                     </div>
-                                                    <div class="w-full bg-gray-700 rounded-full h-2">
-                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 92%"></div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mb-1">
+                                                        <span class="text-sm font-medium text-gray-300">Battery Cycle Life</span>
+                                                        <span class="text-sm font-medium text-purple-400">20,000+ Cycles</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mb-1">
+                                                        <span class="text-sm font-medium text-gray-300">Self-Cleaning System</span>
+                                                        <span class="text-sm font-medium text-purple-400">Robotic Arms + AI</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mb-1">
+                                                        <span class="text-sm font-medium text-gray-300">Fire Resistance</span>
+                                                        <span class="text-sm font-medium text-purple-400">Up to 1,200°F</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -350,7 +378,7 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Drone AI Content -->
+                                <!-- Drone AI Content (Updated with Hive Drone Details & Breakdown data) -->
                                 <div id="drone-content" class="tab-content hidden">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
@@ -358,7 +386,7 @@
                                             <div class="h-64 bg-gray-800 rounded-lg flex items-center justify-center mb-4">
                                                 <div class="text-center">
                                                     <i class="fas fa-drone-alt text-5xl text-purple-500 mb-3"></i>
-                                                    <p class="text-gray-400">AI-controlled autonomous drone fleet</p>
+                                                    <p class="text-gray-400">AI-controlled autonomous drone fleet (PHW1 "Wasp")</p>
                                                 </div>
                                             </div>
                                             <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-colors">
@@ -366,33 +394,42 @@
                                             </button>
                                         </div>
                                         <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
-                                            <h3 class="text-lg font-semibold text-white mb-4">Performance Metrics</h3>
+                                            <h3 class="text-lg font-semibold text-white mb-4">Performance Metrics (PHW1 "Wasp" Drone)</h3>
                                             <div class="space-y-4">
                                                 <div>
                                                     <div class="flex justify-between mb-1">
-                                                        <span class="text-sm font-medium text-gray-300">Flight Time</span>
-                                                        <span class="text-sm font-medium text-purple-400">127 min</span>
-                                                    </div>
-                                                    <div class="w-full bg-gray-700 rounded-full h-2">
-                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 85%"></div>
+                                                        <span class="text-sm font-medium text-gray-300">Max Flight Time</span>
+                                                        <span class="text-sm font-medium text-purple-400">3.5-4 Hours</span>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div class="flex justify-between mb-1">
-                                                        <span class="text-sm font-medium text-gray-300">Autonomy Score</span>
-                                                        <span class="text-sm font-medium text-purple-400">98%</span>
-                                                    </div>
-                                                    <div class="w-full bg-gray-700 rounded-full h-2">
-                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 98%"></div>
+                                                        <span class="text-sm font-medium text-gray-300">Max Range</span>
+                                                        <span class="text-sm font-medium text-purple-400">70-100 km</span>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div class="flex justify-between mb-1">
-                                                        <span class="text-sm font-medium text-gray-300">Payload Capacity</span>
-                                                        <span class="text-sm font-medium text-purple-400">5.8 kg</span>
+                                                        <span class="text-sm font-medium text-gray-300">Top Speed</span>
+                                                        <span class="text-sm font-medium text-purple-400">120-150 km/h</span>
                                                     </div>
-                                                    <div class="w-full bg-gray-700 rounded-full h-2">
-                                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 65%"></div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mb-1">
+                                                        <span class="text-sm font-medium text-gray-300">Battery Charge Speed</span>
+                                                        <span class="text-sm font-medium text-purple-400">Under 20 Mins</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mb-1">
+                                                        <span class="text-sm font-medium text-gray-300">Production Capacity</span>
+                                                        <span class="text-sm font-medium text-purple-400">10,000+ units/month</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mb-1">
+                                                        <span class="text-sm font-medium text-gray-300">AI Threat Detection</span>
+                                                        <span class="text-sm font-medium text-purple-400">~0.2s per pattern</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -408,8 +445,8 @@
                                     <h3 class="text-sm font-medium text-gray-400">Total Investments</h3>
                                     <i class="fas fa-dollar-sign text-purple-500"></i>
                                 </div>
-                                <p class="text-2xl font-bold text-white">$28,421,500</p>
-                                <p class="text-xs text-green-500 mt-1"><i class="fas fa-arrow-up mr-1"></i>12.5% increase</p>
+                                <p class="text-2xl font-bold text-white">$0</p>
+                                <p class="text-xs text-gray-500 mt-1">No active investments</p>
                             </div>
                             <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
                                 <div class="flex items-center justify-between mb-2">
@@ -417,15 +454,38 @@
                                     <i class="fas fa-project-diagram text-purple-500"></i>
                                 </div>
                                 <p class="text-2xl font-bold text-white">3</p>
-                                <p class="text-xs text-green-500 mt-1"><i class="fas fa-check-circle mr-1"></i>All operational</p>
+                                <p class="text-xs text-yellow-500 mt-1"><i class="fas fa-cogs mr-1"></i>In Development</p>
                             </div>
                             <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
                                 <div class="flex items-center justify-between mb-2">
-                                    <h3 class="text-sm font-medium text-gray-400">Next ROI</h3>
-                                    <i class="fas fa-calendar-alt text-purple-500"></i>
+                                    <h3 class="text-sm font-medium text-gray-400">Projected Revenue</h3>
+                                    <i class="fas fa-chart-line text-purple-500"></i>
                                 </div>
-                                <p class="text-2xl font-bold text-white">Q2 2024</p>
-                                <p class="text-xs text-yellow-500 mt-1"><i class="fas fa-clock mr-1"></i>Estimated $4.2M</p>
+                                <p class="text-2xl font-bold text-white">$27B+</p>
+                                <p class="text-xs text-green-500 mt-1">5-Year Revenue Projection</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Activity / Transaction History (Cleared) -->
+                        <div class="bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-6 mb-6">
+                            <h2 class="text-xl font-bold text-white mb-4">Recent Activity</h2>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-700">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
+                                            <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Type</th>
+                                            <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Description</th>
+                                            <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Amount</th>
+                                            <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-700">
+                                        <tr>
+                                            <td colspan="5" class="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-400">No recent activity to display.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </main>
@@ -448,12 +508,12 @@
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
                 
-                // Hardcoded validation
-                if (username === 'investor' && password === 'gulhaque2023') {
+                // Updated login credentials
+                if (username === 'GulHaque' && password === 'GulHaque2024') {
                     // Successful login
                     loginError.classList.add('hidden');
                     
-                    // Add pulse animation to login page before switching
+                    // Add fade-out animation to login page before switching
                     loginPage.classList.add('opacity-0', 'transition-opacity', 'duration-500');
                     
                     setTimeout(() => {
@@ -464,7 +524,7 @@
                     
                 } else {
                     // Failed login
-                    loginError.textContent = 'Invalid credentials. Try investor/gulhaque2023';
+                    loginError.textContent = 'Invalid credentials. Try username: GulHaque, password: GulHaque2024';
                     loginError.classList.remove('hidden');
                     
                     // Shake animation for error
@@ -475,7 +535,7 @@
                 }
             });
             
-            // Tab switching functionality
+            // Tab switching functionality for AI demos
             const tabButtons = {
                 reactor: document.getElementById('reactor-tab'),
                 panel: document.getElementById('panel-tab'),
@@ -492,7 +552,7 @@
                 // Reset all tabs
                 Object.values(tabButtons).forEach(btn => {
                     btn.classList.remove('text-white', 'bg-purple-600');
-                    btn.classList.add('text-gray-400', 'hover:text-white');
+                    btn.classList.add('text-gray-400', 'hover:bg-gray-700', 'hover:text-white');
                 });
                 
                 Object.values(tabContents).forEach(content => {
@@ -501,8 +561,8 @@
                 });
                 
                 // Activate selected tab
-                tabButtons[activeTab].classList.add('text-white', 'bg-purple-600');
-                tabButtons[activeTab].classList.remove('text-gray-400', 'hover:text-white');
+                tabButtons[activeTab].classList.add('bg-purple-600', 'text-white');
+                tabButtons[activeTab].classList.remove('text-gray-400', 'hover:bg-gray-700', 'hover:text-white');
                 
                 tabContents[activeTab].classList.remove('hidden');
                 tabContents[activeTab].classList.add('active');
@@ -512,6 +572,9 @@
             tabButtons.panel.addEventListener('click', () => switchTab('panel'));
             tabButtons.drone.addEventListener('click', () => switchTab('drone'));
             
+            // Initial tab selection
+            switchTab('reactor');
+
             // Logout functionality
             const logoutBtn = document.getElementById('logout-btn');
             logoutBtn.addEventListener('click', function() {
@@ -523,7 +586,7 @@
                     loginPage.classList.remove('hidden');
                     loginPage.classList.add('fade-in');
                     
-                    // Reset form
+                    // Reset form fields and error message on logout
                     document.getElementById('username').value = '';
                     document.getElementById('password').value = '';
                     loginError.classList.add('hidden');
