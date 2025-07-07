@@ -1,1 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCOS-1 Interactive Demo</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Inlined style.css content */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
+        :root {
+            --primary-bg: #0A0D14;
+            --panel-bg: #141822;
+            --accent-gray: #33394D;
+            --primary-text: #F0F4FF;
+            --interactive-cyan: #00E5FF;
+            --warning-amber: #FFC107;
+            --critical-red: #F44336;
+            --financial-green: #28C76F;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--accent-gray);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 229, 255, 0.05);
+        }
+
+        .panel-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid var(--accent-gray);
+            color: #a0aec0; /* text-gray-400 */
+            text-transform: uppercase;
+        }
+
+        .text-interactive-cyan {
+            color: var(--interactive-cyan);
+        }
+
+        .bg-interactive-cyan {
+            background-color: var(--interactive-cyan);
+        }
+
+        .border-interactive-cyan {
+            border-color: var(--interactive-cyan);
+        }
+
+        .text-amber {
+            color: var(--warning-amber);
+        }
+
+        .text-critical-red {
+            color: var(--critical-red);
+        }
+
+        .bg-critical-red {
+            background-color: var(--critical-red);
+        }
+
+        .bg-warning-amber {
+            background-color: var(--warning-amber);
+        }
+
+        .range-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 16px;
+          height: 16px;
+          background: var(--interactive-cyan);
+          cursor: pointer;
+          border-radius: 50%;
+          border: 2px solid var(--primary-bg);
+        }
+
+        .range-slider::-moz-range-thumb {
+          width: 16px;
+          height: 16px;
+          background: var(--interactive-cyan);
+          cursor: pointer;
+          border-radius: 50%;
+          border: 2px solid var(--primary-bg);
+        }
+
+
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: var(--panel-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: var(--accent-gray);
+          border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: var(--interactive-cyan);
+        }
+
+        model-viewer {
+            background-color: transparent;
+        }
+
+        /* AI Assistant Chat Styles */
+        .chat-bubble {
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            max-width: 90%;
+            line-height: 1.5;
+            font-size: 0.875rem;
+            word-wrap: break-word;
+        }
+
+        .chat-bubble-user {
+            background-color: var(--interactive-cyan);
+            color: var(--primary-bg);
+            align-self: flex-end;
+            border-bottom-right-radius: 0.25rem;
+            font-weight: 500;
+        }
+
+        .chat-bubble-ai {
+            background-color: var(--accent-gray);
+            color: var(--primary-text);
+            align-self: flex-start;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        .chat-bubble-ai b {
+            color: var(--interactive-cyan);
+            font-weight: 600;
+        }
+
+        .chat-bubble-alert {
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 1px solid var(--critical-red);
+            color: var(--primary-text);
+            align-self: stretch;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            max-width: 100%;
+        }
+
+        .chat-bubble-alert b {
+            color: var(--critical-red);
+            font-weight: 700;
+        }
+
+        .emergency-button {
+            background-color: transparent;
+            border: 1px solid var(--warning-amber);
+            color: var(--warning-amber);
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .emergency-button:hover {
+            background-color: var(--warning-amber);
+            color: var(--primary-bg);
+        }
+
+        .emergency-button:disabled {
+            border-color: var(--accent-gray);
+            color: var(--accent-gray);
+            cursor: not-allowed;
+            background-color: transparent;
+        }
+
+        .alert-item {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background-color: var(--primary-bg);
+            border-left: 4px solid var(--critical-red);
+        }
+
+        .alert-item.warning {
+             border-left-color: var(--warning-amber);
+        }
+
+        .alert-item.system {
+             border-left-color: var(--interactive-cyan);
+        }
+
+        .alert-item strong {
+            font-weight: 700;
+        }
+
+        .alert-item.critical strong {
+            color: var(--critical-red);
+        }
+
+        .alert-item.warning strong {
+            color: var(--warning-amber);
+        }
+
+        .alert-item.system strong {
+            color: var(--interactive-cyan);
+        }
+
+        .alert-item p {
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        .alert-item .timestamp {
+            font-size: 0.75rem;
+            color: #a0aec0; /* text-gray-400 */
+            margin-bottom: 0.25rem;
+        }
+
+        /* Custom style for AI input placeholder and typed text */
+        #ai-input {
+            color: black; /* Ensures typed text is black */
+            background-color: white; /* Ensures background is white */
+        }
+        #ai-input::placeholder {
+            color: black; /* Ensures placeholder is black */
+            opacity: 1; /* Ensure full opacity for visibility */
+        }
+    </style>
+</head>
+<body class="bg-primary-bg text-primary-text font-sans antialiased">
+
+    <div id="app-container" class="flex flex-col h-screen p-2 md:p-4 gap-4">
+        
+        <!-- Global Header -->
+        <header class="bg-panel-bg border border-accent-gray rounded-lg px-4 py-2 flex justify-between items-center flex-shrink-0">
+            <div class="flex items-center gap-4">
+                <!-- Removed Logo entirely -->
+                <div id="mode-switcher" class="flex items-center bg-primary-bg rounded-md p-1">
+                    <button class="px-3 py-1 text-sm rounded-md bg-interactive-cyan text-primary-bg font-bold">AI Demo</button>
+                    <!-- Removed Investor Button -->
+                    <!-- Removed Regulator Button -->
+                </div>
+            </div>
+            <div class="flex items-center gap-6 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="text-gray-400">SIM TIME:</span>
+                    <span id="sim-time" class="font-mono">2025-07-06T19:49:08Z</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-gray-400">STATUS:</span>
+                    <span id="status-display" class="font-semibold text-gray-400 flex items-center gap-1">
+                        <span id="status-indicator" class="w-2 h-2 rounded-full bg-gray-500"></span>
+                        <span id="status-text">OFFLINE</span>
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="flex-grow grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-5 gap-4 min-h-0">
+
+            <!-- Left Pane: KPIs -->
+            <div class="lg:col-span-1 xl:col-span-1 flex flex-col gap-4 overflow-y-auto">
+                <!-- Control Panel -->
+                <div class="panel">
+                    <h2 class="panel-header">SIMULATION CONTROLS</h2>
+                    <div class="space-y-4 p-4">
+                        <div class="flex gap-2">
+                            <button id="start-stop-button" class="flex-grow bg-interactive-cyan/20 border border-interactive-cyan text-interactive-cyan font-bold py-2 rounded-md hover:bg-interactive-cyan/40 transition-colors duration-300">START SIMULATION</button>
+                            <button id="reset-simulation-button" class="flex-grow bg-gray-600/20 border border-gray-600 text-gray-400 font-bold py-2 rounded-md hover:bg-gray-600/40 transition-colors duration-300">RESET SIMULATION</button>
+                        </div>
+                         <div class="text-sm">
+                            <label for="reactors-slider" class="flex justify-between items-center mb-2 text-gray-400">
+                                <span>NUMBER OF REACTORS</span>
+                                <span id="reactors-count-display" class="font-mono text-white">1</span>
+                            </label>
+                            <input type="range" id="reactors-slider" min="1" max="10" value="1" class="w-full h-2 bg-accent-gray rounded-lg appearance-none cursor-pointer range-slider">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Panels -->
+                <div class="panel">
+                    <h2 class="panel-header">REAL-TIME ENERGY OUTPUT</h2>
+                    <div class="p-4">
+                        <p class="text-4xl font-bold text-interactive-cyan"><span id="power-output-mwe">0.0</span> <span class="text-2xl text-gray-400">MWe</span></p>
+                        <p class="text-sm text-gray-400"><span id="output-percentage-label">Output % of Max Capacity:</span> <span id="output-percentage-display">N/A</span></p>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2 class="panel-header">LIVE ANALYTICS</h2>
+                    <div class="p-4 space-y-2 text-sm">
+                       <p>Core Temp: <span id="core-temperature" class="font-mono text-amber">0.0 °C</span></p>
+                       <p>Core Pressure: <span id="core-pressure" class="font-mono text-amber">0.0 MPa</span></p>
+                       <p>Stability: <span id="core-stability" class="font-mono text-interactive-cyan">100.0%</span></p>
+                    </div>
+                </div>
+
+                 <div class="panel">
+                    <h2 class="panel-header">ENVIRONMENTAL INPUTS</h2>
+                     <div class="p-4 space-y-4 text-sm">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400">Time of Day</span>
+                            <span id="env-time-of-day-value" class="font-mono text-gray-300">--:-- LOCAL</span>
+                        </div>
+                        <div>
+                            <label for="ambient-temp-slider" class="flex justify-between items-center text-gray-400">
+                                <span>Ambient Temp</span>
+                                <span id="ambient-temp-value" class="font-mono text-gray-300">18.5 °C</span>
+                            </label>
+                            <input type="range" id="ambient-temp-slider" min="-10" max="45" value="18.5" step="0.5" class="w-full h-2 bg-accent-gray rounded-lg appearance-none cursor-pointer range-slider mt-2">
+                        </div>
+                        <div>
+                            <label for="grid-demand-slider" class="flex justify-between items-center text-gray-400">
+                                <span>Grid Demand</span>
+                                <span id="grid-demand-value" class="font-mono text-interactive-cyan">455.0 MWe</span>
+                            </label>
+                            <input type="range" id="grid-demand-slider" min="300" max="1000" value="455" step="1" class="w-full h-2 bg-accent-gray rounded-lg appearance-none cursor-pointer range-slider mt-2">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="panel-header">EMERGENCY SCENARIOS</h2>
+                    <div class="p-4 grid grid-cols-2 gap-2 text-sm">
+                        <button id="trigger-cooling-failure" class="emergency-button">Cooling Failure</button>
+                        <button id="trigger-earthquake" class="emergency-button">Earthquake</button>
+                        <button id="trigger-grid-overload" class="emergency-button">Grid Overload</button>
+                        <button id="trigger-cyberattack" class="emergency-button">Cyberattack</button>
+                        <button id="trigger-radiation-spike" class="emergency-button col-span-2">Radiation Spike</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Pane: 3D View -->
+            <div class="lg:col-span-2 xl:col-span-3 flex flex-col gap-4 min-h-0">
+                <div class="panel flex-grow flex flex-col">
+                    <!-- Removed the buttons container for 3D Reactor View and Schematic -->
+                    <div class="flex-grow min-h-0 p-1">
+                        <model-viewer 
+                            src="https://v3.fal.media/files/lion/q8nzvXR1N-ZozJV1lii7n_model.glb"
+                            alt="ARCOS-1 Reactor Model" 
+                            camera-controls 
+                            touch-action="pan-y" 
+                            ar 
+                            shadow-intensity="1" 
+                            autoplay
+                            exposure="0.8"
+                            camera-orbit="30deg 75deg 105%"
+                            style="width: 100%; height: 100%; --mv-ui-bg-color: #141822; --mv-ui-fg-color: #F0F4FF;"
+                        ></model-viewer>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Pane: AI & Logs -->
+            <div class="lg:col-span-1 xl:col-span-1 flex flex-col gap-4 min-h-0">
+                <div class="panel flex flex-col h-full max-h-[calc(100vh-280px)]">
+                    <h2 class="panel-header flex-shrink-0">AI ASSISTANT</h2>
+                    <div id="chat-log" class="p-4 flex-grow overflow-y-auto space-y-4 flex flex-col">
+                        <!-- AI chat messages will be dynamically inserted here -->
+                    </div>
+                    <div class="flex-shrink-0 p-2 border-t border-accent-gray">
+                        <form id="ai-form" class="flex items-center gap-2">
+                            <input id="ai-input" type="text" placeholder="Ask AI Assistant..." class="w-full bg-white border border-accent-gray rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-interactive-cyan">
+                            <button type="submit" class="bg-interactive-cyan text-primary-bg font-bold px-4 rounded-md text-sm h-full hover:bg-interactive-cyan/80 transition-colors">Send</button>
+                        </form>
+                    </div>
+                </div>
+                 <div class="panel flex flex-col">
+                    <h2 class="panel-header flex-shrink-0">SYSTEM STATUS & ALERTS</h2>
+                    <div id="alert-log" class="p-4 overflow-y-auto space-y-2 text-sm max-h-48">
+                        <p class="text-gray-500" id="no-alerts-msg">No active alerts. System nominal.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Wrap the entire script in an IIFE to ensure isolated scope and proper function definition.
+        (function() {
+            console.log("ARCOS-1 script started execution (inside IIFE).");
+
+            let simInterval = null;
+            let alertLogInterval = null;
+            let ui = {}; // Declared globally within this IIFE's scope
+
+            // Define initial state for resetting
+            const INITIAL_SIM_STATE = {
+                isRunning: false,
+                activeEmergency: null,
+                controlsLocked: false,
+                reactorCount: 1,
+                uptimeSeconds: 0,
+                operationalLevel: 0.0,
+                core: {
+                    temperature: 20.0,
+                    pressure: 1.0,
+                    stability: 100.0,
+                    fuelLevel: 100.0,
+                },
+                power: {
+                    outputMWe: 0.0, // Standardized to MWe
+                    thermalMWth: 0.0,
+                    consumptionRate: 0.0,
+                    efficiency: 0.0,
+                },
+                external: {
+                    gridDemand: 455.0,
+                    ambientTemp: 18.5,
+                },
+            };
+
+            // Deep copy initial state to simState
+            let simState = JSON.parse(JSON.stringify(INITIAL_SIM_STATE));
+
+            const arcosKnowledgeBase = {
+              "generalInfo": { "name": "ARCOS-1", "fullName": "Gul Metzen Hybrid SMR", "type": "AI-managed, vertical hybrid Small Modular Reactor (SMR)", "reactorConfiguration": "Integral Pressurized Water Reactor (iPWR) hybrid configuration", "generation": "Fourth-generation" },
+              "performanceMetrics": { "powerOutput": { "nominal": 450, "unit": "MWe", "note": "Full capacity at safe level" }, "thermalOutput": { "estimated": 1250, "unit": "MWth", "note": "Estimated based on 450 MWe output and 36% max efficiency target" }, "efficiency": { "target": "33-36%", "unit": "Thermal", "condition": "Under full operational load" }, "fuel": { "type": "HALEU (High-Assay Low-Enriched Uranium)", "enrichment": { "designRange": "5-19.75%", "optimizedLevel": 17.2, "unit": "% U-235" }, "form": "Sintered uranium dioxide (UO₂) pellets", "pelletGeometry": { "diameter": 9.5, "height": 10, "unit": "mm" } }, "fuelCycle": { "duration": 10, "unit": "years", "note": "Core burn before replacement at ~95% load factor" }, "fuelBurnup": { "targetAverage": 80, "unit": "GWd/MTU" }, "designLifetime": { "duration": 60, "unit": "years" } },
+              "operationalParameters": { "corePressure": { "value": 15.5, "unit": "MPa", "alternativeValue": "2,250 psi" }, "primaryCoolantTemperature": { "inlet": 290, "outlet": 325, "unit": "°C" }, "steamOutput": { "temperature": 330, "unit": "°C", "type": "superheated steam" }, "rampUpDownTimes": "Not specified in the document" },
+              "safetySystems": { "passive": [{ "system": "Passive Decay Heat Removal", "mechanism": "Natural convection and gravity-driven Emergency Core Cooling System (ECCS) loop" }, { "system": "Primary Coolant Circulation", "mechanism": "Natural circulation loop (supported by electromagnetic pumps during normal operation)" }, { "system": "Reactivity Shutdown (SCRAM)", "primaryMechanism": "Gravity-fed control rods", "backupMechanism": "Fast-acting borated water injection" }, { "system": "Emergency Core Cooling", "mechanism": "Hydraulic accumulators with pressurized borated water for instant quenching during high-pressure failures" }, { "system": "Fire Mitigation", "mechanism": "Inert gas suppression systems and high-speed flame ionization detectors" }, { "system": "Venting System", "mechanism": "Filtered and shielded venting with iodine, cesium, and noble gas capture media" }] },
+              "economicData": { "initialCapex": { "value": 400, "unit": "Million USD", "note": "Per single-reactor facility with security and AI" }, "annualOpex": { "value": 25, "unit": "Million USD", "note": "Includes staffing, maintenance, security, and regulatory costs" }, "estimatedCostPerMWh": { "value": 68.54, "unit": "USD", "note": "Calculated based on CapEx, OpEx, 60-year lifetime, and 95% capacity factor. Does not represent a formal LCOE." } }
+            };
+
+            const NOMINAL_THERMAL_OUTPUT_PER_REACTOR = 1250;
+            const NOMINAL_ELECTRICAL_OUTPUT_PER_REACTOR = 450;
+            const NOMINAL_CONSUMPTION_RATE_PER_HOUR = 0.0012;
+            const NOMINAL_CORE_PRESSURE = 15.5;
+
+            // --- Function Definitions (Strict Waterfall Order with const arrow functions) ---
+
+            const cacheDOMElements = () => {
+                const elements = {
+                    timeElement: document.getElementById('sim-time'),
+                    statusDisplay: document.getElementById('status-display'),
+                    statusIndicator: document.getElementById('status-indicator'),
+                    statusText: document.getElementById('status-text'),
+                    startStopButton: document.getElementById('start-stop-button'),
+                    resetSimulationButton: document.getElementById('reset-simulation-button'), // New reset button
+                    reactorsSlider: document.getElementById('reactors-slider'),
+                    reactorsCountDisplay: document.getElementById('reactors-count-display'),
+                    powerOutputMwe: document.getElementById('power-output-mwe'),
+                    outputPercentageLabel: document.getElementById('output-percentage-label'), // New label for percentage
+                    outputPercentageDisplay: document.getElementById('output-percentage-display'), // New display for percentage
+                    coreTemperature: document.getElementById('core-temperature'),
+                    corePressure: document.getElementById('core-pressure'),
+                    coreStability: document.getElementById('core-stability'),
+                    envTimeOfDayValue: document.getElementById('env-time-of-day-value'),
+                    ambientTempSlider: document.getElementById('ambient-temp-slider'),
+                    ambientTempValue: document.getElementById('ambient-temp-value'),
+                    gridDemandSlider: document.getElementById('grid-demand-slider'),
+                    gridDemandValue: document.getElementById('grid-demand-value'),
+                    chatLog: document.getElementById('chat-log'),
+                    aiForm: document.getElementById('ai-form'),
+                    aiInput: document.getElementById('ai-input'),
+                    alertLog: document.getElementById('alert-log'),
+                    noAlertsMsg: document.getElementById('no-alerts-msg'),
+                    emergencyButtons: document.querySelectorAll('.emergency-button'),
+                    triggerCoolingFailureBtn: document.getElementById('trigger-cooling-failure'),
+                    triggerEarthquakeBtn: document.getElementById('trigger-earthquake'),
+                    triggerGridOverloadBtn: document.getElementById('trigger-grid-overload'),
+                    triggerCyberattackBtn: document.getElementById('trigger-cyberattack'),
+                    triggerRadiationSpikeBtn: document.getElementById('trigger-radiation-spike'),
+                };
+                if (!elements.startStopButton) console.error("ERROR: startStopButton not found!");
+                if (!elements.resetSimulationButton) console.error("ERROR: resetSimulationButton not found!");
+                if (!elements.aiInput) console.error("ERROR: aiInput not found!");
+                if (!elements.chatLog) console.error("ERROR: chatLog not found!");
+                if (!elements.alertLog) console.error("ERROR: alertLog not found!");
+                return elements;
+            };
+
+            const startSimClock = (timeElement, envTimeOfDayValue) => {
+                if (!timeElement) return;
+                let simTime;
+                try {
+                    simTime = new Date(timeElement.textContent);
+                    if (isNaN(simTime.getTime())) {
+                        console.warn("Invalid initial sim-time value, defaulting to current time.");
+                        simTime = new Date();
+                    }
+                } catch (e) {
+                    console.error("Error parsing initial sim-time, defaulting to current time:", e);
+                    simTime = new Date();
+                }
+
+                setInterval(() => {
+                    simTime.setSeconds(simTime.getSeconds() + 1);
+                    const isoString = simTime.toISOString().replace('.000', '');
+                    timeElement.textContent = isoString;
+                    const hours = simTime.getUTCHours().toString().padStart(2, '0');
+                    const minutes = simTime.getUTCMinutes().toString().padStart(2, '0');
+                    if (envTimeOfDayValue) envTimeOfDayValue.textContent = `${hours}:${minutes} LOCAL`;
+                }, 1000);
+            };
+
+            const appendMessage = (text, sender) => {
+                console.log(`appendMessage called: [${sender}] ${text}`);
+                const bubble = document.createElement('div');
+                bubble.innerHTML = text;
+                const senderClass = {
+                    'user': 'chat-bubble-user',
+                    'ai': 'chat-bubble-ai',
+                    'alert': 'chat-bubble-alert'
+                };
+                bubble.className = `chat-bubble ${senderClass[sender]}`;
+                ui.chatLog.appendChild(bubble);
+                ui.chatLog.scrollTop = ui.chatLog.scrollHeight;
+            };
+
+            const logAlert = (level, message) => {
+                if (ui.noAlertsMsg) {
+                    ui.noAlertsMsg.remove();
+                    ui.noAlertsMsg = null;
+                }
+                const alertItem = document.createElement('div');
+                const levelClass = level.toLowerCase();
+                const timestamp = new Date().toLocaleTimeString();
+                alertItem.className = `alert-item ${levelClass}`;
+                alertItem.innerHTML = `<p class="timestamp">${timestamp}</p><p><strong>${level}:</strong> ${message}</p>`;
+                ui.alertLog.appendChild(alertItem);
+                ui.alertLog.scrollTop = ui.alertLog.scrollHeight;
+                appendMessage(`<b>[${level}]</b> ${message}`, 'alert'); 
+            };
+
+            const generateIncidentReport = (eventType, summary) => {
+                const report = `
+                    <b>INITIAL INCIDENT REPORT</b><br>
+                    <b>Event:</b> ${eventType}<br>
+                    <b>Status:</b> AI-driven response protocol activated.<br>
+                    <b>Summary:</b> ${summary}<br>
+                    <b>Action:</b> A detailed report is being compiled. All system changes are logged.
+                `;
+                logAlert('SYSTEM', report);
+            };
+
+            const updateStatus = (status, text) => {
+                const statusClasses = {
+                    'ONLINE': 'text-interactive-cyan',
+                    'OFFLINE': 'text-gray-400',
+                    'CRITICAL': 'text-critical-red',
+                    'WARNING': 'text-warning-amber',
+                    'SCRAM': 'text-critical-red animate-pulse'
+                };
+                const indicatorClasses = {
+                    'ONLINE': 'bg-interactive-cyan animate-pulse',
+                    'OFFLINE': 'bg-gray-500',
+                    'CRITICAL': 'bg-critical-red animate-pulse',
+                    'WARNING': 'bg-warning-amber animate-pulse',
+                    'SCRAM': 'bg-critical-red animate-pulse'
+                };
+                ui.statusDisplay.className = `font-semibold flex items-center gap-1 ${statusClasses[status] || 'text-gray-400'}`;
+                ui.statusIndicator.className = `w-2 h-2 rounded-full ${indicatorClasses[status] || 'bg-gray-500'}`;
+                ui.statusText.textContent = text || status;
+            };
+
+            const updateButtonStates = () => {
+                ui.startStopButton.disabled = simState.controlsLocked;
+                ui.resetSimulationButton.disabled = simState.controlsLocked; // Disable reset if controls are locked
+                ui.emergencyButtons.forEach(button => {
+                    // Ensure buttons are only enabled if simulation is running AND no emergency is active AND controls are not locked
+                    button.disabled = !simState.isRunning || simState.activeEmergency !== null || simState.controlsLocked;
+                });
+            };
+
+            const updateUI = () => {
+                const isCyberAttack = simState.activeEmergency === 'CYBERATTACK' && simState.controlsLocked;
+
+                // Use Number() for explicit conversion to handle potential non-numeric values gracefully
+                ui.powerOutputMwe.textContent = (isCyberAttack ? Number(simState.power.outputMWe) * (0.5 + Math.random()) : Number(simState.power.outputMWe)).toFixed(1);
+                
+                const totalMaxCapacity = NOMINAL_ELECTRICAL_OUTPUT_PER_REACTOR * simState.reactorCount;
+                const outputPercentage = totalMaxCapacity > 0 ? (Number(simState.power.outputMWe) / totalMaxCapacity) * 100 : 0; 
+                ui.outputPercentageDisplay.textContent = `${Math.min(100, outputPercentage).toFixed(1)}%`;
+
+
+                ui.coreTemperature.textContent = `${(isCyberAttack ? Number(simState.core.temperature) * (0.8 + Math.random() * 0.4) : Number(simState.core.temperature)).toFixed(1)} °C`;
+                ui.corePressure.textContent = `${(isCyberAttack ? Number(simState.core.pressure) * (0.8 + Math.random() * 0.4) : Number(simState.core.pressure)).toFixed(1)} MPa`;
+                ui.coreStability.textContent = `${(isCyberAttack ? Number(simState.core.stability) * (0.5 + Math.random()) : Number(simState.core.stability)).toFixed(1)}%`;
+            };
+
+            const setOfflineState = () => {
+                simState.power.outputMWe = 0.0;
+                simState.power.thermalMWth = 0.0;
+                simState.core.temperature = 20.0;
+                simState.core.pressure = 1.0;
+                simState.core.stability = 100.0;
+                updateUI();
+                ui.outputPercentageDisplay.textContent = 'N/A'; // Update this for offline state
+            };
+
+            const runNormalPhysics = (maxElectricalOutput) => {
+                // Explicitly ensure simState.power.outputMWe is a number at the start of this function
+                if (typeof simState.power.outputMWe !== 'number' || isNaN(simState.power.outputMWe)) {
+                    console.warn("simState.power.outputMWe was not a number or NaN, resetting to 0.0");
+                    simState.power.outputMWe = 0.0;
+                }
+
+                // Target power is limited by both grid demand and max electrical output of all reactors
+                let targetPower = Math.min(simState.external.gridDemand, maxElectricalOutput);
+
+                let powerDelta = targetPower - simState.power.outputMWe;
+
+                // Adjust power more smoothly
+                let adjustment = powerDelta * 0.15; // Controls speed of ramp up/down
+                let randomFluctuation = (Math.random() - 0.5) * 20; // Small random noise
+
+                simState.power.outputMWe += adjustment + randomFluctuation;
+
+                // Clamp the output to ensure it's within the valid range [0, maxElectricalOutput]
+                simState.power.outputMWe = Math.max(0, Math.min(maxElectricalOutput, simState.power.outputMWe)); 
+
+                const currentPowerRatio = maxElectricalOutput !== 0 ? simState.power.outputMWe / maxElectricalOutput : 0;
+
+                const efficiency_base = 0.36 - (0.03 * (1 - (simState.operationalLevel / 100)));
+                const efficiency_temp_penalty = (simState.external.ambientTemp > 25) ? (simState.external.ambientTemp - 25) * 0.0005 : 0;
+                const efficiency = efficiency_base - efficiency_temp_penalty;
+                
+                simState.power.thermalMWth = efficiency !== 0 ? simState.power.outputMWe / efficiency : 0;
+
+                simState.power.efficiency = efficiency;
+
+                simState.core.temperature = 290 + (35 * currentPowerRatio) + (simState.external.ambientTemp - 18.5) * 0.5 + ((Math.random() - 0.5) * 5);
+                simState.core.pressure = NOMINAL_CORE_PRESSURE * (0.95 + 0.05 * currentPowerRatio) + ((Math.random() - 0.5) * 0.5);
+                simState.core.stability = 99.5 + (Math.random() * 1) - 0.5; // Slight fluctuation around optimal
+            };
+
+            const handleEmergencyPhysics = (maxElectricalOutput) => {
+                switch(simState.activeEmergency) {
+                    case 'COOLING_FAILURE':
+                        simState.core.temperature += 15 + Math.random() * 5;
+                        simState.core.pressure += 0.5 + Math.random() * 0.2;
+                        simState.power.outputMWe = Math.max(0, simState.power.outputMWe * 0.95 - (Math.random() * 10));
+                        if (simState.core.temperature > 700) {
+                            simState.operationalLevel = 0;
+                            simState.power.outputMWe = 0;
+                            updateStatus('SCRAM', 'EMERGENCY SHUTDOWN');
+                            clearInterval(simInterval);
+                            clearInterval(alertLogInterval);
+                            simInterval = null;
+                            alertLogInterval = null;
+                            simState.isRunning = false;
+                            appendMessage("EMERGENCY SHUTDOWN: Reactor SCRAM initiated due to critical cooling failure.", 'alert');
+                            generateIncidentReport('Cooling Failure', 'AI initiated automated SCRAM due to critical loss of coolant flow and rapid temperature increase.');
+                            simState.activeEmergency = null;
+                            updateButtonStates();
+                        }
+                        break;
+                    case 'EARTHQUAKE':
+                        simState.core.stability = Math.max(30, simState.core.stability * 0.9 - (Math.random() * 5));
+                        simState.core.pressure += (Math.random() - 0.5) * 0.5;
+
+                        const targetEarthquakePower = 0.1 * maxElectricalOutput; // 10% of max capacity
+
+                        // Smoothly ramp power towards the 10% target
+                        let powerDelta = targetEarthquakePower - simState.power.outputMWe;
+                        let adjustment = powerDelta * 0.15; // Control ramp speed
+                        simState.power.outputMWe += adjustment;
+
+                        // Clamp power to ensure it doesn't overshoot or go negative
+                        simState.power.outputMWe = Math.max(0, simState.power.outputMWe);
+                        if (powerDelta > 0) { // Ramping up towards target
+                            simState.power.outputMWe = Math.min(targetEarthquakePower + 5, simState.power.outputMWe);
+                        } else { // Ramping down towards target
+                            simState.power.outputMWe = Math.max(targetEarthquakePower - 5, simState.power.outputMWe);
+                        }
+
+                        // Add minor fluctuations around the target once close
+                        if (Math.abs(simState.power.outputMWe - targetEarthquakePower) < 10) {
+                             simState.power.outputMWe += (Math.random() - 0.5) * 5;
+                             simState.power.outputMWe = Math.max(0, Math.min(maxElectricalOutput, simState.power.outputMWe)); // Re-clamp
+                        }
+
+                        // Check if power is close enough to the target to consider it stabilized
+                        if (Math.abs(simState.power.outputMWe - targetEarthquakePower) < 5) {
+                            simState.operationalLevel = 10;
+                            updateStatus('WARNING', 'Hot Standby');
+                            logAlert('SYSTEM', 'AI: Reactor at 10% power in hot standby. Deploying drone network for external inspection.');
+                            generateIncidentReport('Earthquake', 'AI initiated controlled shutdown to 10% power and deployed drones in response to major seismic event.');
+                            simState.activeEmergency = null; // Clear emergency state once stabilized
+                            updateButtonStates(); // Update button states
+                        } else {
+                            updateStatus('CRITICAL', 'Seismic Event - Ramping Down');
+                            logAlert('CRITICAL', `Major seismic event detected (0.7g). Initiating controlled rapid shutdown to 10% power. Current: ${simState.power.outputMWe.toFixed(1)} MWe`);
+                        }
+                        break;
+                    case 'CYBERATTACK':
+                        updateStatus('CRITICAL', 'Cyberattack Detected');
+                        logAlert('CRITICAL', 'AI has detected anomalous sensor readings inconsistent with physical models. Potential cyberattack.');
+                        setTimeout(() => {
+                            simState.controlsLocked = true;
+                            ui.emergencyButtons.forEach(b => b.disabled = true);
+                            ui.startStopButton.disabled = true;
+                            logAlert('SYSTEM', 'AI: Isolating control nodes. Locking manual controls. Cross-validating with redundant sensors.');
+                        }, 2000);
+                        setTimeout(() => generateIncidentReport('Cyberattack', 'AI detected data anomalies, locked controls, and began isolating systems to neutralize threat.'), 4000);
+                        break;
+                    case 'GRID_OVERLOAD':
+                        updateStatus('WARNING', 'Grid Instability');
+                        logAlert('WARNING', 'Massive grid overload detected. Loss of external load.');
+                        simState.external.gridDemand = 10;
+                        setTimeout(() => logAlert('SYSTEM', 'AI: Diverting steam to bypass condenser. Ramping down power to match grid loss.'), 1000);
+                        setTimeout(() => {
+                            simState.operationalLevel = 20;
+                            updateStatus('WARNING', 'Power Ramping Down');
+                        }, 3000);
+                        setTimeout(() => generateIncidentReport('Grid Overload', 'AI automatically ramped down power and diverted steam in response to a sudden loss of grid load.'), 5000);
+                        break;
+                    case 'RADIATION_SPIKE':
+                         updateStatus('CRITICAL', 'Radiation Spike');
+                         logAlert('CRITICAL', 'High radiation levels detected near primary loop. Initiating controlled shutdown.');
+                         
+                         // Rapidly decrease power output towards zero
+                         simState.power.outputMWe = Math.max(0, simState.power.outputMWe * 0.85 - 50); // Faster ramp down
+                         simState.core.temperature = Math.max(20, simState.core.temperature * 0.9); // Cool down faster
+                         simState.core.pressure = Math.max(1, simState.core.pressure * 0.9); // Pressure drop faster
+                         
+                         if (simState.power.outputMWe <= 10 && simState.core.temperature <= 50) { // Check if power is near zero and cool
+                            logAlert('SYSTEM', 'AI: Radiation leak contained. Controlled shutdown complete. System is now offline.');
+                            // Force stop simulation and reset to offline state
+                            toggleSimulation(); // This will stop intervals and call setOfflineState()
+                            simState.activeEmergency = null; // Clear emergency state
+                            updateButtonStates(); // Update button states
+                         } else {
+                            // If not yet zero, continue logging status
+                            logAlert('SYSTEM', `AI: Power at ${simState.power.outputMWe.toFixed(1)} MWe. Continuing controlled shutdown.`);
+                         }
+                         break;
+                }
+                if (simState.power.outputMWe < 0) simState.power.outputMWe = 0;
+            };
+
+            const runSimulation = () => {
+                // Safeguard against NaN propagation
+                if (isNaN(simState.power.outputMWe)) { simState.power.outputMWe = 0.0; console.error("Recovered simState.power.outputMWe from NaN."); }
+                if (isNaN(simState.core.temperature)) { simState.core.temperature = 20.0; console.error("Recovered simState.core.temperature from NaN."); }
+                if (isNaN(simState.core.pressure)) { simState.core.pressure = 1.0; console.error("Recovered simState.core.pressure from NaN."); }
+                if (isNaN(simState.core.stability)) { simState.core.stability = 100.0; console.error("Recovered simState.core.stability from NaN."); }
+
+                simState.uptimeSeconds++;
+                
+                const maxElectricalOutput = NOMINAL_ELECTRICAL_OUTPUT_PER_REACTOR * simState.reactorCount;
+
+                if (simState.activeEmergency) {
+                    handleEmergencyPhysics(maxElectricalOutput);
+                } else {
+                    runNormalPhysics(maxElectricalOutput);
+                }
+                
+                if (!simState.activeEmergency && simState.operationalLevel < 100) {
+                    simState.operationalLevel = Math.min(100, simState.operationalLevel + 1);
+                }
+
+                // Ensure maxElectricalOutput is not zero to prevent division by zero
+                const fuelConsumptionRatio = maxElectricalOutput !== 0 ? (simState.power.outputMWe / maxElectricalOutput) : 0;
+                const fuelConsumedThisTick = (NOMINAL_CONSUMPTION_RATE_PER_HOUR / 3600) * fuelConsumptionRatio;
+                
+                simState.core.fuelLevel = Math.max(0, simState.core.fuelLevel - fuelConsumedThisTick);
+                simState.power.consumptionRate = fuelConsumedThisTick * 3600;
+                
+                updateUI();
+            };
+
+            const checkAndLogStatus = () => {
+                try {
+                    if (!simState.isRunning || simState.activeEmergency || simState.controlsLocked) {
+                        if (ui.alertLog.children.length === 0 || (ui.alertLog.children.length === 1 && ui.alertLog.querySelector('#no-alerts-msg'))) {
+                             if (!ui.noAlertsMsg) {
+                                const p = document.createElement('p');
+                                p.className = 'text-gray-500';
+                                p.id = 'no-alerts-msg';
+                                p.textContent = 'No active alerts. System nominal.';
+                                ui.alertLog.appendChild(p);
+                                ui.noAlertsMsg = p;
+                            }
+                        }
+                        return;
+                    }
+
+                    let alertTriggeredThisCycle = false;
+
+                    const OPTIMAL_CORE_TEMP_RANGE_LOW = 300;
+                    const OPTIMAL_CORE_TEMP_RANGE_HIGH = 330;
+                    const TEMP_WARNING_THRESHOLD_DEVIATION = 20;
+
+                    if (simState.core.temperature < OPTIMAL_CORE_TEMP_RANGE_LOW - TEMP_WARNING_THRESHOLD_DEVIATION ||
+                        simState.core.temperature > OPTIMAL_CORE_TEMP_RANGE_HIGH + TEMP_WARNING_THRESHOLD_DEVIATION) {
+                        logAlert('WARNING', `Core temperature is deviating significantly: ${simState.core.temperature.toFixed(1)}°C. AI adjusting coolant flow.`);
+                        alertTriggeredThisCycle = true;
+                    }
+
+                    const totalMaxOutput = NOMINAL_ELECTRICAL_OUTPUT_PER_REACTOR * simState.reactorCount;
+                    const idealOutput = Math.min(simState.external.gridDemand, totalMaxOutput);
+                    const outputDiffPercent = idealOutput > 0 ? Math.abs(simState.power.outputMWe - idealOutput) / idealOutput * 100 : 0;
+
+                    if (outputDiffPercent > 15) {
+                        if (simState.power.outputMWe < idealOutput) {
+                            logAlert('WARNING', `Power output (${simState.power.outputMWe.toFixed(1)} MWe) is significantly below grid demand (${simState.external.gridDemand.toFixed(1)} MWe). AI increasing output.`);
+                        } else {
+                            logAlert('WARNING', `Power output (${simState.power.outputMWe.toFixed(1)} MWe) is significantly above grid demand (${simState.external.gridDemand.toFixed(1)} MWe). AI reducing output.`);
+                        }
+                        alertTriggeredThisCycle = true;
+                    }
+
+                    if (simState.core.stability < 98.0) {
+                        logAlert('WARNING', `Core stability is fluctuating: ${simState.core.stability.toFixed(1)}%. AI initiating micro-adjustments.`);
+                        alertTriggeredThisCycle = true;
+                    }
+
+                    if (!alertTriggeredThisCycle) {
+                        const lastAlert = ui.alertLog.lastChild;
+                        if (!lastAlert || !lastAlert.textContent.includes('System nominal')) {
+                            logAlert('SYSTEM', 'System nominal. All parameters within optimal range. AI maintaining stable operation.');
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error inside checkAndLogStatus:", error);
+                }
+            };
+
+
+            const handleAIQuery = async (query) => {
+                appendMessage(query, 'user');
+                if(simState.controlsLocked) {
+                    appendMessage("AI functions limited. Manual controls are locked due to a potential security incident. I cannot process queries at this time.", 'ai');
+                    return;
+                }
+
+                appendMessage("AI is thinking...", 'ai');
+                const thinkingMessage = ui.chatLog.lastChild;
+
+                const context = `
+                    You are an AI assistant for the ARCOS-1 Hybrid SMR (Small Modular Reactor) simulation.
+                    Your goal is to answer questions about the reactor's specifications, current operational status, and emergency protocols.
+                    Refer to the provided ARCOS-1 knowledge base and current simulation state.
+                    Be concise and informative. If a question is outside the scope of the ARCOS-1 reactor or the simulation, state that you cannot answer.
+                    If the simulation is not running, mention that live data is unavailable.
+
+                    ARCOS-1 Knowledge Base: ${JSON.stringify(arcosKnowledgeBase, null, 2)}
+
+                    Current Simulation State: ${JSON.stringify(simState, null, 2)}
+                `;
+
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: context + "\n\nUser Query: " + query }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Canvas will provide this at runtime
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    console.log("API Response Status:", response.status);
+                    console.log("API Response OK:", response.ok);
+                    const result = await response.json();
+                    console.log("API Raw Result:", result);
+
+                    if (thinkingMessage) thinkingMessage.remove();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const aiResponseText = result.candidates[0].content.parts[0].text;
+                        appendMessage(aiResponseText, 'ai');
+                    } else {
+                        appendMessage("I'm sorry, I couldn't generate a response. The AI model might be unavailable or returned an unexpected format.", 'ai');
+                        console.error("AI response structure unexpected:", result);
+                    }
+                } catch (error) {
+                    if (thinkingMessage) thinkingMessage.remove();
+                    appendMessage("I'm experiencing connectivity issues and cannot reach the AI at the moment. Please try again later.", 'ai');
+                    console.error("Error calling Gemini API:", error);
+                }
+            };
+
+            const triggerEmergency = (type) => {
+                if (!simState.isRunning) {
+                    appendMessage("Cannot trigger emergency. Simulation is offline.", 'ai');
+                    return;
+                }
+                if (simState.activeEmergency) {
+                    appendMessage("An emergency scenario is already in progress.", 'ai');
+                    return;
+                }
+                simState.activeEmergency = type;
+
+                switch (type) {
+                    case 'COOLING_FAILURE':
+                        updateStatus('CRITICAL', 'Cooling Failure');
+                        logAlert('CRITICAL', 'Cooling failure detected. Coolant flow at 5%. Core temperature rising rapidly.');
+                        setTimeout(() => logAlert('SYSTEM', 'AI: Attempting to engage secondary coolant pumps.'), 1500);
+                        setTimeout(() => {
+                            logAlert('CRITICAL', 'AI: Secondary pumps unresponsive. Core temperature exceeds 700°C. Initiating SCRAM.');
+                            simState.operationalLevel = 0;
+                            simState.power.outputMWe = 0;
+                            updateStatus('SCRAM', 'EMERGENCY SHUTDOWN');
+                            clearInterval(simInterval);
+                            clearInterval(alertLogInterval);
+                            simInterval = null;
+                            alertLogInterval = null;
+                            simState.isRunning = false;
+                            appendMessage("EMERGENCY SHUTDOWN: Reactor SCRAM initiated due to critical cooling failure.", 'alert');
+                            generateIncidentReport('Cooling Failure', 'AI initiated automated SCRAM due to critical loss of coolant flow and rapid temperature increase.');
+                            simState.activeEmergency = null;
+                            updateButtonStates();
+                        }, 4000);
+                        break;
+                    case 'EARTHQUAKE':
+                        updateStatus('CRITICAL', 'Seismic Event');
+                        logAlert('CRITICAL', 'Major seismic event detected (0.7g). Structural integrity may be compromised.');
+                        // The physics for earthquake will now be handled continuously in handleEmergencyPhysics
+                        break;
+                    case 'CYBERATTACK':
+                        updateStatus('CRITICAL', 'Cyberattack Detected');
+                        logAlert('CRITICAL', 'AI has detected anomalous sensor readings inconsistent with physical models. Potential cyberattack.');
+                        setTimeout(() => {
+                            simState.controlsLocked = true;
+                            ui.emergencyButtons.forEach(b => b.disabled = true);
+                            ui.startStopButton.disabled = true;
+                            logAlert('SYSTEM', 'AI: Isolating control nodes. Locking manual controls. Cross-validating with redundant sensors.');
+                        }, 2000);
+                        setTimeout(() => generateIncidentReport('Cyberattack', 'AI detected data anomalies, locked controls, and began isolating systems to neutralize threat.'), 4000);
+                        break;
+                    case 'GRID_OVERLOAD':
+                        updateStatus('WARNING', 'Grid Instability');
+                        logAlert('WARNING', 'Massive grid overload detected. Loss of external load.');
+                        simState.external.gridDemand = 10;
+                        setTimeout(() => logAlert('SYSTEM', 'AI: Diverting steam to bypass condenser. Ramping down power to match grid loss.'), 1000);
+                        setTimeout(() => {
+                            simState.operationalLevel = 20;
+                            updateStatus('WARNING', 'Power Ramping Down');
+                        }, 3000);
+                        setTimeout(() => generateIncidentReport('Grid Overload', 'AI automatically ramped down power and diverted steam in response to a sudden loss of grid load.'), 5000);
+                        break;
+                    case 'RADIATION_SPIKE':
+                         updateStatus('CRITICAL', 'Radiation Spike');
+                         logAlert('CRITICAL', 'High radiation levels detected near primary loop. Initiating controlled shutdown.');
+                         // No immediate toggleSimulation here, let handleEmergencyPhysics manage the ramp down
+                         break;
+                }
+                if (simState.power.outputMWe < 0) simState.power.outputMWe = 0;
+            };
+
+            const toggleSimulation = () => {
+                console.log("toggleSimulation called. Current isRunning:", simState.isRunning);
+                simState.isRunning = !simState.isRunning;
+                if (simState.isRunning) {
+                    ui.startStopButton.textContent = 'STOP SIMULATION';
+                    updateStatus('ONLINE');
+                    runSimulation(); // Run once immediately
+                    // Using arrow functions for setInterval for maximum robustness
+                    simInterval = setInterval(() => runSimulation(), 1000); 
+                    alertLogInterval = setInterval(() => checkAndLogStatus(), 1000); 
+                    appendMessage("Simulation started. Reactor is ramping up to meet grid demand.", 'ai');
+                } else {
+                    clearInterval(simInterval);
+                    clearInterval(alertLogInterval);
+                    simInterval = null;
+                    alertLogInterval = null;
+                    simState.activeEmergency = null;
+                    simState.controlsLocked = false;
+                    simState.power.outputMWe = 0.0; // Explicitly set power to zero on shutdown
+                    ui.startStopButton.textContent = 'START SIMULATION';
+                    updateStatus('OFFLINE');
+                    setOfflineState(); // This will also call updateUI()
+                    appendMessage("Simulation paused. System is offline.", 'ai');
+                }
+                // Ensure button states are updated immediately after toggling simulation
+                updateButtonStates(); 
+            };
+
+            const resetSimulation = () => {
+                console.log("Resetting simulation state.");
+                // Clear any running intervals
+                clearInterval(simInterval);
+                clearInterval(alertLogInterval);
+                simInterval = null;
+                alertLogInterval = null;
+
+                // Reset simState to its initial values
+                simState = JSON.parse(JSON.stringify(INITIAL_SIM_STATE));
+
+                // Reset UI elements to their initial states
+                ui.startStopButton.textContent = 'START SIMULATION';
+                updateStatus('OFFLINE');
+                setOfflineState(); // Resets power, temp, pressure, stability, and updates UI
+
+                // Reset sliders
+                ui.reactorsSlider.value = INITIAL_SIM_STATE.reactorCount;
+                ui.reactorsCountDisplay.textContent = INITIAL_SIM_STATE.reactorCount;
+                ui.ambientTempSlider.value = INITIAL_SIM_STATE.external.ambientTemp;
+                ui.ambientTempValue.textContent = `${INITIAL_SIM_STATE.external.ambientTemp.toFixed(1)} °C`;
+                ui.gridDemandSlider.value = INITIAL_SIM_STATE.external.gridDemand;
+                ui.gridDemandSlider.max = INITIAL_SIM_STATE.reactorCount * NOMINAL_ELECTRICAL_OUTPUT_PER_REACTOR; // Reset max grid demand
+                ui.gridDemandValue.textContent = `${INITIAL_SIM_STATE.external.gridDemand.toFixed(1)} MWe`;
+
+                // Clear chat and alert logs
+                ui.chatLog.innerHTML = '';
+                ui.alertLog.innerHTML = '';
+                // Re-add the "No active alerts" message
+                const p = document.createElement('p');
+                p.className = 'text-gray-500';
+                p.id = 'no-alerts-msg';
+                p.textContent = 'No active alerts. System nominal.';
+                ui.alertLog.appendChild(p);
+                ui.noAlertsMsg = p; // Re-cache the reference
+
+                appendMessage("Simulation reset to initial state. Ready to begin.", 'ai');
+                updateButtonStates(); // Ensure all buttons are in correct state after reset
+            };
+
+
+            const setupEventListeners = () => {
+                // Using an anonymous arrow function to call toggleSimulation for robustness
+                ui.startStopButton.addEventListener('click', () => toggleSimulation());
+                ui.resetSimulationButton.addEventListener('click', () => resetSimulation()); // New event listener for reset button
+
+                ui.reactorsSlider.addEventListener('input', (e) => { 
+                    simState.reactorCount = parseInt(e.target.value, 10); 
+                    ui.reactorsCountDisplay.textContent = simState.reactorCount;
+                    
+                    const newMaxElectricalOutput = NOMINAL_ELECTRICAL_OUTPUT_PER_REACTOR * simState.reactorCount;
+
+                    // Adjust grid demand slider max based on new reactor count
+                    ui.gridDemandSlider.max = newMaxElectricalOutput;
+                    if (simState.external.gridDemand > parseFloat(ui.gridDemandSlider.max)) { // Use parseFloat for comparison
+                        simState.external.gridDemand = parseFloat(ui.gridDemandSlider.max); // Ensure it's a float
+                        ui.gridDemandSlider.value = simState.external.gridDemand;
+                    }
+                    ui.gridDemandValue.textContent = `${simState.external.gridDemand.toFixed(1)} MWe`; 
+
+                    // No direct scaling of power. `runNormalPhysics` will handle the ramp.
+                    // The operational level will naturally adjust as power ramps.
+                });
+
+                ui.ambientTempSlider.addEventListener('input', (e) => { 
+                    simState.external.ambientTemp = parseFloat(e.target.value); 
+                    ui.ambientTempValue.textContent = `${simState.external.ambientTemp.toFixed(1)} °C`; 
+                });
+                ui.gridDemandSlider.addEventListener('input', (e) => { 
+                    simState.external.gridDemand = parseFloat(e.target.value); 
+                    ui.gridDemandValue.textContent = `${simState.external.gridDemand.toFixed(1)} MWe`; 
+                });
+
+                ui.aiForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const query = ui.aiInput.value.trim();
+                    if (query) { handleAIQuery(query); ui.aiInput.value = ''; }
+                });
+
+                ui.triggerCoolingFailureBtn.addEventListener('click', () => triggerEmergency('COOLING_FAILURE'));
+                ui.triggerEarthquakeBtn.addEventListener('click', () => triggerEmergency('EARTHQUAKE'));
+                ui.triggerGridOverloadBtn.addEventListener('click', () => triggerEmergency('GRID_OVERLOAD'));
+                ui.triggerCyberattackBtn.addEventListener('click', () => triggerEmergency('CYBERATTACK'));
+                ui.triggerRadiationSpikeBtn.addEventListener('click', () => triggerEmergency('RADIATION_SPIKE'));
+            };
+
+
+            // --- Initial Setup on DOM Content Loaded ---
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log("DOMContentLoaded fired.");
+                lucide.createIcons();
+                ui = cacheDOMElements(); // 1. Cache DOM elements
+                setOfflineState(); // 2. Initialize simulation state using ui elements
+                appendMessage("Welcome to the ARCOS-1 simulation. I am online and ready to assist.", 'ai'); // 3. Send initial message
+                startSimClock(ui.timeElement, ui.envTimeOfDayValue); // 4. Start clock after ui is ready
+                setupEventListeners(); // 5. Set up event listeners after all functions are defined
+                updateButtonStates(); // 6. Ensure initial button states are correct
+            });
+
+        })(); // End of IIFE
+    </script>
+</body>
+</html>
