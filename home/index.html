@@ -4,90 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gul and Metzen Solutions | Pioneering the Future</title>
-    <link rel="icon" href="https://i.imgur.com/fUreDP2.png" type="image/png"> <!-- Favicon will still use URL, often loads fine -->
+    <link rel="icon" href="https://i.imgur.com/fUreDP2.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'gms-blue': '#0a192f',
-                        'gms-gray': '#1a1a1a',
-                        'gms-light': '#2d3748',
-                        'gms-accent': '#00b4d8'
-                    },
-                    fontFamily: {
-                        montserrat: ['Montserrat', 'sans-serif'],
-                        roboto: ['Roboto', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
     <style>
+        /* Tailwind Configuration Extension */
+        :root {
+            --gms-blue: #0a192f;
+            --gms-gray: #1a1a1a;
+            --gms-light: #2d3748;
+            --gms-accent: #00b4d8;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--gms-blue); /* Ensure consistent dark background */
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
         /* General Fade-in for sections */
         .fade-in-section {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
         .fade-in-section.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Specific fade-in for hero elements */
-        .fade-in {
-            animation: fadeIn 0.8s ease-in forwards;
+        /* Hero text animation */
+        .hero-text-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textReveal 1s ease-out forwards;
+            animation-delay: 0.3s; /* Delay for a staggered effect */
+            text-shadow: 0px 0px 15px rgba(0, 180, 216, 0.4); /* Subtle glow for text */
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        .hero-text-reveal:nth-child(2) { animation-delay: 0.6s; }
+        .hero-text-reveal:nth-child(3) { animation-delay: 0.9s; }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Hero background with subtle parallax/movement and animation */
         .hero-bg {
-            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.7)), url('https://images.unsplash.com/photo-1623874106686-5be5d9f7639a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(rgba(10, 25, 47, 0.98), rgba(10, 25, 47, 0.9)), url('https://images.unsplash.com/photo-1518495973542-cefd56373f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: 110% 110%; /* Slightly larger to allow for animation */
+            background-attachment: fixed; /* Parallax effect */
+            position: relative;
+            overflow: hidden;
+            animation: backgroundPan 60s linear infinite alternate; /* Slow, subtle pan */
         }
-        .division-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(0, 180, 216, 0.15), transparent 60%),
+                        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.15), transparent 60%);
+            opacity: 0.8; /* Slightly more opaque */
+            z-index: 1;
         }
-        .division-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
         }
-        .leader-card:hover .leader-overlay {
-            opacity: 1;
+
+        /* Card hover effects */
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border: 1px solid transparent; /* Default border */
         }
-        .leader-overlay {
-            transition: opacity 0.3s ease;
+        .card-hover-effect:hover {
+            transform: translateY(-10px); /* More pronounced lift */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 180, 216, 0.3); /* Stronger shadow with subtle glow */
+            border-color: var(--gms-accent); /* Accent border on hover */
+            background-color: var(--gms-light); /* Slightly lighter on hover */
         }
-        .client-logo {
+
+        /* Client logo grayscale effect */
+        .client-logo-effect {
             filter: grayscale(100%);
-            transition: filter 0.3s ease;
+            transition: filter 0.3s ease-in-out;
         }
-        .client-logo:hover {
+        .client-logo-effect:hover {
             filter: grayscale(0%);
         }
-        .press-card {
-            transition: all 0.3s ease;
-        }
-        .press-card:hover {
-            transform: translateY(-5px);
-            border-color: #00b4d8;
-        }
-        .contact-input:focus {
-            outline: none;
-            border-color: #00b4d8;
-        }
-        
+
         /* Custom CSS for Main GMS Logo (will be inverted to white) */
         .gms-logo {
             filter: invert(100%); /* Make the black logo white */
-            height: 64px; /* Adjust size as needed */
+            height: 80px; /* Doubled size for the GM image */
             width: auto; /* Maintain aspect ratio */
             display: block; /* Ensure proper rendering */
         }
@@ -112,7 +127,31 @@
             max-height: var(--mobile-menu-height); /* Set dynamically or to a large enough value */
             opacity: 1;
         }
+
+        /* Custom styles for the "GM" text to be smaller */
+        .gms-text-logo {
+            font-size: 1.5rem; /* Text size remains as previously set */
+            line-height: 1.2;
+        }
     </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gms-blue': '#0a192f',
+                        'gms-gray': '#1a1a1a',
+                        'gms-light': '#2d3748',
+                        'gms-accent': '#00b4d8'
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        roboto: ['Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="bg-gms-blue text-white font-roboto">
     <!-- Navigation -->
@@ -121,10 +160,11 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <!-- Main Site Logo - NOW USING BASE64 PLACEHOLDER -->
-                        <img src="<!-- BASE64_GMS_LOGO_HERE -->" alt="Gul Metzen Solutions Logo" class="gms-logo"> 
-                        <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline text-white">GUL METZEN SOLUTIONS</span>
-                        <span class="ml-3 text-lg font-bold font-montserrat sm:hidden text-white">GMS</span>
+                        <!-- Main Site Logo - GMS Logo (Image) -->
+                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo">
+                        <!-- GMS Text Logo -->
+                        <span class="ml-3 font-bold font-montserrat hidden sm:inline text-white gms-text-logo">GUL METZEN SOLUTIONS</span>
+                        <span class="ml-3 font-bold font-montserrat sm:hidden text-white gms-text-logo">GMS</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
@@ -147,9 +187,9 @@
         </div>
         <div id="mobile-menu" class="md:hidden bg-gms-gray">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <!-- Mobile Menu Logo - NOW USING BASE64 PLACEHOLDER -->
+                <!-- Mobile Menu Logo - GMS Logo (Image) -->
                 <div class="flex items-center justify-center py-4">
-                    <img src="<!-- BASE64_GMS_LOGO_HERE -->" alt="Gul Metzen Solutions Logo" class="gms-logo">
+                    <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo">
                 </div>
                 <!-- Mobile Navigation Links with Hover Effect -->
                 <a href="/" id="home-nav-link-mobile" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
@@ -165,19 +205,40 @@
     <!-- Page Content for Home -->
     <div class="pt-20 min-h-screen">
         <!-- Hero Section -->
-        <section class="hero-bg py-32">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="hero-bg py-32 relative z-0">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="text-center">
-                    <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 fade-in">
+                    <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 hero-text-reveal">
                         WE DON'T POWER THE FUTURE, <span class="text-gms-accent">WE OWN IT</span>
                     </h1>
-                    <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 fade-in">
-                        Pioneering the future of energy and autonomous technologies through relentless innovation and strategic vision.
+                    <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 hero-text-reveal">
+                        We are the architects of tomorrow, commanding the convergence of energy, autonomy, and intelligence to forge an unrivaled global infrastructure.
                     </p>
-                    <div class="mt-10 fade-in">
-                        <a href="/divisions/" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
-                            EXPLORE OUR DIVISIONS
+                    <div class="mt-10 hero-text-reveal">
+                        <a href="/divisions/" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                            EXPLORE OUR DOMAIN
                         </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us / Our Philosophy Section -->
+        <section class="py-20 bg-gms-blue fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2">
+                        <h2 class="text-4xl font-bold font-montserrat mb-6 text-gms-accent">ARCHITECTS OF DESTINY: OUR UNYIELDING PHILOSOPHY</h2>
+                        <p class="text-lg mb-6 leading-relaxed">
+                            At Gul and Metzen Solutions LLC, we don't just envision the future; we engineer its very foundation. We are the architects of unprecedented power, seamlessly integrating cutting-edge AI with physical systems to command unparalleled resilience and efficiency across global domains.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            Our purpose is to redefine national security, establish absolute energy independence, and unleash sustainable innovation that transcends conventional boundaries. Every solution we develop is designed for critical environments, ensuring unwavering reliability and strategic advantage when it matters most.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <!-- Innovation Image -->
+                        <img src="https://i.imgur.com/BfIUYQT.jpeg" alt="Abstract Data Network" class="rounded-xl shadow-xl border border-gray-700 w-full h-auto object-cover">
                     </div>
                 </div>
             </div>
@@ -186,75 +247,121 @@
         <!-- Highlights Section -->
         <section class="py-20 bg-gms-gray fade-in-section">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center mb-16 font-montserrat">GLOBAL LEADERS IN INNOVATION</h2>
+                <h2 class="text-3xl font-bold text-center mb-16 font-montserrat text-white">GLOBAL DOMINANCE: UNRIVALED INNOVATION</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center">
-                        <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6">
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center card-hover-effect">
+                        <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6 text-white">
                             <i class="fas fa-atom text-3xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-4">Nuclear Energy</h3>
-                        <p>Pioneering Small Modular Reactor (SMR) grids with AI integration for safer, more efficient, and sustainable nuclear energy solutions.</p>
+                        <h3 class="text-xl font-bold mb-4 font-montserrat">Nuclear Energy Mastery</h3>
+                        <p class="text-gray-300">Pioneering Small Modular Reactor (SMR) grids with AI integration for safer, more efficient, and sustainable nuclear energy solutions, asserting absolute control over power generation.</p>
                     </div>
-                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center">
-                        <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6">
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center card-hover-effect">
+                        <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6 text-white">
                             <i class="fas fa-solar-panel text-3xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-4">Solar Energy</h3>
-                        <p>Smart AI-integrated adjustable solar panel systems that optimize sun exposure and can be deployed in any location.</p>
+                        <h3 class="text-xl font-bold mb-4 font-montserrat">Solar Energy Command</h3>
+                        <p class="text-gray-300">Smart AI-integrated adjustable solar panel systems that optimize sun exposure and can be deployed in any location, transforming solar into an unyielding power source.</p>
                     </div>
-                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center">
-                        <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6">
-                            <i class="fas fa-drone text-3xl"></i>
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center card-hover-effect">
+                        <div class="w-20 h-20 mx-auto bg-gms-accent rounded-full flex items-center justify-center mb-6 text-white">
+                            <i class="fa-solid fa-brain text-3xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-4">Autonomous Systems</h3>
-                        <p>Our Hive drone network serves first responders, border security, emergency disaster response, fire/wildfire combat, national defense, and anti-drone operations.</p>
+                        <h3 class="text-xl font-bold mb-4 font-montserrat">Autonomous Systems Supremacy</h3>
+                        <p class="text-gray-300">Our Hive drone network serves first responders, border security, emergency disaster response, fire/wildfire combat, national defense, and anti-drone operations, establishing total aerial dominance.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Project Swarm Section (Updated with Base64 Placeholder) -->
-        <section class="py-20 fade-in-section">
+        <!-- Project Swarm Section (Updated with correct image) -->
+        <section class="py-20 bg-gms-blue fade-in-section">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row items-center">
+                <div class="flex flex-col md:flex-row items-center gap-12">
                     <div class="md:w-1/2 mb-10 md:mb-0 flex items-center justify-center">
-                        <!-- Project Swarm Image - NOW USING BASE64 PLACEHOLDER -->
-                        <img src="<!-- BASE64_PROJECT_SWARM_LOGO_HERE -->" alt="Project Swarm Logo" class="project-swarm-img">
+                        <!-- Project Swarm Image -->
+                        <img src="https://i.imgur.com/Yj1r1Z1.jpeg" alt="Project Swarm Logo" class="project-swarm-img">
                     </div>
                     <div class="md:w-1/2 md:pl-16">
-                        <h2 class="text-3xl font-bold mb-6 font-montserrat">PROJECT SWARM</h2>
-                        <p class="mb-6 text-lg">Our flagship initiative revolutionizing autonomous systems for national security and emergency response.</p>
-                        <p class="mb-8">Project Swarm integrates advanced AI with drone technology to create coordinated response systems capable of operating in the most challenging environments. With real-time data processing and machine learning capabilities, our systems provide unprecedented situational awareness and response coordination.</p>
-                        <a href="/divisions/" class="text-gms-accent font-bold hover:text-blue-400 flex items-center">
-                            Learn more about Aerospace & Autonomy
-                            <i class="fas fa-arrow-right ml-2"></i>
+                        <h2 class="text-4xl font-bold mb-6 font-montserrat text-gms-accent">PROJECT SWARM: THE PINNACLE OF AUTONOMY</h2>
+                        <p class="mb-6 text-lg leading-relaxed">Our flagship initiative revolutionizes autonomous systems for national security and emergency response. Project Swarm represents the pinnacle of AI-driven defense and rapid deployment capabilities, ensuring an unbreachable shield for the nation.</p>
+                        <p class="mb-8 leading-relaxed">Project Swarm integrates advanced AI with drone technology to create coordinated response systems capable of operating in the most challenging environments. With real-time data processing, predictive analytics, and machine learning capabilities, our systems provide unprecedented situational awareness, rapid deployment, and autonomous response coordination, far exceeding traditional human-led operations and establishing our absolute command.</p>
+                        <a href="/divisions/" class="text-gms-accent font-bold hover:text-blue-400 flex items-center group">
+                            Explore Aerospace & Autonomy Division
+                            <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-2"></i>
                         </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Stats Section -->
+        <!-- Integrated Solutions Section -->
         <section class="py-20 bg-gms-gray fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-8 font-montserrat text-white">COMMANDING THE FUTURE: INTEGRATED GLOBAL SOLUTIONS</h2>
+                <p class="text-lg max-w-4xl mx-auto mb-12 text-gray-300">
+                    Our divisions are not silos; they are interconnected pillars of unparalleled innovation. We leverage cross-disciplinary expertise to engineer synergistic solutions that master multifaceted global challenges, from absolute energy security to advanced, unassailable defense.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gms-light p-6 rounded-xl shadow-lg card-hover-effect">
+                        <i class="fas fa-cubes text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Synergistic Mastery</h3>
+                        <p class="text-gray-300">Combining expertise from energy, autonomy, and AI to build comprehensive platforms that dominate every domain.</p>
+                    </div>
+                    <div class="bg-gms-light p-6 rounded-xl shadow-lg card-hover-effect">
+                        <i class="fas fa-globe-americas text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Global Impact & Control</h3>
+                        <p class="text-gray-300">Solutions designed for infinite scalability and strategic deployment in diverse international environments, asserting our global presence.</p>
+                    </div>
+                    <div class="bg-gms-light p-6 rounded-xl shadow-lg card-hover-effect">
+                        <i class="fas fa-lock text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Unassailable Resilience</h3>
+                        <p class="text-gray-300">Building systems that adapt, endure, and prevail against any unforeseen threats and challenges, ensuring absolute operational continuity.</p>
+                    </div>
+                </div>
+                <div class="mt-12">
+                    <a href="/about/" class="bg-purple-700 hover:bg-purple-800 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                        UNLEASH OUR VISION
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-20 bg-gms-blue fade-in-section">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 font-montserrat text-white">OUR COMMANDING IMPACT</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                     <div>
                         <div class="text-5xl font-bold text-gms-accent mb-2">15+</div>
-                        <div class="text-lg">Years of Innovation</div>
+                        <div class="text-lg text-gray-300">Years of Unrivaled Innovation</div>
                     </div>
                     <div>
                         <div class="text-5xl font-bold text-gms-accent mb-2">$25B+</div>
-                        <div class="text-lg">Projects Raised</div>
+                        <div class="text-lg text-gray-300">Global Projects Secured</div>
                     </div>
                     <div>
                         <div class="text-5xl font-bold text-gms-accent mb-2">100%</div>
-                        <div class="text-lg">US Made</div>
+                        <div class="text-lg text-gray-300">Domestically Engineered Supremacy</div>
                     </div>
                     <div>
                         <div class="text-5xl font-bold text-gms-accent mb-2">7+</div>
-                        <div class="text-lg">Countries Served</div>
+                        <div class="text-lg text-gray-300">Nations Under Our Influence</div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="py-20 bg-gms-gray fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-6 font-montserrat text-white">JOIN THE ARCHITECTS OF TOMORROW.</h2>
+                <p class="text-lg max-w-3xl mx-auto mb-10 text-gray-300">
+                    Partner with the undisputed leaders in energy and autonomous systems. Whether you seek to collaborate, innovate, or secure your future, our domain extends to meet the most demanding challenges.
+                </p>
+                <a href="/contact/" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-full text-xl transition duration-300 transform hover:scale-105 shadow-xl">
+                    ENGAGE OUR EXPERTISE
+                </a>
             </div>
         </section>
     </div>
@@ -263,25 +370,24 @@
     <footer class="bg-gms-gray py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <div class="mb-8">
-                <!-- Footer Logo - NOW USING BASE64 PLACEHOLDER -->
-                <img src="<!-- BASE64_GMS_LOGO_HERE -->" alt="Gul Metzen Solutions Logo" class="gms-logo">
+                <!-- Footer Logo - GMS Logo (Image) -->
+                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo mx-auto mb-4">
                 <p class="text-lg font-bold font-montserrat">GUL METZEN SOLUTIONS</p>
             </div>
             <div class="flex justify-center space-x-6 mb-8">
-                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-twitter fa-2x"></i></a>
-                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in fa-2x"></i></a>
-                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f fa-2x"></i></a>
-                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f fa-2x"></i></a>
+                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram fa-2x"></i></a>
             </div>
             <div class="mb-8 text-sm">
-                <p>&copy; 2023 Gul Metzen Solutions. All rights reserved.</p>
-                <p>123 Innovation Drive, Tech City, ST 12345</p>
-                <p>Email: info@gulmetzensolutions.com | Phone: (123) 456-7890</p>
+                <p>&copy; 2023-2025 Gul and Metzen Solutions LLC. All rights reserved.</p>
+                <p>Jersey City, NJ</p>
             </div>
             <div class="text-xs">
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Privacy Policy</a> |
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Terms of Service</a> |
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Sitemap</a>
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Privacy Policy</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Terms of Service</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Sitemap</a>
             </div>
         </div>
     </footer>
@@ -323,24 +429,6 @@
                 homeNavLinkMobile.addEventListener('click', handleHomeClick);
             }
 
-            // Contact form submission (only if this page had a contact form)
-            const contactForm = document.getElementById('contact-form');
-            if(contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // In a real application, you would send this form data to a server
-                    console.log('Form submitted!'); 
-                    const messageBox = document.createElement('div');
-                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gms-accent text-white p-6 rounded-lg shadow-lg z-[1000]';
-                    messageBox.textContent = 'Thank you for your message. We will contact you shortly.';
-                    document.body.appendChild(messageBox);
-                    setTimeout(() => {
-                        messageBox.remove();
-                    }, 3000); 
-                    contactForm.reset();
-                });
-            }
-            
             // Intersection Observer for scroll-triggered fade-in sections
             const sections = document.querySelectorAll('.fade-in-section');
             const observerSections = new IntersectionObserver((entries, observer) => {
