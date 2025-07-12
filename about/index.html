@@ -8,6 +8,132 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tailwind Configuration Extension */
+        :root {
+            --gms-blue: #0a192f;
+            --gms-gray: #1a1a1a;
+            --gms-light: #2d3748;
+            --gms-accent: #00b4d8;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--gms-blue); /* Ensure consistent dark background */
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* General Fade-in for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero text animation */
+        .hero-text-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textReveal 1s ease-out forwards;
+            animation-delay: 0.3s; /* Delay for a staggered effect */
+            text-shadow: 0px 0px 15px rgba(0, 180, 216, 0.4); /* Subtle glow for text */
+        }
+        .hero-text-reveal:nth-child(2) { animation-delay: 0.6s; }
+        .hero-text-reveal:nth-child(3) { animation-delay: 0.9s; }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero background with subtle parallax/movement and animation */
+        .hero-bg {
+            background: linear-gradient(rgba(10, 25, 47, 0.98), rgba(10, 25, 47, 0.9)), url('https://images.unsplash.com/photo-1518495973542-cefd56373f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: 110% 110%; /* Slightly larger to allow for animation */
+            background-attachment: fixed; /* Parallax effect */
+            position: relative;
+            overflow: hidden;
+            animation: backgroundPan 60s linear infinite alternate; /* Slow, subtle pan */
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(0, 180, 216, 0.15), transparent 60%),
+                        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.15), transparent 60%);
+            opacity: 0.8; /* Slightly more opaque */
+            z-index: 1;
+        }
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Card hover effects */
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border: 1px solid transparent; /* Default border */
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-10px); /* More pronounced lift */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 180, 216, 0.3); /* Stronger shadow with subtle glow */
+            border-color: var(--gms-accent); /* Accent border on hover */
+            background-color: var(--gms-light); /* Slightly lighter on hover */
+        }
+
+        /* Client logo grayscale effect */
+        .client-logo-effect {
+            filter: grayscale(100%);
+            transition: filter 0.3s ease-in-out;
+        }
+        .client-logo-effect:hover {
+            filter: grayscale(0%);
+        }
+
+        /* Custom CSS for Main GMS Logo (will be inverted to white) */
+        .gms-logo {
+            filter: invert(100%); /* Make the black logo white */
+            height: 80px; /* Doubled size for the GM image */
+            width: auto; /* Maintain aspect ratio */
+            display: block; /* Ensure proper rendering */
+        }
+
+        /* Styling for Project Swarm Image (no invert filter) */
+        .project-swarm-img {
+            max-height: 400px; /* Limit height */
+            width: 100%; /* Ensure responsiveness */
+            object-fit: contain; /* Ensure the image fits within the bounds without cropping */
+            border-radius: 0.75rem; /* rounded-xl equivalent */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg equivalent */
+        }
+
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.is-open {
+            max-height: var(--mobile-menu-height); /* Set dynamically or to a large enough value */
+            opacity: 1;
+        }
+
+        /* Custom styles for the "GM" text to be smaller */
+        .gms-text-logo {
+            font-size: 1.5rem; /* Text size remains as previously set */
+            line-height: 1.2;
+        }
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -26,80 +152,6 @@
             }
         }
     </script>
-    <style>
-        /* General Fade-in for sections */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Specific fade-in for hero elements */
-        .fade-in {
-            animation: fadeIn 0.8s ease-in forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-bg {
-            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.7)), url('https://images.unsplash.com/photo-1623874106686-5be5d9f7639a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-        }
-        .division-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .division-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-        .leader-card:hover .leader-overlay {
-            opacity: 1;
-        }
-        .leader-overlay {
-            transition: opacity 0.3s ease;
-        }
-        .client-logo {
-            filter: grayscale(100%);
-            transition: filter 0.3s ease;
-        }
-        .client-logo:hover {
-            filter: grayscale(0%);
-        }
-        .press-card {
-            transition: all 0.3s ease;
-        }
-        .press-card:hover {
-            transform: translateY(-5px);
-            border-color: #00b4d8;
-        }
-        .contact-input:focus {
-            outline: none;
-            border-color: #00b4d8;
-        }
-        /* Custom CSS to invert logo color for visibility on dark backgrounds */
-        .logo-filter-invert {
-            filter: invert(100%);
-        }
-
-        /* Mobile Menu Animation */
-        #mobile-menu {
-            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-        }
-        #mobile-menu.is-open {
-            max-height: var(--mobile-menu-height); /* Set dynamically or to a large enough value */
-            opacity: 1;
-        }
-    </style>
 </head>
 <body class="bg-gms-blue text-white font-roboto">
     <!-- Navigation -->
@@ -108,16 +160,17 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <!-- Main Site Logo -->
-                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 w-auto logo-filter-invert">
-                        <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline">GUL METZEN SOLUTIONS</span>
-                        <span class="ml-3 text-lg font-bold font-montserrat sm:hidden">GMS</span>
+                        <!-- Main Site Logo - GMS Logo (Image) -->
+                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo">
+                        <!-- GMS Text Logo -->
+                        <span class="ml-3 font-bold font-montserrat hidden sm:inline text-white gms-text-logo">GUL METZEN SOLUTIONS</span>
+                        <span class="ml-3 font-bold font-montserrat sm:hidden text-white gms-text-logo">GMS</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <!-- Navigation Links with Hover Effect -->
-                    <a href="/" id="home-nav-link" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">HOME</a>
-                    <a href="/about/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
+                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                    <a href="/about/" id="about-nav-link" class="text-gms-accent px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
                     <a href="/divisions/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
                     <a href="/clients/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
                     <a href="/pressroom/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
@@ -134,13 +187,13 @@
         </div>
         <div id="mobile-menu" class="md:hidden bg-gms-gray">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <!-- Mobile Menu Logo -->
+                <!-- Mobile Menu Logo - GMS Logo (Image) -->
                 <div class="flex items-center justify-center py-4">
-                    <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 w-auto logo-filter-invert">
+                    <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo">
                 </div>
                 <!-- Mobile Navigation Links with Hover Effect -->
-                <a href="/" id="home-nav-link-mobile" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
-                <a href="/about/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
+                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                <a href="/about/" id="about-nav-link-mobile" class="text-gms-accent block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
                 <a href="/divisions/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
                 <a href="/clients/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
                 <a href="/pressroom/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
@@ -149,135 +202,138 @@
         </div>
     </nav>
 
-    <!-- Page Content for About -->
+    <!-- Page Content for About Us -->
     <div class="pt-20 min-h-screen">
-        <section class="py-20 hero-bg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 class="text-4xl md:text-6xl font-bold text-center mb-10 font-montserrat fade-in">ABOUT GUL METZEN SOLUTIONS</h1>
-                <p class="text-xl text-center max-w-4xl mx-auto mb-16 fade-in">
-                    Founded on the principles of innovation, excellence, and national service, Gul Metzen Solutions stands at the forefront of technological advancement.
-                </p>
+        <!-- Hero Section for About Us -->
+        <section class="hero-bg py-32 relative z-0">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center">
+                    <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 hero-text-reveal">
+                        ABOUT <span class="text-gms-accent">GUL METZEN SOLUTIONS</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 hero-text-reveal">
+                        Forging the future through unparalleled innovation, strategic vision, and absolute mastery across critical global sectors.
+                    </p>
+                </div>
             </div>
         </section>
 
-        <section class="py-20 fade-in-section">
+        <!-- Our Story Section -->
+        <section class="py-20 bg-gms-blue fade-in-section">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row mb-20">
-                    <div class="md:w-1/2 mb-10 md:mb-0">
-                        <h2 class="text-3xl font-bold mb-6 font-montserrat">OUR MISSION</h2>
-                        <p class="mb-6 text-lg">To pioneer transformative technologies that secure national interests and propel humanity forward.</p>
-                        <p>At Gul Metzen Solutions, we combine strategic vision with technical excellence to solve the world's most complex challenges. Our commitment to American innovation drives us to develop solutions that enhance security, sustainability, and prosperity.</p>
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2">
+                        <h2 class="text-4xl font-bold font-montserrat mb-6 text-gms-accent">OUR UNYIELDING ORIGINS</h2>
+                        <p class="text-lg mb-6 leading-relaxed">
+                            Gul and Metzen Solutions LLC was born out of a profound necessity and engineered with uncompromising precision. In an era demanding unprecedented resilience and strategic independence, our founders envisioned a future where critical infrastructure was not merely powered, but owned and commanded. This vision led to the creation of a fully realized, AI-powered platform that redefines what clean energy and autonomous defense can be.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            From our inception, we have been driven by a singular mission: to deliver the scale, intelligence, and resilience required to empower nations, safeguard vital systems, and unlock generational returns. Our journey is one of relentless innovation, transforming challenges into opportunities for absolute mastery.
+                        </p>
                     </div>
-                    <div class="md:w-1/2 md:pl-16">
-                        <div class="bg-gray-200 border-2 border-dashed rounded-xl w-full h-80"></div>
-                    </div>
-                </div>
-
-                <h2 class="text-3xl font-bold mb-6 text-center font-montserrat">OUR LEADERSHIP</h2>
-                <p class="text-center max-w-3xl mx-auto mb-16">Visionary leaders driving innovation and strategic growth across all divisions.</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Leadership Cards -->
-                    <div class="leader-card bg-gms-light rounded-xl overflow-hidden shadow-lg">
-                        <div class="relative">
-                            <div class="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-64"></div>
-                            <div class="leader-overlay absolute inset-0 bg-gms-accent bg-opacity-80 opacity-0 flex items-center justify-center">
-                                <div class="text-center p-4">
-                                    <p class="mb-2">"We build the future by imagining what others cannot see."</p>
-                                    <div class="flex justify-center space-x-4">
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-twitter"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-1">Aizan Gul</h3>
-                            <p class="text-gms-accent mb-3">Chief Executive Officer and Co-Chairman</p>
-                            <p class="text-sm">Visionary leader with 20+ years in strategic technology development and global operations.</p>
-                        </div>
-                    </div>
-
-                    <div class="leader-card bg-gms-light rounded-xl overflow-hidden shadow-lg">
-                        <div class="relative">
-                            <div class="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-64"></div>
-                            <div class="leader-overlay absolute inset-0 bg-gms-accent bg-opacity-80 opacity-0 flex items-center justify-center">
-                                <div class="text-center p-4">
-                                    <p class="mb-2">"Excellence is not an act, but a habit cultivated through relentless pursuit."</p>
-                                    <div class="flex justify-center space-x-4">
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-twitter"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-1">Fabidul Haque</h3>
-                            <p class="text-gms-accent mb-3">Chief Operating Officer and Co-Chairman</p>
-                            <p class="text-sm">Operational mastermind driving efficiency and execution across global projects.</p>
-                        </div>
-                    </div>
-
-                    <div class="leader-card bg-gms-light rounded-xl overflow-hidden shadow-lg">
-                        <div class="relative">
-                            <div class="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-64"></div>
-                            <div class="leader-overlay absolute inset-0 bg-gms-accent bg-opacity-80 opacity-0 flex items-center justify-center">
-                                <div class="text-center p-4">
-                                    <p class="mb-2">"In the digital age, information is the ultimate strategic asset."</p>
-                                    <div class="flex justify-center space-x-4">
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-twitter"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-1">Ahmed Gul</h3>
-                            <p class="text-gms-accent mb-3">Chief Information Officer and Board Member</p>
-                            <p class="text-sm">Cybersecurity expert and architect of GMS's digital transformation strategy.</p>
-                        </div>
-                    </div>
-
-                    <div class="leader-card bg-gms-light rounded-xl overflow-hidden shadow-lg">
-                        <div class="relative">
-                            <div class="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-64"></div>
-                            <div class="leader-overlay absolute inset-0 bg-gms-accent bg-opacity-80 opacity-0 flex items-center justify-center">
-                                <div class="text-center p-4">
-                                    <p class="mb-2">"Autonomy is the frontier where human ingenuity meets machine precision."</p>
-                                    <div class="flex justify-center space-x-4">
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-twitter"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-1">Nojus Krankauskas</h3>
-                            <p class="text-gms-accent mb-3">Director of Autonomous Systems</p>
-                            <p class="text-sm">Pioneer in drone technology and AI-driven autonomous systems development.</p>
-                        </div>
-                    </div>
-
-                    <div class="leader-card bg-gms-light rounded-xl overflow-hidden shadow-lg">
-                        <div class="relative">
-                            <div class="bg-gray-200 border-2 border-dashed rounded-t-xl w-full h-64"></div>
-                            <div class="leader-overlay absolute inset-0 bg-gms-accent bg-opacity-80 opacity-0 flex items-center justify-center">
-                                <div class="text-center p-4">
-                                    <p class="mb-2">"Strategic partnerships are the cornerstone of national security innovation."</p>
-                                    <div class="flex justify-center space-x-4">
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-twitter"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-1">Jack Fellows</h3>
-                            <p class="text-gms-accent mb-3">Director of Government Affairs, Board Member</p>
-                            <p class="text-sm">Former government official with deep expertise in defense and international relations.</p>
-                        </div>
+                    <div class="md:w-1/2">
+                        <img src="https://i.imgur.com/GQbLw3u.jpeg" alt="Futuristic Cityscape" class="rounded-xl shadow-xl border border-gray-700 w-full h-auto object-cover">
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Our Leadership Section -->
+        <section class="py-20 bg-gms-gray fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-16 font-montserrat text-white">VISIONARY LEADERSHIP</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Leader 1: Aizan Gul -->
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg card-hover-effect">
+                        <img src="https://placehold.co/150x150/0a192f/00b4d8?text=Aizan+Gul" alt="Aizan Gul" class="rounded-full w-32 h-32 mx-auto mb-6 object-cover border-4 border-gms-accent">
+                        <h3 class="text-xl font-bold mb-2 font-montserrat">Aizan Gul</h3>
+                        <p class="text-gms-accent mb-4">Chief Executive Officer & Co-Chairman</p>
+                        <p class="text-gray-300 text-sm">A prodigious visionary and the strategic architect of our pioneering approach, leading Gul Metzen Solutions with unparalleled foresight and ambition.</p>
+                    </div>
+                    <!-- Leader 2: Fabidul Haque -->
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center card-hover-effect">
+                        <img src="https://placehold.co/150x150/0a192f/00b4d8?text=Fabidul+Haque" alt="Fabidul Haque" class="rounded-full w-32 h-32 mx-auto mb-6 object-cover border-4 border-gms-accent">
+                        <h3 class="text-xl font-bold mb-2 font-montserrat">Fabidul Haque</h3>
+                        <p class="text-gms-accent mb-4">Chief Operating Officer & Co-Chairman</p>
+                        <p class="text-gray-300 text-sm">An astute leader with profound expertise in Biomedical engineering and advanced autonomous learning systems, ensuring the seamless and dominant execution of our global operations.</p>
+                    </div>
+                    <!-- Leader 3: Ahmed Gul -->
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center card-hover-effect">
+                        <img src="https://placehold.co/150x150/0a192f/00b4d8?text=Ahmed+Gul" alt="Ahmed Gul" class="rounded-full w-32 h-32 mx-auto mb-6 object-cover border-4 border-gms-accent">
+                        <h3 class="text-xl font-bold mb-2 font-montserrat">Ahmed Gul</h3>
+                        <p class="text-gms-accent mb-4">Chief Information Officer & Board Member</p>
+                        <p class="text-gray-300 text-sm">A world-class visionary in technological development and information architecture, spearheading our digital supremacy and securing our position as an unassailable global force.</p>
+                    </div>
+                    <!-- Leader 4: Nojus Krankauskas -->
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center card-hover-effect">
+                        <img src="https://placehold.co/150x150/0a192f/00b4d8?text=Nojus+Krankauskas" alt="Nojus Krankauskas" class="rounded-full w-32 h-32 mx-auto mb-6 object-cover border-4 border-gms-accent">
+                        <h3 class="text-xl font-bold mb-2 font-montserrat">Nojus Krankauskas</h3>
+                        <p class="text-gms-accent mb-4">Director of Autonomous Systems</p>
+                        <p class="text-gray-300 text-sm">A relentless pioneer in drone technology and AI-driven autonomous systems, designing and developing the next generation of unyielding aerial and ground command solutions.</p>
+                    </div>
+                    <!-- Leader 5: Jack Fellow -->
+                    <div class="bg-gms-light p-8 rounded-xl shadow-lg text-center card-hover-effect">
+                        <img src="https://placehold.co/150x150/0a192f/00b4d8?text=Jack+Fellow" alt="Jack Fellow" class="rounded-full w-32 h-32 mx-auto mb-6 object-cover border-4 border-gms-accent">
+                        <h3 class="text-xl font-bold mb-2 font-montserrat">Jack Fellow</h3>
+                        <p class="text-gms-accent mb-4">Director of Government Affairs & Board Member</p>
+                        <p class="text-gray-300 text-sm">A seasoned strategist in complex geopolitical landscapes, and an unparalleled expert in ensuring our initiatives align with and advance national and international objectives with absolute precision.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Core Values Section -->
+        <section class="py-20 bg-gms-blue fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-16 font-montserrat text-white">PILLARS OF OUR POWER</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                    <div class="bg-gms-light p-6 rounded-xl shadow-lg card-hover-effect">
+                        <i class="fas fa-lightbulb text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Unrivaled Innovation</h3>
+                        <p class="text-gray-300 text-sm">Constantly pushing the boundaries of what's possible, creating solutions that define the future.</p>
+                    </div>
+                    <div class="bg-gms-light p-6 rounded-xl shadow-lg card-hover-effect">
+                        <i class="fas fa-shield-alt text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Absolute Security</h3>
+                        <p class="text-gray-300 text-sm">Building systems with unassailable defenses, ensuring the integrity and protection of critical assets.</p>
+                    </div>
+                    <div class="bg-gms-light p-6 rounded-xl shadow-lg card-hover-effect">
+                        <i class="fas fa-infinity text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Enduring Resilience</h3>
+                        <p class="text-gray-300 text-sm">Designing infrastructure that withstands any challenge, guaranteeing continuous operation and adaptability.</p>
+                    </div>
+                    <div class="bg-gms-light p-6 rounded-xl shadow-lg card-hover-effect">
+                        <i class="fas fa-globe text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Global Command</h3>
+                        <p class="text-gray-300 text-sm">Leveraging our expertise to exert influence and deliver impact across the international landscape.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Careers Section -->
+        <section class="py-20 bg-gms-gray fade-in-section">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center bg-gms-light p-10 rounded-xl shadow-2xl border border-gms-accent">
+                <h2 class="text-3xl font-bold font-montserrat mb-6 text-gms-accent">WANT TO JOIN THE ARCHITECTS OF TOMORROW?</h2>
+                <p class="text-lg max-w-2xl mx-auto mb-8 text-gray-300">
+                    At Gul and Metzen Solutions, we are constantly seeking brilliant minds and audacious spirits to join our elite team. If you are driven by innovation, aspire to shape global infrastructure, and thrive in an environment of unparalleled challenge and reward, your future begins here.
+                </p>
+                <a href="https://gulhaque.com/careers" target="_blank" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-full text-xl transition duration-300 transform hover:scale-105 shadow-xl">
+                    EXPLORE CAREERS WITH US
+                </a>
+            </div>
+        </section>
+
+        <!-- Call to Action Section (Reused from Home for consistency) -->
+        <section class="py-20 bg-gms-blue fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-6 font-montserrat text-white">ENGAGE OUR EXPERTISE.</h2>
+                <p class="text-lg max-w-3xl mx-auto mb-10 text-gray-300">
+                    Connect with Gul and Metzen Solutions to discuss how our unparalleled capabilities can secure and advance your strategic objectives.
+                </p>
+                <a href="/contact/" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-full text-xl transition duration-300 transform hover:scale-105 shadow-xl">
+                    CONTACT OUR STRATEGISTS
+                </a>
             </div>
         </section>
     </div>
@@ -286,25 +342,24 @@
     <footer class="bg-gms-gray py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <div class="mb-8">
-                <!-- Footer Logo -->
-                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 mx-auto mb-4 logo-filter-invert">
+                <!-- Footer Logo - GMS Logo (Image) -->
+                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo mx-auto mb-4">
                 <p class="text-lg font-bold font-montserrat">GUL METZEN SOLUTIONS</p>
             </div>
             <div class="flex justify-center space-x-6 mb-8">
-                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-twitter fa-2x"></i></a>
-                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in fa-2x"></i></a>
-                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f fa-2x"></i></a>
-                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f fa-2x"></i></a>
+                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram fa-2x"></i></a>
             </div>
             <div class="mb-8 text-sm">
-                <p>&copy; 2023 Gul Metzen Solutions. All rights reserved.</p>
-                <p>123 Innovation Drive, Tech City, ST 12345</p>
-                <p>Email: info@gulmetzensolutions.com | Phone: (123) 456-7890</p>
+                <p>&copy; 2023-2025 Gul and Metzen Solutions LLC. All rights reserved.</p>
+                <p>Jersey City, NJ</p>
             </div>
             <div class="text-xs">
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Privacy Policy</a> |
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Terms of Service</a> |
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Sitemap</a>
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Privacy Policy</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Terms of Service</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Sitemap</a>
             </div>
         </div>
     </footer>
@@ -326,53 +381,32 @@
                 });
             }
 
-            // Prevent refresh on Home button if already at root
-            const homeNavLink = document.getElementById('home-nav-link');
-            const homeNavLinkMobile = document.getElementById('home-nav-link-mobile');
-            
-            function handleHomeClick(e) {
-                const currentPath = window.location.pathname;
-                if (currentPath === '/' || currentPath === '/index.html' || currentPath === '/home/') { 
-                    e.preventDefault();
+            // Highlight active navigation link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath || 
+                    (link.getAttribute('href') === '/' && (currentPath === '/index.html' || currentPath === '/'))) {
+                    link.classList.add('text-gms-accent');
+                    link.classList.remove('text-gray-300');
+                } else {
+                    link.classList.remove('text-gms-accent');
+                    link.classList.add('text-gray-300');
                 }
-            }
+            });
 
-            if (homeNavLink) {
-                homeNavLink.addEventListener('click', handleHomeClick);
-            }
-            if (homeNavLinkMobile) {
-                homeNavLinkMobile.addEventListener('click', handleHomeClick);
-            }
-
-            // Contact form submission (only if this page had a contact form)
-            const contactForm = document.getElementById('contact-form');
-            if(contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    console.log('Form submitted!'); // For demonstration, use console.log instead of alert
-                    const messageBox = document.createElement('div');
-                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gms-accent text-white p-6 rounded-lg shadow-lg z-[1000]';
-                    messageBox.textContent = 'Thank you for your message. We will contact you shortly.';
-                    document.body.appendChild(messageBox);
-                    setTimeout(() => {
-                        messageBox.remove();
-                    }, 3000);
-                    contactForm.reset();
-                });
-            }
-            
             // Intersection Observer for scroll-triggered fade-in sections
             const sections = document.querySelectorAll('.fade-in-section');
             const observerSections = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
+                        observer.unobserve(entry.target); 
                     }
                 });
             }, {
                 rootMargin: '0px',
-                threshold: 0.1
+                threshold: 0.1 
             });
 
             sections.forEach(section => {
