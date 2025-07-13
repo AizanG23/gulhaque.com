@@ -3,11 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gul and Metzen Solutions | Contact Us</title>
+    <title>Connect with Us | Gul and Metzen Solutions</title>
     <link rel="icon" href="https://i.imgur.com/fUreDP2.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tailwind Configuration Extension */
+        :root {
+            --gms-blue: '#0a192f';
+            --gms-gray: '#1a1a1a';
+            --gms-light': '#2d3748';
+            --gms-accent: '#00b4d8';
+            --gms-purple: '#8b5cf6'; /* Added for subtle gradients */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--gms-blue);
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* General Fade-in for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px); /* Increased initial translation */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Slower transition */
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero text animation */
+        .hero-text-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textReveal 1s ease-out forwards;
+            animation-delay: 0.3s;
+            text-shadow: 0px 0px 40px rgba(0, 180, 216, 1); /* Stronger glow for text */
+        }
+        .hero-text-reveal:nth-child(2) { animation-delay: 0.6s; }
+        .hero-text-reveal:nth-child(3) { animation-delay: 0.9s; }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero background with subtle parallax/movement and animation */
+        .hero-bg {
+            background: linear-gradient(rgba(10, 25, 47, 0.98), rgba(10, 25, 47, 0.9)), url('https://images.unsplash.com/photo-1518495973542-cefd56373f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: 110% 110%;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+            animation: backgroundPan 90s linear infinite alternate; /* Slower pan */
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(0, 180, 216, 0.6), transparent 60%),
+                        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.6), transparent 60%);
+            opacity: 0.95;
+            z-index: 1;
+            animation: pulseGlow 10s infinite alternate; /* Subtle glow animation */
+        }
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.95; }
+            50% { opacity: 1; }
+            100% { opacity: 0.95; }
+        }
+
+        /* Custom CSS for Main GMS Logo (will be inverted to white) */
+        .gms-logo {
+            filter: invert(100%);
+            height: 80px;
+            width: auto;
+            display: block;
+        }
+
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out; /* Slightly longer */
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.is-open {
+            max-height: var(--mobile-menu-height);
+            opacity: 1;
+        }
+
+        /* Custom styles for the "GM" text to be smaller */
+        .gms-text-logo {
+            font-size: 1.5rem;
+            line-height: 1.2;
+        }
+
+        /* Subtle background gradient for sections */
+        .section-gradient-bg-1 {
+            background: linear-gradient(to bottom, var(--gms-blue), rgba(10, 25, 47, 0.98));
+        }
+        .section-gradient-bg-2 {
+            background: linear-gradient(to bottom, var(--gms-gray), rgba(26, 26, 26, 0.98));
+        }
+
+        /* Form specific styles */
+        .form-input {
+            background-color: var(--gms-light);
+            border: 1px solid var(--gms-gray);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gms-accent);
+            box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.6); /* Stronger accent glow on focus */
+            transform: translateY(-2px); /* Subtle lift on focus */
+        }
+        .form-textarea {
+            min-height: 150px; /* Taller textarea */
+            resize: vertical;
+        }
+        .submit-button {
+            background: linear-gradient(45deg, var(--gms-accent), var(--gms-purple)); /* Gradient button */
+            color: white;
+            font-weight: bold;
+            padding: 1rem 3rem;
+            border-radius: 9999px;
+            transition: all 0.4s ease; /* All properties for smooth transition */
+            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.5), 0 5px 15px rgba(139, 92, 246, 0.5); /* Dual shadow */
+            position: relative;
+            overflow: hidden;
+        }
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.15); /* Light ripple effect */
+            border-radius: 50%;
+            transition: all 0.75s ease-out;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+        }
+        .submit-button:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .submit-button:hover {
+            transform: translateY(-5px) scale(1.02); /* More pronounced lift and slight scale */
+            box-shadow: 0 15px 35px rgba(0, 180, 216, 0.7), 0 8px 20px rgba(139, 92, 246, 0.7);
+        }
+        .submit-button:active {
+            transform: translateY(0); /* Press down effect */
+            box-shadow: 0 5px 10px rgba(0, 180, 216, 0.3), 0 2px 5px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: linear-gradient(to bottom right, var(--gms-gray), rgba(26, 26, 26, 0.95));
+            border: 2px solid var(--gms-accent);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.7);
+            transform: translateY(-50px) scale(0.9);
+            opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+            max-width: 90%;
+            width: 500px;
+        }
+        .modal-overlay.is-open .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        .modal-close-button {
+            background-color: var(--gms-accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .modal-close-button:hover {
+            background-color: #009ac2;
+            transform: translateY(-2px);
+        }
+
+        /* Contact details icon animation */
+        .contact-icon-item {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .contact-icon-item:hover {
+            transform: translateX(10px) scale(1.05);
+            color: var(--gms-accent);
+        }
+        .contact-icon-item a {
+            transition: color 0.3s ease;
+        }
+        .contact-icon-item a:hover {
+            color: var(--gms-accent);
+        }
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -16,7 +249,8 @@
                         'gms-blue': '#0a192f',
                         'gms-gray': '#1a1a1a',
                         'gms-light': '#2d3748',
-                        'gms-accent': '#00b4d8'
+                        'gms-accent': '#00b4d8',
+                        'gms-purple': '#8b5cf6'
                     },
                     fontFamily: {
                         montserrat: ['Montserrat', 'sans-serif'],
@@ -26,80 +260,6 @@
             }
         }
     </script>
-    <style>
-        /* General Fade-in for sections */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Specific fade-in for hero elements */
-        .fade-in {
-            animation: fadeIn 0.8s ease-in forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-bg {
-            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.7)), url('https://images.unsplash.com/photo-1623874106686-5be5d9f7639a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-        }
-        .division-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .division-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-        .leader-card:hover .leader-overlay {
-            opacity: 1;
-        }
-        .leader-overlay {
-            transition: opacity 0.3s ease;
-        }
-        .client-logo {
-            filter: grayscale(100%);
-            transition: filter 0.3s ease;
-        }
-        .client-logo:hover {
-            filter: grayscale(0%);
-        }
-        .press-card {
-            transition: all 0.3s ease;
-        }
-        .press-card:hover {
-            transform: translateY(-5px);
-            border-color: #00b4d8;
-        }
-        .contact-input:focus {
-            outline: none;
-            border-color: #00b4d8;
-        }
-        /* Custom CSS to invert logo color for visibility on dark backgrounds */
-        .logo-filter-invert {
-            filter: invert(100%);
-        }
-
-        /* Mobile Menu Animation */
-        #mobile-menu {
-            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-        }
-        #mobile-menu.is-open {
-            max-height: var(--mobile-menu-height); /* Set dynamically or to a large enough value */
-            opacity: 1;
-        }
-    </style>
 </head>
 <body class="bg-gms-blue text-white font-roboto">
     <!-- Navigation -->
@@ -108,20 +268,21 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <!-- Main Site Logo -->
-                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 w-auto logo-filter-invert">
-                        <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline">GUL METZEN SOLUTIONS</span>
-                        <span class="ml-3 text-lg font-bold font-montserrat sm:hidden">GMS</span>
+                        <!-- Main Site Logo - GMS Logo (Image) -->
+                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul and Metzen Solutions Logo" class="gms-logo">
+                        <!-- GMS Text Logo -->
+                        <span class="ml-3 font-bold font-montserrat hidden sm:inline text-white gms-text-logo">GUL AND METZEN SOLUTIONS</span>
+                        <span class="ml-3 font-bold font-montserrat sm:hidden text-white gms-text-logo">GMS</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <!-- Navigation Links with Hover Effect -->
-                    <a href="/" id="home-nav-link" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">HOME</a>
                     <a href="/about/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
                     <a href="/divisions/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
                     <a href="/clients/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
                     <a href="/pressroom/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
-                    <a href="/contact/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
+                    <a href="/contact/" id="contact-nav-link" class="text-gms-accent px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
@@ -134,88 +295,136 @@
         </div>
         <div id="mobile-menu" class="md:hidden bg-gms-gray">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <!-- Mobile Menu Logo -->
+                <!-- Mobile Menu Logo - GMS Logo (Image) -->
                 <div class="flex items-center justify-center py-4">
-                    <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 w-auto logo-filter-invert">
+                    <img src="https://i.imgur.com/fUreDP2.png" alt="Gul and Metzen Solutions Logo" class="gms-logo">
                 </div>
                 <!-- Mobile Navigation Links with Hover Effect -->
-                <a href="/" id="home-nav-link-mobile" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
                 <a href="/about/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
                 <a href="/divisions/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
                 <a href="/clients/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
                 <a href="/pressroom/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
-                <a href="/contact/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
+                <a href="/contact/" id="contact-nav-link-mobile" class="text-gms-accent block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
             </div>
         </div>
     </nav>
 
     <!-- Page Content for Contact -->
-    <div class="pt-20 min-h-screen">
-        <section class="py-20 hero-bg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 class="text-4xl md:text-6xl font-bold text-center mb-10 font-montserrat fade-in">CONTACT US</h1>
-                <p class="text-xl text-center max-w-4xl mx-auto mb-16 fade-in">
-                    Connect with Gul Metzen Solutions for partnership opportunities, media inquiries, or general information.
+    <div class="pt-20 min-h-screen flex flex-col">
+        <!-- Hero Section for Contact -->
+        <section class="hero-bg py-32 relative z-0 flex-grow flex items-center justify-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 hero-text-reveal">
+                    CONNECT WITH <span class="text-gms-accent">US</span>
+                </h1>
+                <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 hero-text-reveal">
+                    Engage with the architects of tomorrow's infrastructure. Your inquiries are our priority.
                 </p>
             </div>
         </section>
 
-        <section class="py-20 fade-in-section">
+        <!-- Contact Information & Form Section -->
+        <section class="py-20 bg-gms-blue fade-in-section section-gradient-bg-1">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col lg:flex-row">
-                    
-                    <div class="lg:w-1/2">
-                        <div class="bg-gms-gray rounded-xl p-8">
-                            <h2 class="text-2xl font-bold mb-6 font-montserrat">SEND US A MESSAGE</h2>
-                            <!-- !!! IMPORTANT: Replace "YOUR_FORMSPREE_ENDPOINT_HERE" with your actual, unique URL from Formspree.io !!! -->
-                            <form id="contact-form" action="YOUR_FORMSPREE_ENDPOINT_HERE" method="POST">
-                                <div class="mb-6">
-                                    <label for="fullName" class="block text-gray-300 mb-2">Full Name</label>
-                                    <input type="text" id="fullName" name="fullName" class="contact-input w-full bg-gms-light border border-gray-700 rounded-lg px-4 py-3 focus:border-gms-accent" required>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Contact Details -->
+                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent flex flex-col justify-between">
+                        <div>
+                            <h2 class="text-3xl font-bold font-montserrat mb-6 text-gms-accent">REACH OUT TO OUR TEAM</h2>
+                            <p class="text-lg leading-relaxed text-gray-300 mb-8">
+                                Whether you have questions about our advanced energy solutions, autonomous defense systems, or potential partnerships, our dedicated team is ready to assist. We value every inquiry and strive to provide comprehensive support.
+                            </p>
+
+                            <div class="space-y-6 mb-10">
+                                <div class="flex items-center contact-icon-item">
+                                    <i class="fas fa-envelope text-gms-accent text-2xl mr-4"></i>
+                                    <div>
+                                        <p class="text-gray-400 text-sm">General Inquiries</p>
+                                        <a href="mailto:inquiries@gulhaque.com" class="text-lg text-white hover:text-gms-accent transition duration-300">inquiries@gulhaque.com</a>
+                                    </div>
                                 </div>
-                                
-                                <div class="mb-6">
-                                    <label for="emailAddress" class="block text-gray-300 mb-2">Email Address</label>
-                                    <input type="email" id="emailAddress" name="email" class="contact-input w-full bg-gms-light border border-gray-700 rounded-lg px-4 py-3 focus:border-gms-accent" required>
-                                    <!-- Formspree automatically uses 'email' field for reply-to -->
+                                <!-- Phone number removed as per request -->
+                                <div class="flex items-start contact-icon-item">
+                                    <i class="fas fa-map-marker-alt text-gms-accent text-2xl mr-4 mt-1"></i>
+                                    <div>
+                                        <p class="text-gray-400 text-sm">Headquarters</p>
+                                        <p class="text-lg text-white">
+                                            Gul and Metzen Solutions LLC<br/>
+                                            Jersey City, NJ, USA
+                                        </p>
+                                    </div>
                                 </div>
-                                
-                                <div class="mb-6">
-                                    <label for="company" class="block text-gray-300 mb-2">Company</label>
-                                    <input type="text" id="company" name="company" class="contact-input w-full bg-gms-light border border-gray-700 rounded-lg px-4 py-3 focus:border-gms-accent">
+                                <div class="flex items-start contact-icon-item">
+                                    <i class="fas fa-globe text-gms-accent text-2xl mr-4 mt-1"></i>
+                                    <div>
+                                        <p class="text-gray-400 text-sm">Global Presence</p>
+                                        <p class="text-lg text-white">
+                                            Operating across key strategic locations worldwide.
+                                        </p>
+                                    </div>
                                 </div>
-                                
-                                <div class="mb-6">
-                                    <label for="subject" class="block text-gray-300 mb-2">Subject</label>
-                                    <select id="subject" name="subject" class="contact-input w-full bg-gms-light border border-gray-700 rounded-lg px-4 py-3 focus:border-gms-accent">
-                                        <option>General Inquiry</option>
-                                        <option>Partnership Opportunities</option>
-                                        <option>Media Request</option>
-                                        <option>Career Opportunities</option>
-                                        <option>Technical Support</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="mb-6">
-                                    <label for="message" class="block text-gray-300 mb-2">Message</label>
-                                    <textarea id="message" name="message" rows="5" class="contact-input w-full bg-gms-light border border-gray-700 rounded-lg px-4 py-3 focus:border-gms-accent" required></textarea>
-                                </div>
-                                
-                                <div class="mb-6">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="form-checkbox bg-gms-light border-gray-700 rounded" required>
-                                        <span class="ml-2 text-gray-300">I agree to the privacy policy and terms of service</span>
-                                    </label>
-                                </div>
-                                
-                                <button type="submit" class="w-full bg-gms-accent hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
-                                    SEND MESSAGE
-                                </button>
-                            </form>
+                            </div>
+                        </div>
+
+                        <!-- Social Media Links -->
+                        <div class="mt-auto pt-8 border-t border-gms-light">
+                            <h3 class="text-xl font-bold font-montserrat mb-4 text-white">FOLLOW OUR JOURNEY</h3>
+                            <div class="flex space-x-6">
+                                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-110"><i class="fab fa-twitter fa-2x"></i></a>
+                                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-110"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-110"><i class="fab fa-facebook-f fa-2x"></i></a>
+                                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-110"><i class="fab fa-instagram fa-2x"></i></a>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Contact Form -->
+                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent">
+                        <h2 class="text-3xl font-bold font-montserrat mb-6 text-gms-accent">SEND US A SECURE MESSAGE</h2>
+                        <form id="contactForm" action="mailto:inquiries@gulhaque.com" method="post" enctype="text/plain" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-lg font-medium text-gray-200 mb-2">Your Name</label>
+                                <input type="text" id="name" name="name" class="w-full form-input" placeholder="Enter your full name" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-lg font-medium text-gray-200 mb-2">Your Email</label>
+                                <input type="email" id="email" name="email" class="w-full form-input" placeholder="your.email@example.com" required>
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-lg font-medium text-gray-200 mb-2">Subject</label>
+                                <input type="text" id="subject" name="subject" class="w-full form-input" placeholder="Briefly describe your inquiry" required>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-lg font-medium text-gray-200 mb-2">Your Message</label>
+                                <textarea id="message" name="message" class="w-full form-input form-textarea" placeholder="Type your message here..." required></textarea>
+                            </div>
+                            <div class="text-center pt-4">
+                                <p class="text-sm text-gray-400 mb-4">
+                                    <i class="fas fa-info-circle mr-1"></i> Submitting this form will open your default email client.
+                                </p>
+                                <button type="submit" class="submit-button">
+                                    SEND MESSAGE <i class="fas fa-paper-plane ml-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
+    </div>
+
+    <!-- Thank You Modal -->
+    <div id="thankYouModal" class="modal-overlay">
+        <div class="modal-content">
+            <i class="fas fa-check-circle text-gms-accent text-6xl mb-4 animate-bounce"></i>
+            <h3 class="text-3xl font-bold font-montserrat text-white mb-4">MESSAGE SENT!</h3>
+            <p class="text-lg text-gray-300 mb-6">
+                Thank you for contacting Gul and Metzen Solutions. We have received your inquiry and will respond as soon as possible.
+            </p>
+            <button id="closeModal" class="modal-close-button">
+                CLOSE
+            </button>
         </div>
     </div>
 
@@ -223,25 +432,24 @@
     <footer class="bg-gms-gray py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <div class="mb-8">
-                <!-- Footer Logo -->
-                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 mx-auto mb-4 logo-filter-invert">
-                <p class="text-lg font-bold font-montserrat">GUL METZEN SOLUTIONS</p>
+                <!-- Footer Logo - GMS Logo (Image) -->
+                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul and Metzen Solutions Logo" class="gms-logo mx-auto mb-4">
+                <p class="text-lg font-bold font-montserrat">GUL AND METZEN SOLUTIONS</p>
             </div>
             <div class="flex justify-center space-x-6 mb-8">
-                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-twitter fa-2x"></i></a>
-                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in fa-2x"></i></a>
-                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f fa-2x"></i></a>
-                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f fa-2x"></i></a>
+                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram fa-2x"></i></a>
             </div>
             <div class="mb-8 text-sm">
-                <p>&copy; 2023 Gul Metzen Solutions. All rights reserved.</p>
-                <p>123 Innovation Drive, Tech City, ST 12345</p>
-                <p>Email: info@gulmetzensolutions.com | Phone: (123) 456-7890</p>
+                <p>&copy; 2023-2025 Gul and Metzen Solutions LLC. All rights reserved.</p>
+                <p>Jersey City, NJ</p>
             </div>
             <div class="text-xs">
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Privacy Policy</a> |
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Terms of Service</a> |
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Sitemap</a>
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Privacy Policy</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Terms of Service</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Sitemap</a>
             </div>
         </div>
     </footer>
@@ -256,7 +464,6 @@
                 mobileMenuButton.addEventListener('click', function() {
                     const isOpen = mobileMenu.classList.toggle('is-open');
                     if (isOpen) {
-                        // Calculate height of content to ensure smooth transition
                         mobileMenu.style.setProperty('--mobile-menu-height', mobileMenu.scrollHeight + 'px');
                     } else {
                         mobileMenu.style.setProperty('--mobile-menu-height', '0px');
@@ -264,24 +471,22 @@
                 });
             }
 
-            // Prevent refresh on Home button if already at root
-            const homeNavLink = document.getElementById('home-nav-link');
-            const homeNavLinkMobile = document.getElementById('home-nav-link-mobile');
-            
-            function handleHomeClick(e) {
-                // Check if current path is root or /index.html (common for gh-pages)
-                const currentPath = window.location.pathname;
-                if (currentPath === '/' || currentPath === '/index.html' || currentPath === '/home/') { 
-                    e.preventDefault(); // Stop the default link behavior (refresh)
+            // Highlight active navigation link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                // Check for exact match or root for home
+                if (link.getAttribute('href') === currentPath ||
+                   (link.getAttribute('href') === '/pressroom/' && currentPath.startsWith('/pressroom/')) ||
+                   (link.getAttribute('href') === '/' && (currentPath === '/index.html' || currentPath === '/')) ||
+                   (link.getAttribute('href') === '/contact/' && currentPath.startsWith('/contact/'))) {
+                    link.classList.add('text-gms-accent');
+                    link.classList.remove('text-gray-300');
+                } else {
+                    link.classList.remove('text-gms-accent');
+                    link.classList.add('text-gray-300');
                 }
-            }
-
-            if (homeNavLink) {
-                homeNavLink.addEventListener('click', handleHomeClick);
-            }
-            if (homeNavLinkMobile) {
-                homeNavLinkMobile.addEventListener('click', handleHomeClick);
-            }
+            });
 
             // Intersection Observer for scroll-triggered fade-in sections
             const sections = document.querySelectorAll('.fade-in-section');
@@ -289,17 +494,54 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // Stop observing once animated
+                        observer.unobserve(entry.target);
                     }
                 });
             }, {
                 rootMargin: '0px',
-                threshold: 0.1 // Trigger when 10% of the section is visible
+                threshold: 0.1
             });
 
             sections.forEach(section => {
                 observerSections.observe(section);
             });
+
+            // Contact Form Submission and Modal
+            const contactForm = document.getElementById('contactForm');
+            const thankYouModal = document.getElementById('thankYouModal');
+            const closeModalButton = document.getElementById('closeModal');
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(event) {
+                    // Prevent default form submission to allow mailto to trigger first, then show modal
+                    // The mailto link will open the user's email client.
+                    // This script then immediately shows the modal.
+                    // A true server-side form would require backend processing.
+
+                    // Small delay to allow mailto to potentially initiate before modal shows
+                    setTimeout(() => {
+                        thankYouModal.classList.add('is-open');
+                    }, 100);
+                });
+            }
+
+            if (closeModalButton) {
+                closeModalButton.addEventListener('click', function() {
+                    thankYouModal.classList.remove('is-open');
+                    // Optionally reset the form after closing the modal
+                    contactForm.reset();
+                });
+            }
+
+            // Close modal if clicked outside content
+            if (thankYouModal) {
+                thankYouModal.addEventListener('click', function(event) {
+                    if (event.target === thankYouModal) {
+                        thankYouModal.classList.remove('is-open');
+                        contactForm.reset();
+                    }
+                });
+            }
         });
     </script>
 </body>
