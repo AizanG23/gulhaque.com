@@ -1,1 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gul and Metzen Solutions | Energy Dominance</title>
+    <link rel="icon" href="https://i.imgur.com/fUreDP2.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tailwind Configuration Extension */
+        :root {
+            --gms-blue: #0a192f;
+            --gms-gray: #1a1a1a;
+            --gms-light: #2d3748;
+            --gms-accent: #00b4d8;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--gms-blue); /* Ensure consistent dark background */
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* General Fade-in for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero text animation */
+        .hero-text-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textReveal 1s ease-out forwards;
+            animation-delay: 0.3s; /* Delay for a staggered effect */
+            text-shadow: 0px 0px 25px rgba(0, 180, 216, 0.7); /* Stronger glow for text */
+        }
+        .hero-text-reveal:nth-child(2) { animation-delay: 0.6s; }
+        .hero-text-reveal:nth-child(3) { animation-delay: 0.9s; }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero background with subtle parallax/movement and animation */
+        .hero-bg {
+            background: linear-gradient(rgba(10, 25, 47, 0.98), rgba(10, 25, 47, 0.9)), url('https://images.unsplash.com/photo-1518495973542-cefd56373f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: 110% 110%; /* Slightly larger to allow for animation */
+            background-attachment: fixed; /* Parallax effect */
+            position: relative;
+            overflow: hidden;
+            animation: backgroundPan 60s linear infinite alternate; /* Slow, subtle pan */
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(0, 180, 216, 0.35), transparent 60%), /* Stronger glow */
+                        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.35), transparent 60%); /* Stronger glow */
+            opacity: 0.9; /* Slightly more opaque */
+            z-index: 1;
+        }
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Card hover effects */
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border: 1px solid transparent; /* Default border */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* Base shadow for reflection */
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-12px); /* More pronounced lift */
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 180, 216, 0.5); /* Stronger shadow with more glow */
+            border-color: var(--gms-accent); /* Accent border on hover */
+            background-color: var(--gms-light); /* Slightly lighter on hover */
+        }
+
+        /* Custom CSS for Main GMS Logo (will be inverted to white) */
+        .gms-logo {
+            filter: invert(100%); /* Make the black logo white */
+            height: 80px; /* Doubled size for the GM image */
+            width: auto; /* Maintain aspect ratio */
+            display: block; /* Ensure proper rendering */
+        }
+
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.is-open {
+            max-height: var(--mobile-menu-height); /* Set dynamically or to a large enough value */
+            opacity: 1;
+        }
+
+        /* Custom styles for the "GM" text to be smaller */
+        .gms-text-logo {
+            font-size: 1.5rem; /* Text size remains as previously set */
+            line-height: 1.2;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gms-blue': '#0a192f',
+                        'gms-gray': '#1a1a1a',
+                        'gms-light': '#2d3748',
+                        'gms-accent': '#00b4d8'
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        roboto: ['Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gms-blue text-white font-roboto">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-gms-gray bg-opacity-90 backdrop-blur-sm z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <!-- Main Site Logo - GMS Logo (Image) -->
+                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo">
+                        <!-- GMS Text Logo -->
+                        <span class="ml-3 font-bold font-montserrat hidden sm:inline text-white gms-text-logo">GUL METZEN SOLUTIONS</span>
+                        <span class="ml-3 font-bold font-montserrat sm:hidden text-white gms-text-logo">GMS</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <!-- Navigation Links with Hover Effect -->
+                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                    <a href="/about/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
+                    <a href="/divisions/" id="divisions-nav-link" class="text-gms-accent px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
+                    <a href="/clients/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
+                    <a href="/pressroom/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
+                    <a href="/contact/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden bg-gms-gray">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <!-- Mobile Menu Logo - GMS Logo (Image) -->
+                <div class="flex items-center justify-center py-4">
+                    <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo">
+                </div>
+                <!-- Mobile Navigation Links with Hover Effect -->
+                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                <a href="/about/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
+                <a href="/divisions/" id="divisions-nav-link-mobile" class="text-gms-accent block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
+                <a href="/clients/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
+                <a href="/pressroom/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content for Energy Dominance -->
+    <div class="pt-20 min-h-screen">
+        <!-- Hero Section for Energy Dominance -->
+        <section class="hero-bg py-32 relative z-0">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center">
+                    <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 hero-text-reveal">
+                        ENERGY <span class="text-gms-accent">DOMINANCE</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 hero-text-reveal">
+                        Forging a new era of absolute energy independence and unyielding resilience for nations worldwide.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction to Energy Dominance -->
+        <section class="py-20 bg-gms-blue fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2">
+                        <h2 class="text-4xl font-bold font-montserrat mb-6 text-gms-accent">COMMANDING THE GLOBAL POWER GRID</h2>
+                        <p class="text-lg mb-6 leading-relaxed">
+                            The Energy Dominance division of Gul Metzen Solutions stands at the vanguard of a global energy revolution. We are not merely providing power; we are engineering the very foundation of national resilience and economic sovereignty through the strategic deployment of next-generation energy infrastructure. Our integrated approach ensures unparalleled efficiency, security, and a future free from traditional energy vulnerabilities.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            From the silent, formidable strength of advanced nuclear reactors to the dynamic, adaptive power of AI-driven solar arrays, our systems are designed to perform in the most demanding environments, guaranteeing uninterrupted energy flow and strategic advantage.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center items-center">
+                        <img src="https://i.imgur.com/tYCN8E8.jpeg" alt="Futuristic Energy Grid" class="rounded-xl shadow-xl border border-gray-700 w-full md:w-auto max-h-96 object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCOS 1 Small Modular Reactor (SMR) Systems -->
+        <section class="py-20 bg-gms-gray fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 font-montserrat text-white">ARCOS 1: THE UNYIELDING HEART OF POWER</h2>
+                <div class="flex flex-col md:flex-row-reverse items-center gap-12">
+                    <div class="md:w-1/2 flex justify-center items-center">
+                        <img src="https://i.imgur.com/ZI9ZLsm.jpeg" alt="Nuclear Reactor Core" class="rounded-xl shadow-xl border border-gray-700 w-full md:w-auto max-h-96 object-cover">
+                    </div>
+                    <div class="md:w-1/2">
+                        <p class="text-lg mb-6 leading-relaxed text-gray-300">
+                            The ARCOS 1 Small Modular Reactor represents the pinnacle of compact, safe, and highly efficient nuclear power generation. Engineered for rapid deployment and seamless integration, these advanced reactors provide a foundational source of clean, baseload energy, capable of powering critical infrastructure and entire regions with unparalleled reliability.
+                        </p>
+                        <ul class="space-y-3 mb-8 text-gray-300">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
+                                <span><strong>Modular & Scalable Design:</strong> Rapidly deployable and adaptable to diverse environments, from remote military bases to sprawling urban centers.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
+                                <span><strong>Enhanced Passive Safety Systems:</strong> Incorporating cutting-edge safety protocols that ensure inherent stability and resilience under all conditions.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
+                                <span><strong>AI-Integrated Operations:</strong> Predictive analytics and autonomous control systems optimize performance, minimize human intervention, and enhance security.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
+                                <span><strong>Zero-Emission Power:</strong> Delivering consistent, carbon-free electricity, significantly reducing environmental impact while maximizing energy output.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Qadira Solar Array System -->
+        <section class="py-20 bg-gms-blue fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16 font-montserrat text-white">QADIRA SOLAR ARRAY SYSTEM: INTELLIGENT ENERGY HARVEST</h2>
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2 flex justify-center items-center">
+                        <img src="https://i.imgur.com/d2jrGGS.jpeg" alt="Advanced Solar Panels" class="rounded-xl shadow-xl border border-gray-700 w-full md:w-auto max-h-96 object-cover">
+                    </div>
+                    <div class="md:w-1/2">
+                        <p class="text-lg mb-6 leading-relaxed text-gray-300">
+                            The Qadira Solar Array System represents a paradigm shift in renewable energy. Engineered entirely in-house, our proprietary panels integrate revolutionary AI-reactive glass-polymer composites, maximizing photon absorption and ensuring extreme durability in the harshest environments. This system autonomously adapts to weather and operational demands, transforming solar energy into an unyielding, intelligent power source.
+                        </p>
+                        <ul class="space-y-3 mb-8 text-gray-300">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
+                                <span><strong>Proprietary AI-Reactive Composites:</strong> Custom-developed materials that dynamically optimize photon absorption, achieving unprecedented energy capture efficiency.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
+                                <span><strong>Dual-Axis AI-Controlled Tracking:</strong> Panels feature a 180&deg; horizontal and 90&deg; vertical rotational range, ensuring peak solar capture from sunrise to sunset, regardless of terrain.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
+                                <span><strong>Autonomous Self-Cleaning System:</strong> Robotic arms embedded with soft-poly brush technology clean each panel at programmed intervals or in response to AI-detected soiling/debris, maintaining optimal performance.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-gms-accent mt-1 mr-3"></i>
+                                <span><strong>AI Weather Shielding & Resilience:</strong> Automatic panel rotation and robust design allow the system to adapt to extreme weather conditions, protecting assets and ensuring continuous operation.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integrated Energy Solutions -->
+        <section class="py-20 bg-gms-gray fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-8 font-montserrat text-white">THE SYNERGY OF POWER: UNIFIED ENERGY COMMAND</h2>
+                <p class="text-lg max-w-4xl mx-auto mb-12 text-gray-300">
+                    The true strength of our Energy Dominance lies in the seamless integration of ARCOS 1 SMRs and the Qadira Solar Array System. This powerful synergy creates a hybrid microgrid platform, autonomously optimized by predictive AI, to deliver unparalleled energy resilience and strategic independence. Our systems are designed to operate as a cohesive, intelligent network, ensuring unwavering power for any mission, anywhere.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="card-hover-effect bg-gms-light p-6 rounded-xl shadow-lg">
+                        <i class="fas fa-network-wired text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Integrated Grid Resilience</h3>
+                        <p class="text-gray-300 text-sm">Harmonizing diverse energy sources into a single, unbreakable power network, immune to external disruptions.</p>
+                    </div>
+                    <div class="card-hover-effect bg-gms-light p-6 rounded-xl shadow-lg">
+                        <i class="fas fa-battery-full text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Advanced Energy Storage</h3>
+                        <p class="text-gray-300 text-sm">Implementing cutting-edge storage solutions for peak performance and continuous power delivery, even off-grid.</p>
+                    </div>
+                    <div class="card-hover-effect bg-gms-light p-6 rounded-xl shadow-lg">
+                        <i class="fas fa-map-marked-alt text-4xl text-gms-accent mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3 font-montserrat">Global Deployment Capabilities</h3>
+                        <p class="text-gray-300 text-sm">Containerized, export-ready energy solutions designed for rapid and secure deployment across continents.</p>
+                    </div >
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="py-20 bg-gms-blue fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-6 font-montserrat text-white">SECURE YOUR ENERGY FUTURE.</h2>
+                <p class="text-lg max-w-3xl mx-auto mb-10 text-gray-300">
+                    Partner with Gul Metzen Solutions to establish unassailable energy independence and strategic advantage. Our expertise ensures your critical systems are powered with unwavering reliability.
+                </p>
+                <a href="/contact/" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-full text-xl transition duration-300 transform hover:scale-105 shadow-xl">
+                    ENGAGE OUR EXPERTISE
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gms-gray py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <div class="mb-8">
+                <!-- Footer Logo - GMS Logo (Image) -->
+                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo mx-auto mb-4">
+                <p class="text-lg font-bold font-montserrat">GUL METZEN SOLUTIONS</p>
+            </div>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f fa-2x"></i></a>
+                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram fa-2x"></i></a>
+            </div>
+            <div class="mb-8 text-sm">
+                <p>&copy; 2023-2025 Gul and Metzen Solutions LLC. All rights reserved.</p>
+                <p>Jersey City, NJ</p>
+            </div>
+            <div class="text-xs">
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Privacy Policy</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Terms of Service</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function() {
+                    const isOpen = mobileMenu.classList.toggle('is-open');
+                    if (isOpen) {
+                        mobileMenu.style.setProperty('--mobile-menu-height', mobileMenu.scrollHeight + 'px');
+                    } else {
+                        mobileMenu.style.setProperty('--mobile-menu-height', '0px');
+                    }
+                });
+            }
+
+            // Highlight active navigation link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                // Check for exact match or root for home
+                if (link.getAttribute('href') === currentPath || 
+                   (link.getAttribute('href') === '/divisions/' && currentPath.startsWith('/divisions/')) ||
+                   (link.getAttribute('href') === '/' && (currentPath === '/index.html' || currentPath === '/'))) {
+                    link.classList.add('text-gms-accent');
+                    link.classList.remove('text-gray-300');
+                } else {
+                    link.classList.remove('text-gms-accent');
+                    link.classList.add('text-gray-300');
+                }
+            });
+
+            // Intersection Observer for scroll-triggered fade-in sections
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observerSections = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 
+            });
+
+            sections.forEach(section => {
+                observerSections.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
 
