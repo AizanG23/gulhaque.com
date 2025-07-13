@@ -1,1 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers | Gul and Metzen Solutions</title>
+    <link rel="icon" href="https://i.imgur.com/fUreDP2.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tailwind Configuration Extension */
+        :root {
+            --gms-blue: '#0a192f';
+            --gms-gray: '#1a1a1a';
+            --gms-light': '#2d3748';
+            --gms-accent: '#00b4d8';
+            --gms-purple: '#8b5cf6';
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--gms-blue);
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* General Fade-in for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px); /* More pronounced initial translation */
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out; /* Slower, smoother transition */
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero text animation */
+        .hero-text-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textReveal 1s ease-out forwards;
+            animation-delay: 0.3s;
+            text-shadow: 0px 0px 50px rgba(0, 180, 216, 1); /* Even stronger glow for text */
+        }
+        .hero-text-reveal:nth-child(2) { animation-delay: 0.6s; }
+        .hero-text-reveal:nth-child(3) { animation-delay: 0.9s; }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero background with subtle parallax/movement and animation */
+        .hero-bg {
+            background: linear-gradient(rgba(10, 25, 47, 0.98), rgba(10, 25, 47, 0.9)), url('https://images.unsplash.com/photo-1518495973542-cefd56373f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: 110% 110%;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+            animation: backgroundPan 120s linear infinite alternate; /* Very slow pan */
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(0, 180, 216, 0.7), transparent 60%),
+                        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.7), transparent 60%);
+            opacity: 0.98; /* Almost full opacity for stronger glow */
+            z-index: 1;
+            animation: pulseGlow 12s infinite alternate; /* Subtle glow animation */
+        }
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.98; }
+            50% { opacity: 1; }
+            100% { opacity: 0.98; }
+        }
+
+        /* Custom CSS for Main GMS Logo (will be inverted to white) */
+        .gms-logo {
+            filter: invert(100%);
+            height: 80px;
+            width: auto;
+            display: block;
+        }
+
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.is-open {
+            max-height: var(--mobile-menu-height);
+            opacity: 1;
+        }
+
+        /* Custom styles for the "GM" text to be smaller */
+        .gms-text-logo {
+            font-size: 1.5rem;
+            line-height: 1.2;
+        }
+
+        /* Subtle background gradient for sections */
+        .section-gradient-bg-1 {
+            background: linear-gradient(to bottom, var(--gms-blue), rgba(10, 25, 47, 0.99));
+        }
+        .section-gradient-bg-2 {
+            background: linear-gradient(to bottom, var(--gms-gray), rgba(26, 26, 26, 0.99));
+        }
+
+        /* Card hover effects for benefits/values */
+        .card-hover-effect {
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+            border: 1px solid transparent;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-20px) scale(1.03); /* More pronounced lift and scale */
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 1), 0 0 60px rgba(0, 180, 216, 0.8); /* Stronger shadow with intense glow */
+            border-color: var(--gms-accent);
+            background-color: var(--gms-light);
+        }
+
+        /* Icon animation for benefits/values */
+        .icon-bounce-hover {
+            transition: transform 0.3s ease;
+        }
+        .card-hover-effect:hover .icon-bounce-hover {
+            transform: translateY(-8px); /* Icon bounces up */
+        }
+
+        /* Animated background for "No Open Positions" section */
+        .no-positions-bg {
+            background: linear-gradient(to right, var(--gms-gray), var(--gms-light), var(--gms-gray));
+            background-size: 300% 100%;
+            animation: gradientShift 15s ease infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Text glow for "No Open Positions" heading - REFINED */
+        .heading-pulse-glow {
+            animation: pulseTextGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseTextGlow {
+            0% { text-shadow: 0 0 10px var(--gms-accent), 0 0 20px rgba(0, 180, 216, 0.4); }
+            50% { text-shadow: 0 0 20px var(--gms-accent), 0 0 40px rgba(0, 180, 216, 0.8); }
+            100% { text-shadow: 0 0 10px var(--gms-accent), 0 0 20px rgba(0, 180, 216, 0.4); }
+        }
+
+        /* Animation for "Who We Seek" list items */
+        .list-item-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: listItemFadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes listItemFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* NEW: Reflective text glow for general text */
+        .text-reflective-glow {
+            text-shadow:
+                0 0 5px rgba(255, 255, 255, 0.3), /* Soft white highlight */
+                0 0 10px rgba(0, 180, 216, 0.4), /* Accent color glow */
+                0 0 15px rgba(0, 180, 216, 0.2); /* Wider, softer glow */
+            transition: text-shadow 0.5s ease;
+        }
+        /* Optional: Add a subtle hover effect to reflective text */
+        .text-reflective-glow:hover {
+            text-shadow:
+                0 0 8px rgba(255, 255, 255, 0.5),
+                0 0 15px rgba(0, 180, 216, 0.6),
+                0 0 25px rgba(0, 180, 216, 0.3);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gms-blue': '#0a192f',
+                        'gms-gray': '#1a1a1a',
+                        'gms-light': '#2d3748',
+                        'gms-accent': '#00b4d8',
+                        'gms-purple': '#8b5cf6'
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        roboto: ['Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gms-blue text-white font-roboto">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-gms-gray bg-opacity-90 backdrop-blur-sm z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <!-- Main Site Logo - GMS Logo (Image) -->
+                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul and Metzen Solutions Logo" class="gms-logo">
+                        <!-- GMS Text Logo -->
+                        <span class="ml-3 font-bold font-montserrat hidden sm:inline text-white gms-text-logo">GUL AND METZEN SOLUTIONS</span>
+                        <span class="ml-3 font-bold font-montserrat sm:hidden text-white gms-text-logo">GMS</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <!-- Navigation Links with Hover Effect -->
+                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                    <a href="/about/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
+                    <a href="/divisions/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
+                    <a href="/clients/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
+                    <a href="/pressroom/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
+                    <a href="/contact/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden bg-gms-gray">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <!-- Mobile Menu Logo - GMS Logo (Image) -->
+                <div class="flex items-center justify-center py-4">
+                    <img src="https://i.imgur.com/fUreDP2.png" alt="Gul and Metzen Solutions Logo" class="gms-logo">
+                </div>
+                <!-- Mobile Navigation Links with Hover Effect -->
+                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                <a href="/about/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
+                <a href="/divisions/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
+                <a href="/clients/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
+                <a href="/pressroom/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
+                <a href="/contact/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content for Careers -->
+    <div class="pt-20 min-h-screen flex flex-col">
+        <!-- Hero Section for Careers -->
+        <section class="hero-bg py-32 relative z-0 flex-grow flex items-center justify-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 hero-text-reveal text-reflective-glow">
+                    SHAPE THE <span class="text-gms-accent">FUTURE</span> WITH US
+                </h1>
+                <p class="text-xl md:text-2xl max-w-4xl mx-auto mb-10 hero-text-reveal text-reflective-glow">
+                    Join the elite minds at Gul and Metzen Solutions, where unparalleled innovation meets transformative global impact.
+                </p>
+            </div>
+        </section>
+
+        <!-- Why Join Us Section -->
+        <section class="py-20 bg-gms-blue fade-in-section section-gradient-bg-1">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold font-montserrat mb-16 text-gms-accent text-reflective-glow">WHY GUL AND METZEN SOLUTIONS?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Card 1: Unparalleled Impact -->
+                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent card-hover-effect">
+                        <i class="fas fa-rocket text-5xl text-gms-accent mb-6 icon-bounce-hover"></i>
+                        <h3 class="text-2xl font-bold font-montserrat mb-4 text-reflective-glow">UNPARALLELED IMPACT</h3>
+                        <p class="text-lg leading-relaxed text-gray-300 text-reflective-glow">
+                            Work on projects that redefine national security, energy independence, and global infrastructure. Your contributions directly shape the future.
+                        </p>
+                    </div>
+                    <!-- Card 2: Elite Compensation & Benefits -->
+                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent card-hover-effect">
+                        <i class="fas fa-dollar-sign text-5xl text-gms-accent mb-6 icon-bounce-hover"></i>
+                        <h3 class="text-2xl font-bold font-montserrat mb-4 text-reflective-glow">ELITE COMPENSATION & BENEFITS</h3>
+                        <p class="text-lg leading-relaxed text-gray-300 text-reflective-glow">
+                            We attract and retain the brightest minds with industry-leading salaries, comprehensive health packages, and unparalleled long-term incentives.
+                        </p>
+                    </div>
+                    <!-- Card 3: Culture of Innovation -->
+                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent card-hover-effect">
+                        <i class="fas fa-flask text-5xl text-gms-accent mb-6 icon-bounce-hover"></i>
+                        <h3 class="text-2xl font-bold font-montserrat mb-4 text-reflective-glow">CULTURE OF INNOVATION</h3>
+                        <p class="text-lg leading-relaxed text-gray-300 text-reflective-glow">
+                            Thrive in an environment where audacious ideas are celebrated, and cutting-edge research is the daily norm. We empower you to innovate without limits.
+                        </p>
+                    </div>
+                    <!-- Card 4: Collaborative & Open Workforce -->
+                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent card-hover-effect">
+                        <i class="fas fa-users text-5xl text-gms-accent mb-6 icon-bounce-hover"></i>
+                        <h3 class="text-2xl font-bold font-montserrat mb-4 text-reflective-glow">OPEN WORKFORCE</h3>
+                        <p class="text-lg leading-relaxed text-gray-300 text-reflective-glow">
+                            Collaborate with a diverse collective of the world's most brilliant minds. Our open and inclusive environment fosters groundbreaking synergy.
+                        </p>
+                    </div>
+                    <!-- Card 5: Unyielding Growth -->
+                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent card-hover-effect">
+                        <i class="fas fa-chart-line text-5xl text-gms-accent mb-6 icon-bounce-hover"></i>
+                        <h3 class="text-2xl font-bold font-montserrat mb-4 text-reflective-glow">UNYIELDING GROWTH</h3>
+                        <p class="text-lg leading-relaxed text-gray-300 text-reflective-glow">
+                            Your professional development is paramount. Access bespoke training, mentorship from industry titans, and limitless opportunities for advancement.
+                        </p>
+                    </div>
+                    <!-- Card 6: Global Competitive Edge -->
+                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent card-hover-effect">
+                        <i class="fas fa-trophy text-5xl text-gms-accent mb-6 icon-bounce-hover"></i>
+                        <h3 class="text-2xl font-bold font-montserrat mb-4 text-reflective-glow">GLOBAL COMPETITIVE EDGE</h3>
+                        <p class="text-lg leading-relaxed text-gray-300 text-reflective-glow">
+                            Be part of a team that consistently outpaces the competition, setting global benchmarks in every domain we conquer.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who We Seek Section - ANIMATED LIST ITEMS & REFLECTIVE TEXT -->
+        <section class="py-20 bg-gms-gray fade-in-section section-gradient-bg-2">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold font-montserrat mb-8 text-white text-reflective-glow">WHO WE SEEK</h2>
+                <p class="text-lg max-w-3xl mx-auto mb-10 text-gray-300 text-reflective-glow">
+                    We are searching for individuals who are not merely exceptional, but truly extraordinary. The architects of tomorrow possess:
+                </p>
+                <ul class="list-none space-y-4 text-xl text-gray-200 mb-12">
+                    <li class="flex items-center justify-center list-item-reveal text-reflective-glow" style="animation-delay: 0.1s;"><i class="fas fa-brain text-gms-accent mr-3"></i> The Sharpest Intellect</li>
+                    <li class="flex items-center justify-center list-item-reveal text-reflective-glow" style="animation-delay: 0.2s;"><i class="fas fa-bolt text-gms-accent mr-3"></i> Unwavering Drive & Ambition</li>
+                    <li class="flex items-center justify-center list-item-reveal text-reflective-glow" style="animation-delay: 0.3s;"><i class="fas fa-cogs text-gms-accent mr-3"></i> A Relentless Pursuit of Perfection</li>
+                    <li class="flex items-center justify-center list-item-reveal text-reflective-glow" style="animation-delay: 0.4s;"><i class="fas fa-code text-gms-accent mr-3"></i> Mastery in Their Domain</li>
+                    <li class="flex items-center justify-center list-item-reveal text-reflective-glow" style="animation-delay: 0.5s;"><i class="fas fa-hand-fist text-gms-accent mr-3"></i> An Unyielding Commitment to Excellence</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- No Current Open Positions Section - ANIMATED HEADING & TEXT, NO BUTTON -->
+        <section class="py-20 bg-gms-blue fade-in-section no-positions-bg">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center bg-gms-gray bg-opacity-80 p-10 rounded-xl shadow-2xl border border-gms-accent">
+                <i class="fas fa-hourglass-half text-gms-accent text-6xl mb-6 animate-bounce"></i>
+                <h2 class="text-3xl font-bold font-montserrat mb-6 text-white heading-pulse-glow text-reflective-glow">CURRENTLY NO OPEN OPPORTUNITIES</h2>
+                <p class="text-lg max-w-2xl mx-auto mb-8 text-gray-300 fade-in-section text-reflective-glow" style="animation-delay: 0.2s;">
+                    The ranks of Gul and Metzen Solutions are composed of the most formidable talent. While we are not actively recruiting for new positions at this moment, our pursuit of excellence is continuous.
+                </p>
+                <p class="text-lg max-w-2xl mx-auto mb-10 text-gray-300 fade-in-section text-reflective-glow" style="animation-delay: 0.4s;">
+                    We invite you to revisit this page regularly. When new opportunities arise to join our transformative mission, they will be announced here. Prepare to seize your moment.
+                </p>
+                <!-- Removed "STAY CONNECTED" button as per request -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gms-gray py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <div class="mb-8">
+                <!-- Footer Logo - GMS Logo (Image) -->
+                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul and Metzen Solutions Logo" class="gms-logo mx-auto mb-4">
+                <p class="text-lg font-bold font-montserrat">GUL AND METZEN SOLUTIONS</p>
+            </div>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f fa-2x"></i></a>
+                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram fa-2x"></i></a>
+            </div>
+            <div class="mb-8 text-sm">
+                <p>&copy; 2023-2025 Gul and Metzen Solutions LLC. All rights reserved.</p>
+                <p>Jersey City, NJ</p>
+            </div>
+            <div class="text-xs">
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Privacy Policy</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Terms of Service</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function() {
+                    const isOpen = mobileMenu.classList.toggle('is-open');
+                    if (isOpen) {
+                        mobileMenu.style.setProperty('--mobile-menu-height', mobileMenu.scrollHeight + 'px');
+                    } else {
+                        mobileMenu.style.setProperty('--mobile-menu-height', '0px');
+                    }
+                });
+            }
+
+            // Highlight active navigation link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                // Check for exact match or root for home
+                if (link.getAttribute('href') === currentPath ||
+                   (link.getAttribute('href') === '/careers/' && currentPath.startsWith('/careers/')) || /* Added for careers page */
+                   (link.getAttribute('href') === '/' && (currentPath === '/index.html' || currentPath === '/'))) {
+                    link.classList.add('text-gms-accent');
+                    link.classList.remove('text-gray-300');
+                } else {
+                    link.classList.remove('text-gms-accent');
+                    link.classList.add('text-gray-300');
+                }
+            });
+
+            // Intersection Observer for scroll-triggered fade-in sections
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observerSections = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observerSections.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
 
