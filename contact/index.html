@@ -120,125 +120,34 @@
             background: linear-gradient(to bottom, var(--gms-gray), rgba(26, 26, 26, 0.98));
         }
 
-        /* Form specific styles */
-        .form-input {
-            background-color: var(--gms-light);
-            border: 1px solid var(--gms-gray);
-            color: white;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-        }
-        .form-input:focus {
-            outline: none;
-            border-color: var(--gms-accent);
-            box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.6); /* Stronger accent glow on focus */
-            transform: translateY(-2px); /* Subtle lift on focus */
-        }
-        .form-textarea {
-            min-height: 150px; /* Taller textarea */
-            resize: vertical;
-        }
-        .submit-button {
-            background: linear-gradient(45deg, var(--gms-accent), var(--gms-purple)); /* Gradient button */
-            color: white;
-            font-weight: bold;
-            padding: 1rem 3rem;
-            border-radius: 9999px;
-            transition: all 0.4s ease; /* All properties for smooth transition */
-            box-shadow: 0 10px 25px rgba(0, 180, 216, 0.5), 0 5px 15px rgba(139, 92, 246, 0.5); /* Dual shadow */
-            position: relative;
-            overflow: hidden;
-        }
-        .submit-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: rgba(255, 255, 255, 0.15); /* Light ripple effect */
-            border-radius: 50%;
-            transition: all 0.75s ease-out;
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
-        }
-        .submit-button:hover::before {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
-        .submit-button:hover {
-            transform: translateY(-5px) scale(1.02); /* More pronounced lift and slight scale */
-            box-shadow: 0 15px 35px rgba(0, 180, 216, 0.7), 0 8px 20px rgba(139, 92, 246, 0.7);
-        }
-        .submit-button:active {
-            transform: translateY(0); /* Press down effect */
-            box-shadow: 0 5px 10px rgba(0, 180, 216, 0.3), 0 2px 5px rgba(139, 92, 246, 0.3);
-        }
-
-        /* Modal Overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-overlay.is-open {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background: linear-gradient(to bottom right, var(--gms-gray), rgba(26, 26, 26, 0.95));
-            border: 2px solid var(--gms-accent);
-            border-radius: 1rem;
-            padding: 2.5rem;
-            text-align: center;
-            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.7);
-            transform: translateY(-50px) scale(0.9);
-            opacity: 0;
-            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
-            max-width: 90%;
-            width: 500px;
-        }
-        .modal-overlay.is-open .modal-content {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-        }
-        .modal-close-button {
-            background-color: var(--gms-accent);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            margin-top: 1.5rem;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        .modal-close-button:hover {
-            background-color: #009ac2;
-            transform: translateY(-2px);
-        }
-
         /* Contact details icon animation */
         .contact-icon-item {
-            transition: transform 0.3s ease, color 0.3s ease;
+            transition: transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            padding: 0.5rem; /* Add padding for hover effect */
+            border-radius: 0.5rem;
+            display: flex; /* Ensure flex for alignment */
+            align-items: center; /* Align icon and text */
         }
         .contact-icon-item:hover {
-            transform: translateX(10px) scale(1.05);
+            transform: translateX(10px) scale(1.02); /* More subtle scale */
             color: var(--gms-accent);
+            box-shadow: 0 0 15px rgba(0, 180, 216, 0.3); /* Subtle glow on hover */
         }
         .contact-icon-item a {
             transition: color 0.3s ease;
         }
         .contact-icon-item a:hover {
             color: var(--gms-accent);
+        }
+
+        /* Large icon animation */
+        .large-icon-pulse {
+            animation: largeIconPulse 2s infinite alternate;
+        }
+
+        @keyframes largeIconPulse {
+            0% { text-shadow: 0 0 10px var(--gms-accent), 0 0 20px rgba(0, 180, 216, 0.5); }
+            100% { text-shadow: 0 0 20px var(--gms-accent), 0 0 40px rgba(0, 180, 216, 0.8); }
         }
     </style>
     <script>
@@ -316,116 +225,65 @@
         <section class="hero-bg py-32 relative z-0 flex-grow flex items-center justify-center">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                 <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 hero-text-reveal">
-                    CONNECT WITH <span class="text-gms-accent">US</span>
+                    CONTACT <span class="text-gms-accent">US</span>
                 </h1>
                 <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 hero-text-reveal">
-                    Engage with the architects of tomorrow's infrastructure. Your inquiries are our priority.
+                    Connect with Gul and Metzen Solutions for all strategic inquiries.
                 </p>
             </div>
         </section>
 
-        <!-- Contact Information & Form Section -->
+        <!-- Direct Contact Information Section -->
         <section class="py-20 bg-gms-blue fade-in-section section-gradient-bg-1">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    <!-- Contact Details -->
-                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent flex flex-col justify-between">
-                        <div>
-                            <h2 class="text-3xl font-bold font-montserrat mb-6 text-gms-accent">REACH OUT TO OUR TEAM</h2>
-                            <p class="text-lg leading-relaxed text-gray-300 mb-8">
-                                Whether you have questions about our advanced energy solutions, autonomous defense systems, or potential partnerships, our dedicated team is ready to assist. We value every inquiry and strive to provide comprehensive support.
-                            </p>
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent text-center">
+                    <i class="fas fa-satellite-dish text-gms-accent text-8xl mb-8 large-icon-pulse"></i>
 
-                            <div class="space-y-6 mb-10">
-                                <div class="flex items-center contact-icon-item">
-                                    <i class="fas fa-envelope text-gms-accent text-2xl mr-4"></i>
-                                    <div>
-                                        <p class="text-gray-400 text-sm">General Inquiries</p>
-                                        <a href="mailto:inquiries@gulhaque.com" class="text-lg text-white hover:text-gms-accent transition duration-300">inquiries@gulhaque.com</a>
-                                    </div>
-                                </div>
-                                <!-- Phone number removed as per request -->
-                                <div class="flex items-start contact-icon-item">
-                                    <i class="fas fa-map-marker-alt text-gms-accent text-2xl mr-4 mt-1"></i>
-                                    <div>
-                                        <p class="text-gray-400 text-sm">Headquarters</p>
-                                        <p class="text-lg text-white">
-                                            Gul and Metzen Solutions LLC<br/>
-                                            Jersey City, NJ, USA
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start contact-icon-item">
-                                    <i class="fas fa-globe text-gms-accent text-2xl mr-4 mt-1"></i>
-                                    <div>
-                                        <p class="text-gray-400 text-sm">Global Presence</p>
-                                        <p class="text-lg text-white">
-                                            Operating across key strategic locations worldwide.
-                                        </p>
-                                    </div>
-                                </div>
+                    <h2 class="text-4xl font-bold font-montserrat mb-6 text-white">ENGAGE OUR EXPERTISE</h2>
+                    <p class="text-lg leading-relaxed text-gray-300 mb-10">
+                        For all strategic inquiries, media relations, and general communications, please reach out to us directly. Our dedicated team is prepared to address your needs with precision and discretion.
+                    </p>
+
+                    <div class="space-y-8 mb-12">
+                        <div class="flex flex-col sm:flex-row items-center justify-center contact-icon-item">
+                            <i class="fas fa-envelope text-gms-accent text-3xl sm:mr-4 mb-2 sm:mb-0"></i>
+                            <div>
+                                <p class="text-gray-400 text-sm">General Inquiries</p>
+                                <a href="mailto:inquiries@gulhaque.com" class="text-xl text-white hover:text-gms-accent transition duration-300 font-medium">inquiries@gulhaque.com</a>
                             </div>
                         </div>
-
-                        <!-- Social Media Links -->
-                        <div class="mt-auto pt-8 border-t border-gms-light">
-                            <h3 class="text-xl font-bold font-montserrat mb-4 text-white">FOLLOW OUR JOURNEY</h3>
-                            <div class="flex space-x-6">
-                                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-110"><i class="fab fa-twitter fa-2x"></i></a>
-                                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-110"><i class="fab fa-linkedin-in fa-2x"></i></a>
-                                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-110"><i class="fab fa-facebook-f fa-2x"></i></a>
-                                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-110"><i class="fab fa-instagram fa-2x"></i></a>
+                        <div class="flex flex-col sm:flex-row items-center justify-center contact-icon-item">
+                            <i class="fas fa-map-marker-alt text-gms-accent text-3xl sm:mr-4 mb-2 sm:mb-0"></i>
+                            <div>
+                                <p class="text-gray-400 text-sm">Headquarters</p>
+                                <p class="text-xl text-white font-medium">
+                                    Gul and Metzen Solutions LLC<br/>
+                                    Jersey City, NJ, USA
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-center justify-center contact-icon-item">
+                            <i class="fas fa-globe-americas text-gms-accent text-3xl sm:mr-4 mb-2 sm:mb-0"></i>
+                            <div>
+                                <p class="text-gray-400 text-sm">Official Website</p>
+                                <a href="https://www.gulhaque.com" target="_blank" class="text-xl text-white hover:text-gms-accent transition duration-300 font-medium">www.gulhaque.com</a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Contact Form -->
-                    <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent">
-                        <h2 class="text-3xl font-bold font-montserrat mb-6 text-gms-accent">SEND US A SECURE MESSAGE</h2>
-                        <form id="contactForm" action="mailto:inquiries@gulhaque.com" method="post" enctype="text/plain" class="space-y-6">
-                            <div>
-                                <label for="name" class="block text-lg font-medium text-gray-200 mb-2">Your Name</label>
-                                <input type="text" id="name" name="name" class="w-full form-input" placeholder="Enter your full name" required>
-                            </div>
-                            <div>
-                                <label for="email" class="block text-lg font-medium text-gray-200 mb-2">Your Email</label>
-                                <input type="email" id="email" name="email" class="w-full form-input" placeholder="your.email@example.com" required>
-                            </div>
-                            <div>
-                                <label for="subject" class="block text-lg font-medium text-gray-200 mb-2">Subject</label>
-                                <input type="text" id="subject" name="subject" class="w-full form-input" placeholder="Briefly describe your inquiry" required>
-                            </div>
-                            <div>
-                                <label for="message" class="block text-lg font-medium text-gray-200 mb-2">Your Message</label>
-                                <textarea id="message" name="message" class="w-full form-input form-textarea" placeholder="Type your message here..." required></textarea>
-                            </div>
-                            <div class="text-center pt-4">
-                                <p class="text-sm text-gray-400 mb-4">
-                                    <i class="fas fa-info-circle mr-1"></i> Submitting this form will open your default email client.
-                                </p>
-                                <button type="submit" class="submit-button">
-                                    SEND MESSAGE <i class="fas fa-paper-plane ml-2"></i>
-                                </button>
-                            </div>
-                        </form>
+                    <!-- Social Media Links -->
+                    <div class="pt-8 border-t border-gms-light">
+                        <h3 class="text-xl font-bold font-montserrat mb-4 text-white">FOLLOW OUR JOURNEY</h3>
+                        <div class="flex justify-center space-x-8">
+                            <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-125"><i class="fab fa-twitter fa-3x"></i></a>
+                            <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-125"><i class="fab fa-linkedin-in fa-3x"></i></a>
+                            <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-125"><i class="fab fa-facebook-f fa-3x"></i></a>
+                            <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-gms-accent transition duration-300 transform hover:scale-125"><i class="fab fa-instagram fa-3x"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
-
-    <!-- Thank You Modal -->
-    <div id="thankYouModal" class="modal-overlay">
-        <div class="modal-content">
-            <i class="fas fa-check-circle text-gms-accent text-6xl mb-4 animate-bounce"></i>
-            <h3 class="text-3xl font-bold font-montserrat text-white mb-4">MESSAGE SENT!</h3>
-            <p class="text-lg text-gray-300 mb-6">
-                Thank you for contacting Gul and Metzen Solutions. We have received your inquiry and will respond as soon as possible.
-            </p>
-            <button id="closeModal" class="modal-close-button">
-                CLOSE
-            </button>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -505,43 +363,6 @@
             sections.forEach(section => {
                 observerSections.observe(section);
             });
-
-            // Contact Form Submission and Modal
-            const contactForm = document.getElementById('contactForm');
-            const thankYouModal = document.getElementById('thankYouModal');
-            const closeModalButton = document.getElementById('closeModal');
-
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(event) {
-                    // Prevent default form submission to allow mailto to trigger first, then show modal
-                    // The mailto link will open the user's email client.
-                    // This script then immediately shows the modal.
-                    // A true server-side form would require backend processing.
-
-                    // Small delay to allow mailto to potentially initiate before modal shows
-                    setTimeout(() => {
-                        thankYouModal.classList.add('is-open');
-                    }, 100);
-                });
-            }
-
-            if (closeModalButton) {
-                closeModalButton.addEventListener('click', function() {
-                    thankYouModal.classList.remove('is-open');
-                    // Optionally reset the form after closing the modal
-                    contactForm.reset();
-                });
-            }
-
-            // Close modal if clicked outside content
-            if (thankYouModal) {
-                thankYouModal.addEventListener('click', function(event) {
-                    if (event.target === thankYouModal) {
-                        thankYouModal.classList.remove('is-open');
-                        contactForm.reset();
-                    }
-                });
-            }
         });
     </script>
 </body>
