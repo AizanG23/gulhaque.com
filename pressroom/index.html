@@ -8,6 +8,142 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tailwind Configuration Extension */
+        :root {
+            --gms-blue: '#0a192f';
+            --gms-gray: '#1a1a1a';
+            --gms-light': '#2d3748';
+            --gms-accent: '#00b4d8';
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--gms-blue); /* Ensure consistent dark background */
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* General Fade-in for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero text animation */
+        .hero-text-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textReveal 1s ease-out forwards;
+            animation-delay: 0.3s; /* Delay for a staggered effect */
+            text-shadow: 0px 0px 35px rgba(0, 180, 216, 0.9); /* Even stronger glow for text */
+        }
+        .hero-text-reveal:nth-child(2) { animation-delay: 0.6s; }
+        .hero-text-reveal:nth-child(3) { animation-delay: 0.9s; }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero background with subtle parallax/movement and animation */
+        .hero-bg {
+            background: linear-gradient(rgba(10, 25, 47, 0.98), rgba(10, 25, 47, 0.9)), url('https://images.unsplash.com/photo-1518495973542-cefd56373f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: 110% 110%; /* Slightly larger to allow for animation */
+            background-attachment: fixed; /* Parallax effect */
+            position: relative;
+            overflow: hidden;
+            animation: backgroundPan 60s linear infinite alternate; /* Slow, subtle pan */
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top left, rgba(0, 180, 216, 0.55), transparent 60%), /* Even stronger glow */
+                        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.55), transparent 60%); /* Even stronger glow */
+            opacity: 0.9; /* Slightly more opaque */
+            z-index: 1;
+        }
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Card hover effects */
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border: 1px solid transparent; /* Default border */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); /* Base shadow for reflection */
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-15px); /* More pronounced lift */
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 1), 0 0 50px rgba(0, 180, 216, 0.7); /* Stronger shadow with more glow */
+            border-color: var(--gms-accent); /* Accent border on hover */
+            background-color: var(--gms-light); /* Slightly lighter on hover */
+        }
+
+        /* Custom CSS for Main GMS Logo (will be inverted to white) */
+        .gms-logo {
+            filter: invert(100%); /* Make the black logo white */
+            height: 80px; /* Doubled size for the GM image */
+            width: auto; /* Maintain aspect ratio */
+            display: block; /* Ensure proper rendering */
+        }
+
+        /* Image sizing for main content */
+        .content-image {
+            width: 100%;
+            max-height: 900px; /* Consistent max-height for larger display */
+            object-fit: cover; /* Ensures image covers the area, cropping if necessary */
+            border-radius: 0.75rem; /* rounded-xl equivalent */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg equivalent */
+        }
+
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+        #mobile-menu.is-open {
+            max-height: var(--mobile-menu-height); /* Set dynamically or to a large enough value */
+            opacity: 1;
+        }
+
+        /* Custom styles for the "GM" text to be smaller */
+        .gms-text-logo {
+            font-size: 1.5rem; /* Text size remains as previously set */
+            line-height: 1.2;
+        }
+
+        /* Icon pulse animation */
+        .icon-pulse {
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { text-shadow: 0 0 5px var(--gms-accent); }
+            to { text-shadow: 0 0 20px var(--gms-accent), 0 0 30px rgba(0, 180, 216, 0.5); }
+        }
+
+        /* Subtle background gradient for sections */
+        .section-gradient-bg-1 {
+            background: linear-gradient(to bottom, var(--gms-blue), rgba(10, 25, 47, 0.95));
+        }
+        .section-gradient-bg-2 {
+            background: linear-gradient(to bottom, var(--gms-gray), rgba(26, 26, 26, 0.95));
+        }
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -26,80 +162,6 @@
             }
         }
     </script>
-    <style>
-        /* General Fade-in for sections */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Specific fade-in for hero elements */
-        .fade-in {
-            animation: fadeIn 0.8s ease-in forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-bg {
-            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.7)), url('https://images.unsplash.com/photo-1623874106686-5be5d9f7639a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-        }
-        .division-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .division-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-        .leader-card:hover .leader-overlay {
-            opacity: 1;
-        }
-        .leader-overlay {
-            transition: opacity 0.3s ease;
-        }
-        .client-logo {
-            filter: grayscale(100%);
-            transition: filter 0.3s ease;
-        }
-        .client-logo:hover {
-            filter: grayscale(0%);
-        }
-        .press-card {
-            transition: all 0.3s ease;
-        }
-        .press-card:hover {
-            transform: translateY(-5px);
-            border-color: #00b4d8;
-        }
-        .contact-input:focus {
-            outline: none;
-            border-color: #00b4d8;
-        }
-        /* Custom CSS to invert logo color for visibility on dark backgrounds */
-        .logo-filter-invert {
-            filter: invert(100%);
-        }
-
-        /* Mobile Menu Animation */
-        #mobile-menu {
-            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-        }
-        #mobile-menu.is-open {
-            max-height: var(--mobile-menu-height); /* Set dynamically or to a large enough value */
-            opacity: 1;
-        }
-    </style>
 </head>
 <body class="bg-gms-blue text-white font-roboto">
     <!-- Navigation -->
@@ -108,19 +170,20 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <!-- Main Site Logo -->
-                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 w-auto logo-filter-invert">
-                        <span class="ml-3 text-lg font-bold font-montserrat hidden sm:inline">GUL METZEN SOLUTIONS</span>
-                        <span class="ml-3 text-lg font-bold font-montserrat sm:hidden">GMS</span>
+                        <!-- Main Site Logo - GMS Logo (Image) -->
+                        <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo">
+                        <!-- GMS Text Logo -->
+                        <span class="ml-3 font-bold font-montserrat hidden sm:inline text-white gms-text-logo">GUL METZEN SOLUTIONS</span>
+                        <span class="ml-3 font-bold font-montserrat sm:hidden text-white gms-text-logo">GMS</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <!-- Navigation Links with Hover Effect -->
-                    <a href="/" id="home-nav-link" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">HOME</a>
                     <a href="/about/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
                     <a href="/divisions/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
                     <a href="/clients/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
-                    <a href="/pressroom/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
+                    <a href="/pressroom/" id="pressroom-nav-link" class="text-gms-accent px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
                     <a href="/contact/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
                 </div>
                 <div class="md:hidden flex items-center">
@@ -134,16 +197,15 @@
         </div>
         <div id="mobile-menu" class="md:hidden bg-gms-gray">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <!-- Mobile Menu Logo -->
-                <div class="flex items-center justify-center py-4">
-                    <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 w-auto logo-filter-invert">
+                <!-- Mobile Menu Logo - GMS Logo (Image) -->
+                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo">
                 </div>
                 <!-- Mobile Navigation Links with Hover Effect -->
-                <a href="/" id="home-nav-link-mobile" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
+                <a href="/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">HOME</a>
                 <a href="/about/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">ABOUT</a>
                 <a href="/divisions/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">DIVISIONS</a>
                 <a href="/clients/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CLIENTS</a>
-                <a href="/pressroom/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
+                <a href="/pressroom/" id="pressroom-nav-link-mobile" class="text-gms-accent block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">PRESSROOM</a>
                 <a href="/contact/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 transform hover:scale-105">CONTACT</a>
             </div>
         </div>
@@ -151,96 +213,67 @@
 
     <!-- Page Content for Pressroom -->
     <div class="pt-20 min-h-screen">
-        <section class="py-20 hero-bg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 class="text-4xl md:text-6xl font-bold text-center mb-10 font-montserrat fade-in">PRESSROOM</h1>
-                <p class="text-xl text-center max-w-4xl mx-auto mb-16 fade-in">
-                    Latest news, announcements, and media coverage of Gul Metzen Solutions.
-                </p>
+        <!-- Hero Section for Pressroom -->
+        <section class="hero-bg py-32 relative z-0">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center">
+                    <h1 class="text-5xl md:text-7xl font-bold font-montserrat mb-6 hero-text-reveal">
+                        GMS <span class="text-gms-accent">PRESSROOM</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 hero-text-reveal">
+                        Announcements, insights, and milestones from the forefront of global innovation and strategic defense.
+                    </p>
+                </div>
             </div>
         </section>
 
-        <section class="py-20 fade-in-section">
+        <!-- Latest News / Featured Press Release -->
+        <section class="py-20 bg-gms-blue fade-in-section section-gradient-bg-1">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold mb-16 text-center font-montserrat">LATEST NEWS</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
-                    <div class="press-card bg-gms-light rounded-xl overflow-hidden border border-gray-700">
-                        <div class="bg-gray-200 border-2 border-dashed w-full h-56"></div>
-                        <div class="p-6">
-                            <div class="text-gms-accent font-bold mb-2">June 15, 2023</div>
-                            <h3 class="text-xl font-bold mb-3">GMS Awarded $450M Contract for Next-Gen Nuclear Reactors</h3>
-                            <p class="mb-4">The Department of Energy selects Gul Metzen Solutions to develop advanced modular nuclear reactors for national security applications.</p>
-                            <a href="#" class="text-gms-accent font-bold hover:text-blue-400">Read more →</a>
-                        </div>
-                    </div>
-                    
-                    <div class="press-card bg-gms-light rounded-xl overflow-hidden border border-gray-700">
-                        <div class="bg-gray-200 border-2 border-dashed w-full h-56"></div>
-                        <div class="p-6">
-                            <div class="text-gms-accent font-bold mb-2">May 30, 2023</div>
-                            <h3 class="text-xl font-bold mb-3">Project Swarm Successfully Deployed in Disaster Response Exercise</h3>
-                            <p class="mb-4">GMS's autonomous drone system demonstrated unprecedented coordination in simulated disaster scenario, reducing response times by 65%.</p>
-                            <a href="#" class="text-gms-accent font-bold hover:text-blue-400">Read more →</a>
-                        </div>
-                    </div>
-                    
-                    <div class="press-card bg-gms-light rounded-xl overflow-hidden border border-gray-700">
-                        <div class="bg-gray-200 border-2 border-dashed w-full h-56"></div>
-                        <div class="p-6">
-                            <div class="text-gms-accent font-bold mb-2">April 22, 2023</div>
-                            <h3 class="text-xl font-bold mb-3">GMS Announces Strategic Partnership with Saudi Energy Ministry</h3>
-                            <p class="mb-4">New agreement will bring solar and nuclear technologies to Saudi Arabia's Vision 2030 energy transformation initiative.</p>
-                            <a href="#" class="text-gms-accent font-bold hover:text-blue-400">Read more →</a>
-                        </div>
-                    </div>
-                    
-                    <div class="press-card bg-gms-light rounded-xl overflow-hidden border border-gray-700">
-                        <div class="bg-gray-200 border-2 border-dashed w-full h-56"></div>
-                        <div class="p-6">
-                            <div class="text-gms-accent font-bold mb-2">March 10, 2023</div>
-                            <h3 class="text-xl font-bold mb-3">GMS CIO Ahmed Gul Named to National Cybersecurity Advisory Board</h3>
-                            <p class="mb-4">Ahmed Gul appointed to advise on national cybersecurity strategy and critical infrastructure protection.</p>
-                            <a href="#" class="text-gms-accent font-bold hover:text-blue-400">Read more →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center mb-20">
-                    <a href="#" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg inline-block transition duration-300">
-                        VIEW ALL NEWS
+                <h2 class="text-3xl font-bold font-montserrat mb-12 text-gms-accent text-center">LATEST NEWS & ANNOUNCEMENTS</h2>
+                <div class="bg-gms-gray rounded-xl p-8 shadow-2xl border border-gms-accent card-hover-effect">
+                    <p class="text-sm text-gray-400 mb-2">FOR IMMEDIATE RELEASE</p>
+                    <p class="text-sm text-gray-400 mb-6">JUNE 9, 2025 – JERSEY CITY, NJ</p>
+                    <h3 class="text-3xl font-bold font-montserrat mb-4 text-white">
+                        CEO Aizan Gul Announces Groundbreaking Implementation of Project Swarm in Clark County, Nevada
+                    </h3>
+                    <p class="text-lg leading-relaxed text-gray-300 mb-6">
+                        Gul Metzen Solutions today announced the commencement of the groundbreaking implementation phase for Project Swarm, our innovative energy grid and drone project, in Clark County, Nevada, with initial constructions slated to begin on August 15th. This strategic deployment marks a significant milestone in establishing advanced infrastructure within the region.
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-300 mb-8">
+                        Project Swarm is designed to enhance energy independence and bolster national security through its highly intelligent, self-organizing systems. The initial construction will focus on establishing foundational infrastructure critical for the deployment and robust operation of these advanced systems, ensuring unparalleled precision and adaptive intelligence.
+                    </p>
+                    <a href="/pressroom/project-swarm-implementation.html" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-xl">
+                        READ FULL PRESS RELEASE
+                        <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
+            </div>
+        </section>
 
-                <h2 class="text-3xl font-bold mb-16 text-center font-montserrat">MEDIA RESOURCES</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-gms-gray p-8 rounded-xl text-center">
-                        <div class="w-16 h-16 bg-gms-accent rounded-full flex items-center justify-center mx-auto mb-6">
-                            <i class="fas fa-download text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">Press Kits</h3>
-                        <p class="mb-6">Download comprehensive media packages for company information and key projects.</p>
-                        <a href="#" class="text-gms-accent font-bold hover:text-blue-400">Download Resources</a>
-                    </div>
-                    
-                    <div class="bg-gms-gray p-8 rounded-xl text-center">
-                        <div class="w-16 h-16 bg-gms-accent rounded-full flex items-center justify-center mx-auto mb-6">
-                            <i class="fas fa-images text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">Media Gallery</h3>
-                        <p class="mb-6">Access high-resolution images, videos, and graphics for media use.</p>
-                        <a href="#" class="text-gms-accent font-bold hover:text-blue-400">Access Gallery</a>
-                    </div>
-                    
-                    <div class="bg-gms-gray p-8 rounded-xl text-center">
-                        <div class="w-16 h-16 bg-gms-accent rounded-full flex items-center justify-center mx-auto mb-6">
-                            <i class="fas fa-user-tie text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">Press Contacts</h3>
-                        <p class="mb-6">Connect with our media relations team for inquiries and interview requests.</p>
-                        <a href="#" class="text-gms-accent font-bold hover:text-blue-400">Contact Media Team</a>
-                    </div>
+        <!-- Pressroom Archives (Placeholder) -->
+        <section class="py-20 bg-gms-gray fade-in-section section-gradient-bg-2">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold font-montserrat mb-8 text-white">PRESSROOM ARCHIVES</h2>
+                <p class="text-lg max-w-3xl mx-auto mb-10 text-gray-300">
+                    Stay informed on Gul Metzen Solutions' continuous advancements and strategic developments. Future announcements and in-depth reports will be featured here.
+                </p>
+                <div class="text-gray-500 italic text-md">
+                    No older articles available at this time. Please check back soon for more updates.
                 </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="py-20 bg-gms-blue fade-in-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-6 font-montserrat text-white">FOR MEDIA INQUIRIES.</h2>
+                <p class="text-lg max-w-3xl mx-auto mb-10 text-gray-300">
+                    For further information, interviews, or media resources, please contact our dedicated press team.
+                </p>
+                <a href="/contact/" class="bg-gms-accent hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-full text-xl transition duration-300 transform hover:scale-105 shadow-xl">
+                    CONTACT OUR PRESS TEAM
+                </a>
             </div>
         </section>
     </div>
@@ -249,25 +282,24 @@
     <footer class="bg-gms-gray py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <div class="mb-8">
-                <!-- Footer Logo -->
-                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="h-16 mx-auto mb-4 logo-filter-invert">
+                <!-- Footer Logo - GMS Logo (Image) -->
+                <img src="https://i.imgur.com/fUreDP2.png" alt="Gul Metzen Solutions Logo" class="gms-logo mx-auto mb-4">
                 <p class="text-lg font-bold font-montserrat">GUL METZEN SOLUTIONS</p>
             </div>
             <div class="flex justify-center space-x-6 mb-8">
-                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-twitter fa-2x"></i></a>
-                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in fa-2x"></i></a>
-                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f fa-2x"></i></a>
-                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f fa-2x"></i></a>
+                <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram fa-2x"></i></a>
             </div>
             <div class="mb-8 text-sm">
-                <p>&copy; 2023 Gul Metzen Solutions. All rights reserved.</p>
-                <p>123 Innovation Drive, Tech City, ST 12345</p>
-                <p>Email: info@gulmetzensolutions.com | Phone: (123) 456-7890</p>
+                <p>&copy; 2023-2025 Gul and Metzen Solutions LLC. All rights reserved.</p>
+                <p>Jersey City, NJ</p>
             </div>
             <div class="text-xs">
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Privacy Policy</a> |
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Terms of Service</a> |
-                <a href="#" class="text-gray-400 hover:text-white mx-2">Sitemap</a>
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Privacy Policy</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Terms of Service</a> |
+                <a href="#" class="text-gray-400 hover:text-white mx-2 transition duration-300">Sitemap</a>
             </div>
         </div>
     </footer>
@@ -289,41 +321,22 @@
                 });
             }
 
-            // Prevent refresh on Home button if already at root
-            const homeNavLink = document.getElementById('home-nav-link');
-            const homeNavLinkMobile = document.getElementById('home-nav-link-mobile');
-            
-            function handleHomeClick(e) {
-                const currentPath = window.location.pathname;
-                if (currentPath === '/' || currentPath === '/index.html' || currentPath === '/home/') {
-                    e.preventDefault();
+            // Highlight active navigation link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                // Check for exact match or root for home
+                if (link.getAttribute('href') === currentPath ||
+                   (link.getAttribute('href') === '/pressroom/' && currentPath.startsWith('/pressroom/')) || /* Updated for pressroom */
+                   (link.getAttribute('href') === '/' && (currentPath === '/index.html' || currentPath === '/'))) {
+                    link.classList.add('text-gms-accent');
+                    link.classList.remove('text-gray-300');
+                } else {
+                    link.classList.remove('text-gms-accent');
+                    link.classList.add('text-gray-300');
                 }
-            }
+            });
 
-            if (homeNavLink) {
-                homeNavLink.addEventListener('click', handleHomeClick);
-            }
-            if (homeNavLinkMobile) {
-                homeNavLinkMobile.addEventListener('click', handleHomeClick);
-            }
-
-            // Contact form submission (only if this page had a contact form)
-            const contactForm = document.getElementById('contact-form');
-            if(contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    console.log('Form submitted!');
-                    const messageBox = document.createElement('div');
-                    messageBox.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gms-accent text-white p-6 rounded-lg shadow-lg z-[1000]';
-                    messageBox.textContent = 'Thank you for your message. We will contact you shortly.';
-                    document.body.appendChild(messageBox);
-                    setTimeout(() => {
-                        messageBox.remove();
-                    }, 3000);
-                    contactForm.reset();
-                });
-            }
-            
             // Intersection Observer for scroll-triggered fade-in sections
             const sections = document.querySelectorAll('.fade-in-section');
             const observerSections = new IntersectionObserver((entries, observer) => {
